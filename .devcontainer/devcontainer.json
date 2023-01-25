@@ -90,5 +90,6 @@
 		// "terraform": "latest",
 		"azure-cli": {
 			"version": "lts"
+		}
 	}
 }
