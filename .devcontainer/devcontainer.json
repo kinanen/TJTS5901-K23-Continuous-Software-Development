@@ -21,7 +21,7 @@
 		// https://github.com/Microsoft/vscode-dev-containers/tree/main/containers/kubernetes-helm
 		"SYNC_LOCALHOST_KUBECONFIG": "true",
 		// Setup flask debug mode to be on in devcontainer
-		"FLASK_DEBUG": "1",
+		"FLASK_DEBUG": "1"
 		// Pass in the host directory for Docker mount commands from inside the container
 		//"HOST_PROJECT_PATH": "${localWorkspaceFolder}"
 	},
@@ -85,7 +85,7 @@
 		"docker-from-docker": "latest",
 		"kubectl-helm-minikube": {
 			"version": "1.24",
-			"minikube": "none",
+			"minikube": "none"
 		},
 		// "terraform": "latest",
 		"azure-cli": {
