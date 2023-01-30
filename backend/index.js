@@ -16,10 +16,10 @@ app.get('/', (req, res) => {
 
 
 app.get('/server-info', (req, res) => {
-    res.send('<p>This will show the same server info as the Python file app.py</p>')
+    res.send('<p>This will (hopefully) show the same server info as the Python file app.py</p>')
 })
 
-const PORT = 3001
+const PORT = 5001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
