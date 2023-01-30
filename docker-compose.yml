@@ -10,7 +10,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
 
-    working_dir: /app
+    #working_dir: /app/backend
 
     # Ports to expose to the host. Uncomment if running outside of vscode.
     # ports:

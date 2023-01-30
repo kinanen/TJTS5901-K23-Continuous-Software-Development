@@ -39,7 +39,7 @@ build:
     - |
       buildctl-daemonless.sh build  --progress=plain \
           --frontend=dockerfile.v0 \
-          --local context=. \
+          --local context=./backend \
           --local dockerfile=. \
           --opt build-arg:CI_COMMIT_SHA=${CI_COMMIT_SHA} \
           --output type=image,name=${DOCKER_IMAGE_NAME}:${DOCKER_TAG},push=true
