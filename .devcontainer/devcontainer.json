@@ -8,7 +8,7 @@
 		"../docker-compose.yml"
 	],
 
-	"service": "tjts5901",
+	"service": "backend",
 
 	// Don't start flask app by default.
 	"overrideCommand": true,
@@ -19,9 +19,9 @@
 	"remoteEnv": {
 		// If you do not want to sync your host .kube folder with the devcontainer, set this to false.
 		// https://github.com/Microsoft/vscode-dev-containers/tree/main/containers/kubernetes-helm
-		"SYNC_LOCALHOST_KUBECONFIG": "true",
+		"SYNC_LOCALHOST_KUBECONFIG": "true"
 		// Setup flask debug mode to be on in devcontainer
-		"FLASK_DEBUG": "1"
+		//"FLASK_DEBUG": "1"
 		// Pass in the host directory for Docker mount commands from inside the container
 		//"HOST_PROJECT_PATH": "${localWorkspaceFolder}"
 	},
@@ -63,7 +63,9 @@
 				"ms-azuretools.vscode-docker",
 				"redhat.vscode-yaml",
 				"GitLab.gitlab-workflow",
-				"samuelcolvin.jinjahtml"
+				"samuelcolvin.jinjahtml",
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"ms-kubernetes-tools.vscode-aks-tools"
 			]
 		}
 	},
@@ -72,14 +74,14 @@
 	"forwardPorts": [ 5001 ],
 
 	// Uncomment the next line if you want start specific services in your Docker Compose config.
-	// "runServices": [],
+	//"runServices": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// Here we install kube sync support
 	"postCreateCommand": "/bin/sh .devcontainer/post-create.sh",
 
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode",
+	//"remoteUser": "vscode",
 
 	"features": {
 		"docker-from-docker": "latest",
