@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 // Mongoose Schema for the user with relevant fields
 const userSchema = mongoose.Schema({
   email: String,
-  username: String,
+  firstName: String,
+  surname: String,
+  userType: String,
   passwordHash: String,
   items: [
     {
