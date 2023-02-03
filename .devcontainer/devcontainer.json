@@ -65,7 +65,8 @@
 				"GitLab.gitlab-workflow",
 				"samuelcolvin.jinjahtml",
 				"ms-kubernetes-tools.vscode-kubernetes-tools",
-				"ms-kubernetes-tools.vscode-aks-tools"
+				"ms-kubernetes-tools.vscode-aks-tools",
+				"humao.rest-client"
 			]
 		}
 	},
