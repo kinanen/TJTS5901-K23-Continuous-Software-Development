@@ -1,24 +1,26 @@
 const mongoose = require('mongoose')
 
+// The MongoDB Schema for items
 const itemSchema = mongoose.Schema({
   name: String,
   description: String,
-  initial_price: Number,
+  initialPrice: Number,
   seller: 
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-  highest_bid: Number,
-  highest_bidder: 
+  highestBid: Number,
+  highestBidder: 
   {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  start_date: Date,
-  end_date: Date
+  startDate: Date,
+  endDate: Date
 })
 
+// Transfer the Schema to JSON
 itemSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
@@ -29,6 +31,7 @@ itemSchema.set('toJSON', {
   }
 })
 
+// Create Item model from the Schema
 const Item = mongoose.model('Item', itemSchema)
 
 module.exports = Item

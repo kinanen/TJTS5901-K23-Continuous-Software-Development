@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// Mongoose Schema for the user with relevant fields
 const userSchema = mongoose.Schema({
   email: String,
   username: String,
@@ -12,6 +13,7 @@ const userSchema = mongoose.Schema({
   ],
 })
 
+// Set the Schema to JSON
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
@@ -22,6 +24,7 @@ userSchema.set('toJSON', {
   }
 })
 
+// Create User model with the Schema
 const User = mongoose.model('User', userSchema)
 
 module.exports = User
