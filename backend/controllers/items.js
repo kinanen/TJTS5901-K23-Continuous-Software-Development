@@ -1,0 +1,57 @@
+const itemsRouter = require('express').Router()
+const Item = require('../models/item')
+const User = require('../models/user')
+const jwt = require('jsonwebtoken')
+
+// Get all the items from Database
+itemsRouter.get('/', async (request, response) => {
+    const items = await Item
+      .find({}).populate('user', { username: 1 })
+    
+    response.json(items)
+})
+
+// Get the JWT from the request
+const getTokenFrom = request => {
+    const authorization = request.get('authorization')
+    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+      return authorization.substring(7)
+    }
+    return null
+}
+
+// Post the new item to Database
+itemsRouter.post('/', async (request, response) => {
+    const body = request.body
+    const token = getTokenFrom(request)
+    // Verify the token is legit with verify
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    if (!token || !decodedToken.id) {
+      return response.status(401).json({ error: 'token missing or invalid' })
+    }
+    // Find the proper user with the token
+    const user = await User.findById(decodedToken.id)
+    
+    // Create new Item with the data from the frontend and found user
+    const item = new Item({
+        name: body.name,
+        secription: body.description,
+        initialPrice: body.initialPrice,
+        seller: user.id,
+        highestBid: body.initialPrice,
+        highestBidder: null,
+        startDate: body.startDate,
+        endDate: body.endDate
+    })
+  
+    // Save the item to Database and put it to constant
+    const savedItem = await item.save()
+    // Save the item to users items in sale
+    user.items = user.items.concat(saveditem.id)
+    // Save the modified user to Database
+    await user.save()
+    // Respond with code 201 Created, and send the Item in JSON form to frontend
+    response.status(201).json(savedItem)
+})
+
+module.exports = itemsRouter

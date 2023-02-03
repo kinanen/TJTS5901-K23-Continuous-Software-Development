@@ -7,6 +7,7 @@ const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
+const itemsRouter = require('./controllers/items')
 
 // Connecting to the database using mongoose
 mongoose.connect(process.env.MONGODB_URL)
@@ -17,9 +18,6 @@ mongoose.connect(process.env.MONGODB_URL)
     logger.error('error connection to MongoDB:', error.message)
   })
 
-var corsOptions = {
-  origin: process.env.CLIENT_ORIGIN || "http://localhost:3000"
-}
 
 // Using cors so that the requests from the UI are passed to the server
 app.use(cors())
@@ -30,7 +28,7 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-//app.use('/api/items', itemsRouter)
+app.use('/api/items', itemsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
