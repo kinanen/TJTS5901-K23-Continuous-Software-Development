@@ -5,6 +5,13 @@
 
 version: '3.8'
 services:
+  mongodb:
+    image: mongo:4.2
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+    volumes:
+      - mongodb-data:/data/db
   backend:
     build:
       context: ./backend
@@ -27,16 +34,16 @@ services:
       - ${HOME}/.minikube:/usr/local/share/minikube-localhost:cached
     ## Don't restart container if it exits. Useful for debugging, not for production.  
     restart: 'no'
-    env_file: ./.env
+    env_file: ./backend/.env
     #environment:
       #FLASK_APP: tjt5901:app
       #FLASK_DEBUG: 1
       #FLASK_RUN_PORT: 5001
       #- CLIENT_ORIGIN=$CLIENT_ORIGIN
-  # Example for another service, such as a database.
-  # mongodb:
-  #   image: mongo:stable
-  #   restart: unless-stopped
+    depends_on:
+      - mongodb
+  
 
 volumes:
   tjts5901-vscode-extensions:
+  mongodb-data:
