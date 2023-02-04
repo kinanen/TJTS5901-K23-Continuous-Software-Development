@@ -13,16 +13,14 @@ usersRouter.get('/', async (request, response) => {
 
 // Register user with the given data from the frontend
 usersRouter.post('/', async (request, response) => {
-  const { email, username, password } = request.body
+  const { email, firstName, surname, userType, password } = request.body
 
   // Check if user already exists with email
   const existingEmail = await User.findOne({ email })
-  // Check if user already exists with username
-  const existingusername = await User.findOne({ username })
   // If there is either email or username already in use, respond with code 409 Conflict
-  if (existingEmail || existingusername) {
+  if (existingEmail) {
     return response.status(409).json({
-      error: 'email and username must be unique'
+      error: 'email must be unique'
     })
   }
 
@@ -31,7 +29,6 @@ usersRouter.post('/', async (request, response) => {
       error: 'email must be the right format'
     })
   }
-
 
   if (password.length < 8) {
     return response.status(400).json({
@@ -46,7 +43,9 @@ usersRouter.post('/', async (request, response) => {
   // Create the user with given data
   const user = new User({
     email,
-    username,
+    firstName,
+    surname,
+    userType,
     passwordHash,
   })
 
@@ -54,7 +53,7 @@ usersRouter.post('/', async (request, response) => {
   const savedUser = await user.save()
 
   // Log the event
-  logger.info(`New user ${user.username} registered`)
+  logger.info(`New user ${user.email}, ${user.firstName} ${user.surname} - ${user.userType} registered`)
   // Respond with code 201 Created and send the user in JSON form
   response.status(201).json(savedUser)
 })
