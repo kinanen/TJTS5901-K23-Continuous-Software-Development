@@ -6,6 +6,7 @@ const logger = require('../utils/logger')
 // Get all the registered users
 usersRouter.get('/', async (request, response) => {
   const users = await User
+    .find({})
     .find({}).populate('items')
 
   response.json(users)
@@ -19,6 +20,7 @@ usersRouter.post('/', async (request, response) => {
   const existingEmail = await User.findOne({ email })
   // If there is either email or username already in use, respond with code 409 Conflict
   if (existingEmail) {
+    logger.error(`Someone tried to register new account with same account - ${email}`)
     return response.status(409).json({
       error: 'email must be unique'
     })
@@ -53,9 +55,15 @@ usersRouter.post('/', async (request, response) => {
   const savedUser = await user.save()
 
   // Log the event
-  logger.info(`New user ${user.email}, ${user.firstName} ${user.surname} - ${user.userType} registered`)
+  logger.notice(`New user ${user.email}, ${user.firstName} ${user.surname} - ${user.userType} registered`)
   // Respond with code 201 Created and send the user in JSON form
   response.status(201).json(savedUser)
 })
+
+usersRouter.get('/:id', async (request, response) => {
+  user = request.user
+
+  
+}) 
 
 module.exports = usersRouter
