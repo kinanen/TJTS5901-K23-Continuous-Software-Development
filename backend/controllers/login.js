@@ -16,6 +16,7 @@ loginRouter.post('/', async (request, response) => {
 
   // If either is incorrect, return code 401 Unauthorized
   if (!(user && passwordCorrect)) {
+    logger.error(`Someone tried to login with incorrect details ${email}`)
     return response.status(401).json({
       error: 'invalid email or password'
     })
@@ -31,8 +32,7 @@ loginRouter.post('/', async (request, response) => {
   // Sign the token with sign and given user
   const token = jwt.sign(
     userForToken,
-    process.env.SECRET,
-    { expiresIn: 60*60 }
+    process.env.SECRET
   )
 
   // Respond with code 200 OK, and send token, email and id back to frontend
