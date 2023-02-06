@@ -3,7 +3,10 @@ const mongoose = require('mongoose')
 // The MongoDB Schema for items
 const itemSchema = mongoose.Schema({
   name: String,
+  model: String,
   description: String,
+  category: String,
+  condition: String,
   initialPrice: Number,
   seller: 
     {
@@ -17,7 +20,9 @@ const itemSchema = mongoose.Schema({
     ref: 'User'
   },
   startDate: Date,
-  endDate: Date
+  endDate: Date,
+  zipcode: String,
+  currency: String
 })
 
 // Transfer the Schema to JSON

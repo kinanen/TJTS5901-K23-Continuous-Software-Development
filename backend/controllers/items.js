@@ -33,13 +33,18 @@ itemsRouter.post('/', async (request, response) => {
   // Create new Item with the data from the frontend and found user
   const item = new Item({
       name: body.name,
-      secription: body.description,
+      model: body.model,
+      description: body.description,
+      category: body.category,
+      condition: body.condition,
       initialPrice: body.initialPrice,
-      seller: user.id,
-      highestBid: body.initialPrice,
+      seller: user._id,
+      highestBid: null,
       highestBidder: null,
       startDate: body.startDate,
-      endDate: body.endDate
+      endDate: body.endDate,
+      zipcode: body.zipcode,
+      currency: body.currency
   })
   
     // Save the item to Database and put it to constant
@@ -49,8 +54,8 @@ itemsRouter.post('/', async (request, response) => {
     // Save the modified user to Database
     await user.save()
     const itemToReturn = await Item
-    .findById(savedItem._id)
-    .populate('user', { email: 1 })
+      .findById(savedItem._id)
+      .populate('user', { email: 1 })
     // Respond with code 201 Created, and send the Item in JSON form to frontend
     response.status(201).json(itemToReturn)
 })
