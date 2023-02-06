@@ -17,6 +17,17 @@ import {
 import SignInImg from "../images/signin.jpg";
 import { useState } from 'react';
 
+import axios from 'axios';
+const baseUrl = '/api/login';
+
+  
+  const login = async credentials => {
+    console.log(credentials);
+    const response = await axios.post(baseUrl, credentials)
+    console.log(response.data);
+    return response.data
+  }
+
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const emailUpdate = (event) => setEmail(event.target.value);
@@ -28,6 +39,15 @@ export default function SignIn() {
   //--------------------------- ************** ----------------------------------
   const handleSubmit = (event) => { // Once the form has been submitted, this function will post to the backend
     event.preventDefault();
+    
+    const credentials = {
+      email: email,
+      password: password,
+      usertype: userType
+    };
+
+    login(credentials);
+
     /* 
     const postURL = "http://localhost:4000/api/staff/" //This should be replaced by our own
     fetch(postURL, {
@@ -47,7 +67,7 @@ export default function SignIn() {
         alert('You have added an item to the system!');
       }) 
       */
-    alert(`Email: ${email}, Password: ${password}, User Type: ${userType}`);
+    //alert(`Email: ${email}, Password: ${password}, User Type: ${userType}`);
   }
 
   //--------------------------- ************** ----------------------------------
