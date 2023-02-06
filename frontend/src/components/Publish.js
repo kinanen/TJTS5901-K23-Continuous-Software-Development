@@ -2,6 +2,18 @@ import { FormControl, FormLabel, Input, VStack, Link, Heading, SimpleGrid, GridI
 import { Link as ReachLink } from "react-router-dom";
 import { useState } from 'react';
 
+
+import axios from 'axios';
+  const baseUrl = '/api/items';
+
+  
+  const publish = async details => {
+    console.log(details);
+    const response = await axios.post(baseUrl, details)
+    console.log(response.data);
+    return response.data
+  }
+
 function Form() {
     const [itemName, setItemName] = useState('');
     const itemNameUpdate = (event) => setItemName(event.target.value);
@@ -23,6 +35,19 @@ function Form() {
     //--------------------------- ************** ----------------------------------
     const handleSubmit = (event) => { // Once the form has been submitted, this function will post to the backend
         event.preventDefault();
+
+        const details = {
+            name: itemName,
+            model: itemModel,
+            description: itemDesc,
+            category: category,
+            condition: condition,
+            initialPrice: price,
+            zipcode: zipcode,
+            currency: currency
+          };
+      
+          publish(details);
         /* 
         const postURL = "http://localhost:4000/api/staff/" //This should be replaced by our own
         fetch(postURL, {
@@ -46,11 +71,11 @@ function Form() {
                 alert('You have added an item to the system!');
             }) 
         */
-        alert(`Name: ${itemName}, Model: ${itemModel}, Description: ${itemDesc},
-            Category: ${category}, Condition: ${condition}, Zipcode: ${zipcode},
-            Price: ${price}, Currency: ${currency}`);
-        console.log("Tässä tulee tuotteeni:");
-        console.log(itemName, itemModel, itemDesc, category, condition, zipcode, price, currency);
+        //alert(`Name: ${itemName}, Model: ${itemModel}, Description: ${itemDesc},
+           // Category: ${category}, Condition: ${condition}, Zipcode: ${zipcode},
+           // Price: ${price}, Currency: ${currency}`);
+        // console.log("Tässä tulee tuotteeni:");
+        // console.log(itemName, itemModel, itemDesc, category, condition, zipcode, price, currency);
     }
 
     //--------------------------- ************** ----------------------------------

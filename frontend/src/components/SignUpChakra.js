@@ -23,12 +23,12 @@ import {
   import SignUpImg from "../images/signup.jpg";
 
   import axios from 'axios';
-  const baseUrl = '/api/login';
+  const baseUrl = '/api/users';
 
   
   const login = async credentials => {
     console.log(credentials);
-    const response = await axios.post("//localhost:27017/fastandfurious/api/login", credentials)
+    const response = await axios.post(baseUrl, credentials)
     console.log(response.data);
     return response.data
   }
@@ -51,11 +51,11 @@ import {
     event.preventDefault();
 
     const newuser = {
-      fname: fname,
-      lname: lname,
       email: email,
-      password: password,
-      usertype: userType
+      firstName: fname,
+      surname: lname,
+      userType: userType,
+      password: password
     };
 
     login(newuser);
