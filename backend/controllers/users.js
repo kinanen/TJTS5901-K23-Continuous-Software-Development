@@ -63,7 +63,7 @@ usersRouter.post('/', async (request, response) => {
 usersRouter.get('/:id', async (request, response) => {
   user = request.user
 
-  
+  response.status(200).json(user)
 }) 
 
 module.exports = usersRouter

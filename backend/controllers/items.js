@@ -2,12 +2,14 @@ const itemsRouter = require('express').Router()
 const Item = require('../models/item')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+const { request, response } = require('../app')
+const { findByIdAndUpdate } = require('../models/item')
 
 // Get all the items from Database
 itemsRouter.get('/', async (request, response) => {
     const items = await Item
     .find({})
-    .find({}).populate('user', { email: 1 })
+    .find({}).populate('seller', { firstName: 1, surname: 1 })
     
     response.json(items)
 })
@@ -60,6 +62,35 @@ itemsRouter.post('/', async (request, response) => {
     .populate('seller', { email: 1 })
   // Respond with code 201 Created, and send the Item in JSON form to frontend
   response.status(201).json(itemToReturn)
+})
+
+itemsRouter.get('/:id', async (request, response) => {
+  const item = await Item.findById(request.params.id)
+
+  response.status(200).json(item)
+})
+
+itemsRouter.put('/:id', async (request, response) => {
+  if (!request.user) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+  const newItem = request.body
+  const user = request.user
+  const item = await Item.findById(request.params.id)
+
+  if(!(newItem.highestBid > item.highestBid) || (newItem.highestBid < item.initialPrice)) {
+    return response.status(409).json({ error: "bid was lower than expected" })
+  }
+
+  newItem.highestBidder = user.id
+
+  const updatedItem = await Item
+    .findByIdAndUpdate(
+      request.params.id,
+      newItem
+    ).populate('highestBidder', { firstName: 1, surname: 1 })
+
+    response.json(updatedItem)
 })
 
 module.exports = itemsRouter
