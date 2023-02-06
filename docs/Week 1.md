@@ -8,3 +8,12 @@ Set up Afure for fast and furious following the instructions. Created the Contai
 
 ### Henna:
 Set up Teams channel for team communication. Created Way of working document based on team discussions. Put together user stories. Set up local dev environment.
+
+### Pierre:
+Did the OWASP security considerations.
+Set up personal local dev environment.
+
+### OWASP security considerations
+Since we don't have any web application yet, we just made some researches on how to use the OWASP top ten
+We'll use OWASP zap every week to identify the most critical security risks of our web application.
+We'll choose 5 security risks of the top ten and try to fix them.
