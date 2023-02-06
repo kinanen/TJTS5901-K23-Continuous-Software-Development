@@ -25,7 +25,6 @@ loginRouter.post('/', async (request, response) => {
   // Create the user to be used for the JWT
   const userForToken = {
     email: user.email,
-    username: user.username,
     id: user.id,
   }
 
