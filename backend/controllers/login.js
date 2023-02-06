@@ -5,7 +5,7 @@ const User = require('../models/user')
 const logger = require('../utils/logger')
 
 loginRouter.post('/', async (request, response) => {
-  const { email, password } = request.body
+  const { email, password, userType } = request.body
 
   // Check if there exists a user with given email
   const user = await User.findOne({ email })
@@ -22,9 +22,16 @@ loginRouter.post('/', async (request, response) => {
     })
   }
 
+  if(userType !== user.userType) {
+    return response.status(401).json({
+      error: " Given user type doesn't match user's real type"
+    })
+  }
+
   // Create the user to be used for the JWT
   const userForToken = {
     email: user.email,
+    userType: user.userType,
     id: user.id,
   }
 
@@ -38,7 +45,7 @@ loginRouter.post('/', async (request, response) => {
   // on successful login
   response
     .status(200)
-    .send({ token, email: user.email, id: user.id })
+    .send({ token, email: user.email, userType: user.userType, id: user.id })
 })
 
 module.exports = loginRouter

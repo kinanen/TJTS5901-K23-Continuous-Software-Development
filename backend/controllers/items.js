@@ -23,30 +23,24 @@ itemsRouter.post('/', async (request, response) => {
   // Get the user from the token via the userExtractor middleware
   const user = request.user
   const body = request.body
-  //const token = getTokenFrom(request)
-  // Verify the token is legit with verify
-  //const decodedToken = jwt.verify(token, process.env.SECRET)
-  //if (!token || !decodedToken.id) {
-    //return response.status(401).json({ error: 'token missing or invalid' })
-  //}
-  // Find the proper user with the token
-  //const user = await User.findById(decodedToken.id)
+
+  endDate = new Date()
     
   // Create new Item with the data from the frontend and found user
   const item = new Item({
-      name: body.name,
-      model: body.model,
-      description: body.description,
-      category: body.category,
-      condition: body.condition,
-      initialPrice: body.initialPrice,
-      seller: user._id,
-      highestBid: null,
-      highestBidder: null,
-      startDate: new Date(),
-      endDate: new Date(),
-      zipcode: body.zipcode,
-      currency: body.currency
+    name: body.name,
+    model: body.model,
+    description: body.description,
+    category: body.category,
+    condition: body.condition,
+    initialPrice: body.initialPrice,
+    seller: user._id,
+    highestBid: null,
+    highestBidder: null,
+    startDate: new Date(),
+    endDate: endDate.setHours(endDate.getHours() + 24),
+    zipcode: body.zipcode,
+    currency: body.currency
   })
 
   console.log(item)
