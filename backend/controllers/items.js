@@ -41,23 +41,25 @@ itemsRouter.post('/', async (request, response) => {
       seller: user._id,
       highestBid: null,
       highestBidder: null,
-      startDate: body.startDate,
-      endDate: body.endDate,
+      startDate: new Date(),
+      endDate: new Date(),
       zipcode: body.zipcode,
       currency: body.currency
   })
+
+  console.log(item)
   
-    // Save the item to Database and put it to constant
-    const savedItem = await item.save()
-    // Save the item to users items in sale
-    user.items = user.items.concat(saveditem._id)
-    // Save the modified user to Database
-    await user.save()
-    const itemToReturn = await Item
-      .findById(savedItem._id)
-      .populate('user', { email: 1 })
-    // Respond with code 201 Created, and send the Item in JSON form to frontend
-    response.status(201).json(itemToReturn)
+  // Save the item to Database and put it to constant
+  const savedItem = await item.save()
+  // Save the item to users items in sale
+  user.items = user.items.concat(savedItem._id)
+  // Save the modified user to Database
+  await user.save()
+  const itemToReturn = await Item
+    .findById(savedItem._id)
+    .populate('seller', { email: 1 })
+  // Respond with code 201 Created, and send the Item in JSON form to frontend
+  response.status(201).json(itemToReturn)
 })
 
 module.exports = itemsRouter
