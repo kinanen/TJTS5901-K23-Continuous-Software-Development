@@ -124,6 +124,7 @@ const DesktopNav = () => {
           <Popover trigger={'hover'} placement={'bottom-start'}>
             <PopoverTrigger>
               <Link
+                as={ReachLink}
                 p={2}
                 to={navItem.href ?? '#'}
                 fontSize={'sm'}
@@ -162,6 +163,7 @@ const DesktopNav = () => {
 const DesktopSubNav = ({ label, href, subLabel }) => {
   return (
     <Link
+      as={ReachLink}
       to={href}
       role={'group'}
       display={'block'}
@@ -250,7 +252,7 @@ const MobileNavItem = ({ label, children, href }) => {
           align={'start'}>
           {children &&
             children.map((child) => (
-              <Link key={child.label} py={2} to={child.href}>
+              <Link as={ReachLink} key={child.label} py={2} to={child.href}>
                 {child.label}
               </Link>
             ))}

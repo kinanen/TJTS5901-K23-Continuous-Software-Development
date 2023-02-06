@@ -21,6 +21,17 @@ import {
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
   import { Link as ReachLink } from "react-router-dom";
   import SignUpImg from "../images/signup.jpg";
+
+  import axios from 'axios';
+  const baseUrl = '/api/users';
+
+  
+  const login = async credentials => {
+    console.log(credentials);
+    const response = await axios.post(baseUrl, credentials)
+    console.log(response.data);
+    return response.data
+  }
   
   export default function SignUp() {
     const [showPassword, setShowPassword] = useState(false);
@@ -38,6 +49,16 @@ import {
     //--------------------------- ************** ----------------------------------
   const handleSubmit = (event) => { // Once the form has been submitted, this function will post to the backend
     event.preventDefault();
+
+    const newuser = {
+      email: email,
+      firstName: fname,
+      surname: lname,
+      userType: userType,
+      password: password
+    };
+
+    login(newuser);
     /* 
     const postURL = "http://localhost:4000/api/staff/" //This should be replaced by our own
     fetch(postURL, {
@@ -57,7 +78,7 @@ import {
         alert('You have added an item to the system!');
       }) 
       */
-    alert(`First Name: ${fname}, Last Name: ${lname}, Email: ${email}, Password: ${password}, User Type: ${userType}`);
+    //alert(`First Name: ${fname}, Last Name: ${lname}, Email: ${email}, Password: ${password}, User Type: ${userType}`);
   }
 
   //--------------------------- ************** ----------------------------------
