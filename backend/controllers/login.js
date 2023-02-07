@@ -21,13 +21,13 @@ loginRouter.post('/', async (request, response) => {
       error: 'invalid email or password'
     })
   }
-  /*
+  
   if(userType !== user.userType) {
     logger.error(`Someone tried to login with incorrect user type ${email}`)
     return response.status(401).json({
       error: " Given user type doesn't match user's real type"
     })
-  }*/
+  }
 
   // Create the user to be used for the JWT
   const userForToken = {

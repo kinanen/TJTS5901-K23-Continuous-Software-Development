@@ -25,15 +25,17 @@ let token = null
 const STORAGE_KEY = 'loggedAuctionAppUser'
 
 const setUser = (user) => {
+  console.log(user)
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user))
   token = user.token
+  
 }
 
   const login = async credentials => {
     console.log(credentials);
     const response = await axios.post(baseUrl, credentials)
     console.log(response.data);
-    setUser(response.data.id);
+    setUser({email: response.data.email, userType: response.data.userType, id: response.data.id, token: response.data.token});
     return response.data
   }
 
