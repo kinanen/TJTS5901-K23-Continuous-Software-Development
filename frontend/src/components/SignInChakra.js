@@ -42,8 +42,8 @@ export default function SignIn() {
     
     const credentials = {
       email: email,
-      password: password
-      //,usertype: userType
+      password: password,
+      userType: userType
     };
 
     login(credentials);
