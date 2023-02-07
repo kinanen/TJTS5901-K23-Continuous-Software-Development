@@ -7,6 +7,8 @@ const logger = require('../utils/logger')
 loginRouter.post('/', async (request, response) => {
   const { email, password, userType } = request.body
 
+  console.log(userType)
+
   // Check if there exists a user with given email
   const user = await User.findOne({ email })
   // Compare the given password with bcrypt to the users saved passwordHash
@@ -22,7 +24,7 @@ loginRouter.post('/', async (request, response) => {
     })
   }
   
-  if(userType !== user.userType) {
+  if(userType !== user.userType.toLowerCase()) {
     logger.error(`Someone tried to login with incorrect user type ${email}`)
     return response.status(401).json({
       error: " Given user type doesn't match user's real type"
