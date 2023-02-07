@@ -9,6 +9,13 @@ const baseUrl = '/api/items';
 let token = null
 const STORAGE_KEY = 'loggedAuctionAppUser'
 
+// const setUser = (user) => {
+//     window.localStorage.setItem(
+//       STORAGE_KEY, JSON.stringify(user)
+//     )
+//     token = user.token
+//   }
+
 const getUser = () => {
     const loggedUserJSON = window.localStorage.getItem(STORAGE_KEY)
     if (loggedUserJSON) {
@@ -62,7 +69,10 @@ function Form() {
     const handleSubmit = (event) => { // Once the form has been submitted, this function will post to the backend
         event.preventDefault();
 
-        getUser();
+        let user = getUser(); 
+        console.log(user);
+        console.log(token);
+        
 
         const details = {
             name: itemName,
@@ -71,11 +81,11 @@ function Form() {
             category: category,
             condition: condition,
             initialPrice: price,
-            seller: '123',//user._id,
-            highestBid: null,
-            highestBidder: null,
-            startDate: new Date(),
-            endDate: new Date(),//endDate.setHours(endDate.getHours() + 24),
+            //seller: user,
+            //highestBid: null,
+            //highestBidder: null,
+            //startDate: new Date(),
+            //endDate: new Date(),//endDate.setHours(endDate.getHours() + 24),
             zipcode: zipcode,
             currency: currency
           };

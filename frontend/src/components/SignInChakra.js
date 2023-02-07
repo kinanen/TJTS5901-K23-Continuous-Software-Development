@@ -20,11 +20,20 @@ import { useState } from 'react';
 import axios from 'axios';
 const baseUrl = '/api/login';
 
-  
+
+let token = null
+const STORAGE_KEY = 'loggedAuctionAppUser'
+
+const setUser = (user) => {
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user))
+  token = user.token
+}
+
   const login = async credentials => {
     console.log(credentials);
     const response = await axios.post(baseUrl, credentials)
     console.log(response.data);
+    setUser(response.data.id);
     return response.data
   }
 
