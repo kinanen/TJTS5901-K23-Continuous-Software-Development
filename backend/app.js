@@ -1,7 +1,6 @@
 const config = require('./utils/config')
 const express = require('express')
 const app = express()
-const cors = require('cors')
 require("dotenv").config()
 const mongoose = require('mongoose')
 const logger = require('./utils/logger')
@@ -17,11 +16,8 @@ mongoose.connect(config.MONGODB_URL)
   })
   .catch((error) => {
     logger.error('error connection to MongoDB:', error.message)
-  })
+})
 
-
-// Using cors so that the requests from the UI are passed to the server
-app.use(cors())
 // Using the production build that's created from the React app
 // so that it can be accesed from the backend URL
 app.use(express.static('build'))

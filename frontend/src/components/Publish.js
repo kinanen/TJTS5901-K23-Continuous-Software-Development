@@ -4,12 +4,45 @@ import { useState } from 'react';
 
 
 import axios from 'axios';
-  const baseUrl = '/api/items';
+const baseUrl = '/api/items';
 
+let token = null
+const STORAGE_KEY = 'loggedAuctionAppUser'
+
+// const setUser = (user) => {
+//     window.localStorage.setItem(
+//       STORAGE_KEY, JSON.stringify(user)
+//     )
+//     token = user.token
+//   }
+
+const getUser = () => {
+    const loggedUserJSON = window.localStorage.getItem(STORAGE_KEY)
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      token = user.token
+      return user
+    }
   
+    return null
+  }
+
+  const getToken = () => token
+
+  const config = () => {
+    //console.log("nyt ollaan configissa");
+    //console.log(token);
+    //console.log(getUser());
+    return {
+      headers: {
+        Authorization: `bearer ${getToken()}`
+      },
+    }
+  }
+
   const publish = async details => {
     console.log(details);
-    const response = await axios.post(baseUrl, details)
+    const response = await axios.post(baseUrl, details, config())
     console.log(response.data);
     return response.data
   }
@@ -36,6 +69,11 @@ function Form() {
     const handleSubmit = (event) => { // Once the form has been submitted, this function will post to the backend
         event.preventDefault();
 
+        let user = getUser(); 
+        console.log(user);
+        console.log(token);
+        
+
         const details = {
             name: itemName,
             model: itemModel,
@@ -43,6 +81,11 @@ function Form() {
             category: category,
             condition: condition,
             initialPrice: price,
+            //seller: user,
+            //highestBid: null,
+            //highestBidder: null,
+            //startDate: new Date(),
+            //endDate: new Date(),//endDate.setHours(endDate.getHours() + 24),
             zipcode: zipcode,
             currency: currency
           };
