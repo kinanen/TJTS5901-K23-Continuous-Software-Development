@@ -42,8 +42,6 @@ itemsRouter.post('/', async (request, response) => {
     zipcode: body.zipcode,
     currency: body.currency
   })
-
-  console.log(item)
   
   // Save the item to Database and put it to constant
   const savedItem = await item.save()
@@ -58,12 +56,14 @@ itemsRouter.post('/', async (request, response) => {
   response.status(201).json(itemToReturn)
 })
 
+// Get a single item from Database
 itemsRouter.get('/:id', async (request, response) => {
   const item = await Item.findById(request.params.id)
 
   response.status(200).json(item)
 })
 
+// PUT endpoint for updating the item when user bids on it
 itemsRouter.put('/:id', async (request, response) => {
   if (!request.user) {
     return response.status(401).json({ error: 'token missing or invalid' })
@@ -72,7 +72,9 @@ itemsRouter.put('/:id', async (request, response) => {
   const user = request.user
   const item = await Item.findById(request.params.id)
 
-  if(!(newItem.highestBid > item.highestBid) || (newItem.highestBid < item.initialPrice)) {
+  // If the bid sent is lower than the highest bid or the initial price
+  // return with status code 409 Conflict
+  if((newItem.highestBid < item.highestBid) || (newItem.highestBid < item.initialPrice)) {
     return response.status(409).json({ error: "bid was lower than expected" })
   }
 
@@ -84,7 +86,8 @@ itemsRouter.put('/:id', async (request, response) => {
       newItem
     ).populate('highestBidder', { firstName: 1, surname: 1 })
 
-    response.json(updatedItem)
+  // Send the updated item in the response
+  response.json(updatedItem)
 })
 
 module.exports = itemsRouter
