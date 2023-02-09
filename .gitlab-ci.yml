@@ -1,5 +1,6 @@
 ## Stage names in the pipeline.
 stages:
+##- test
   - build
 
 variables:
