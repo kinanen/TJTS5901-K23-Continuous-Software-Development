@@ -89,6 +89,17 @@ itemsRouter.put('/photo/:id', upload.single("file"), async (request, response) =
   response.status(200).json(uploadProcess)
 })
 
+itemsRouter.get('/photo/:id', async (request, response) => {
+  const photo = await Upload.findById(request.params.id)
+
+  if(!photo) {
+    logger.error("Could not find a photo with given id")
+    return response.status(404).json({ error: "no such photo found with id" })
+  }
+
+  response.status(200).json(photo)
+})
+
 // GET a single item from Database
 itemsRouter.get('/:id', async (request, response) => {
   const item = await Item.findById(request.params.id)
