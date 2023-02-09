@@ -22,7 +22,12 @@ const itemSchema = mongoose.Schema({
   startDate: Date,
   endDate: Date,
   zipcode: String,
-  currency: String
+  currency: String,
+  photo: 
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Upload'
+  }
 })
 
 // Transfer the Schema to JSON
