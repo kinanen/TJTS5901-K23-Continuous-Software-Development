@@ -3,8 +3,16 @@ const usersRouter = require('express').Router()
 const User = require('../models/user')
 const logger = require('../utils/logger')
 
-// Get all the registered users
+// Get all the registered users, only works for operator-user types
 usersRouter.get('/', async (request, response) => {
+  if (!request.user) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+  const user = request.user
+  if(user.userType !== "operator")
+  {
+    return response.status(403).json({ error: 'insufficient authorization' })
+  }
   const users = await User
     .find({})
     .find({}).populate('items')
