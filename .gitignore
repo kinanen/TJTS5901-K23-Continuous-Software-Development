@@ -172,3 +172,5 @@ cython_debug/
 _docs/
 .env
 .DS_Store
+
+*.pem

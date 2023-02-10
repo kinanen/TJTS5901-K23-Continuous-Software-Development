@@ -89,6 +89,10 @@ usersRouter.get('/:id', async (request, response) => {
     return response.status(404).json({ error: "no user found with given id" })
   }
 
+  if((user.userType !== "operator") && (user.id !== userFromParams.id)) {
+    return response.status(403).json({ error: "user tried to access other user's info without proper authorization" })
+  }
+
   // otherwise respond with code 200 OK and send the user info
   response.status(200).json(user)
 }) 
