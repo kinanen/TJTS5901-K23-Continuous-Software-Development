@@ -16,7 +16,7 @@ loginRouter.post('/', async (request, response) => {
 
   // If either is incorrect, return code 401 Unauthorized
   if (!(user && passwordCorrect)) {
-    logger.warn(`Someone tried to login with incorrect details ${email}`)
+    logger.warning(`Someone tried to login with incorrect details ${email}`)
     return response.status(401).json({
       error: 'invalid email or password'
     })
@@ -25,7 +25,7 @@ loginRouter.post('/', async (request, response) => {
   // check the user type that the user tried to login with
   // if it matches with their real user type
   if(userType !== user.userType) {
-    logger.warn(`Someone tried to login with incorrect user type ${email}`)
+    logger.warning(`Someone tried to login with incorrect user type ${email}`)
     return response.status(401).json({
       error: "Given user type doesn't match user's real type"
     })

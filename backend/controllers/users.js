@@ -6,7 +6,7 @@ const logger = require('../utils/logger')
 // GET all the registered users, only works for operator-user types
 usersRouter.get('/', async (request, response) => {
   if (!request.user) {
-    logger.warn("Someone tried to access all users list without login")
+    logger.warning("Someone tried to access all users list without login")
     return response.status(401).json({ error: 'token missing or invalid' })
   }
   const user = request.user
@@ -31,7 +31,7 @@ usersRouter.post('/', async (request, response) => {
   const existingEmail = await User.findOne({ email })
   // If there is either email or username already in use, respond with code 409 Conflict
   if (existingEmail) {
-    logger.warn(`Someone tried to register new account with same account - ${email}`)
+    logger.warning(`Someone tried to register new account with same account - ${email}`)
     return response.status(409).json({
       error: 'email must be unique'
     })
@@ -75,7 +75,7 @@ usersRouter.post('/', async (request, response) => {
 usersRouter.get('/:id', async (request, response) => {
   // if user can't be found with the given token or no token was given
   if (!request.user) {
-    logger.warn("Someone tried to get user info with no token or invalid one")
+    logger.warning("Someone tried to get user info with no token or invalid one")
     return response.status(401).json({ error: 'token missing or invalid' })
   }
   const user = request.user

@@ -18,7 +18,7 @@ itemsRouter.get('/', async (request, response) => {
 // POST the new item to Database
 itemsRouter.post('/', async (request, response) => {
   if (!request.user) {
-    logger.warn("Someone tried to add an item with no token or invalid token")
+    logger.warning("Someone tried to add an item with no token or invalid token")
     return response.status(401).json({ error: 'token missing or invalid' })
   }
 
@@ -117,7 +117,7 @@ itemsRouter.get('/:id', async (request, response) => {
 itemsRouter.put('/:id', async (request, response) => {
   // if user can't be found respond with code 401 Unauthorized
   if (!request.user) {
-    logger.warn("Someone tried to bid on an item without token or with an invalid one")
+    logger.warning("Someone tried to bid on an item without token or with an invalid one")
     return response.status(401).json({ error: 'token missing or invalid' })
   }
   // new item sent from frontend
