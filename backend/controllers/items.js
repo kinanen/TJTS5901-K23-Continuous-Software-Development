@@ -1,11 +1,12 @@
 const itemsRouter = require('express').Router()
 const Item = require('../models/item')
-const User = require('../models/user')
-const jwt = require('jsonwebtoken')
-const { request, response } = require('../app')
-const { findByIdAndUpdate } = require('../models/item')
+const Upload = require('../models/upload')
+const logger = require('../utils/logger')
+const multer  = require('multer')
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-// Get all the items from Database
+// GET all the items from Database
 itemsRouter.get('/', async (request, response) => {
     const items = await Item
     .find({})
@@ -14,9 +15,10 @@ itemsRouter.get('/', async (request, response) => {
     response.json(items)
 })
 
-// Post the new item to Database
+// POST the new item to Database
 itemsRouter.post('/', async (request, response) => {
   if (!request.user) {
+    logger.warning("Someone tried to add an item with no token or invalid token")
     return response.status(401).json({ error: 'token missing or invalid' })
   }
 
@@ -25,7 +27,7 @@ itemsRouter.post('/', async (request, response) => {
   const body = request.body
 
   endDate = new Date()
-    
+
   // Create new Item with the data from the frontend and found user
   const item = new Item({
     name: body.name,
@@ -40,11 +42,10 @@ itemsRouter.post('/', async (request, response) => {
     startDate: new Date(),
     endDate: endDate.setHours(endDate.getHours() + 24),
     zipcode: body.zipcode,
-    currency: body.currency
+    currency: body.currency,
+    photo: null
   })
 
-  console.log(item)
-  
   // Save the item to Database and put it to constant
   const savedItem = await item.save()
   // Save the item to users items in sale
@@ -58,33 +59,94 @@ itemsRouter.post('/', async (request, response) => {
   response.status(201).json(itemToReturn)
 })
 
+// PUT endpoint for uploading a photo and link it with the correct item
+itemsRouter.put('/photo/:id', upload.single("file"), async (request, response) => {
+  const item = await Item.findById(request.params.id)
+  // if there's no item found, respond with code 404 Not Found
+  if(!item) {
+    logger.error("Could not find an item with given id")
+    return response.status(404).json({ error: "item not found" })
+  }
+
+  // object for the photo, put the item id to item field
+  let imageUploadObject = {
+    item: item._id,
+    file: {
+      data: request.file.buffer,
+      contentType: request.file.mimetype
+    }
+  }
+  // object formed with Upload schema
+  const uploadObject = new Upload(imageUploadObject);
+  // save the photo id to item
+  item.photo = uploadObject._id
+  // save the altered item to database
+  await item.save()
+  // saving the object into the database
+  const uploadProcess = await uploadObject.save();
+
+  // respond with code 200 OK after all the operations and send the photo back in JSON form
+  response.status(200).json(uploadProcess)
+})
+
+itemsRouter.get('/photo/:id', async (request, response) => {
+  const photo = await Upload.findById(request.params.id)
+
+  if(!photo) {
+    logger.error("Could not find a photo with given id")
+    return response.status(404).json({ error: "no such photo found with id" })
+  }
+
+  response.status(200).json(photo)
+})
+
+// GET a single item from Database
 itemsRouter.get('/:id', async (request, response) => {
   const item = await Item.findById(request.params.id)
-
+  // if there's no item found, respond with code 404 Not Found
+  if(!item) {
+    logger.error("Could not find an item with given id")
+    return response.status(404).json({ error: "item not found" })
+  }
+  
+  // respond with code 200 OK if the item can be found
   response.status(200).json(item)
 })
 
+// PUT endpoint for updating the item when user bids on it
 itemsRouter.put('/:id', async (request, response) => {
+  // if user can't be found respond with code 401 Unauthorized
   if (!request.user) {
+    logger.warning("Someone tried to bid on an item without token or with an invalid one")
     return response.status(401).json({ error: 'token missing or invalid' })
   }
+  // new item sent from frontend
   const newItem = request.body
+  // get the user that bid on the item
   const user = request.user
+  // get the item from database to compare it with new item
   const item = await Item.findById(request.params.id)
 
-  if(!(newItem.highestBid > item.highestBid) || (newItem.highestBid < item.initialPrice)) {
+  // If the bid sent is lower than the highest bid or the initial price
+  // return with status code 409 Conflict
+  if((newItem.highestBid < item.highestBid) || (newItem.highestBid < item.initialPrice)) {
     return response.status(409).json({ error: "bid was lower than expected" })
   }
 
+  // set the item's highest bidder to be the logged in user's id
   newItem.highestBidder = user.id
 
+  // update the item with the highest bid and populate the highestBidder field 
+  // with the user's name
   const updatedItem = await Item
     .findByIdAndUpdate(
       request.params.id,
       newItem
     ).populate('highestBidder', { firstName: 1, surname: 1 })
 
-    response.json(updatedItem)
+  // respond with code 200 OK and send the updated item in the response
+  logger.notice(`User ${user.email} bid on item ${item.id}`)
+  response.status(200).json(updatedItem)
 })
 
 module.exports = itemsRouter

@@ -7,8 +7,6 @@ const logger = require('../utils/logger')
 loginRouter.post('/', async (request, response) => {
   const { email, password, userType } = request.body
 
-  console.log(userType)
-
   // Check if there exists a user with given email
   const user = await User.findOne({ email })
   // Compare the given password with bcrypt to the users saved passwordHash
@@ -18,16 +16,18 @@ loginRouter.post('/', async (request, response) => {
 
   // If either is incorrect, return code 401 Unauthorized
   if (!(user && passwordCorrect)) {
-    logger.error(`Someone tried to login with incorrect details ${email}`)
+    logger.warning(`Someone tried to login with incorrect details ${email}`)
     return response.status(401).json({
       error: 'invalid email or password'
     })
   }
   
-  if(userType !== user.userType.toLowerCase()) {
-    logger.error(`Someone tried to login with incorrect user type ${email}`)
+  // check the user type that the user tried to login with
+  // if it matches with their real user type
+  if(userType !== user.userType) {
+    logger.warning(`Someone tried to login with incorrect user type ${email}`)
     return response.status(401).json({
-      error: " Given user type doesn't match user's real type"
+      error: "Given user type doesn't match user's real type"
     })
   }
 
@@ -43,12 +43,13 @@ loginRouter.post('/', async (request, response) => {
     userForToken,
     process.env.SECRET
   )
-
+  
+  logger.notice(`Succesful login ${email}`)
   // Respond with code 200 OK, and send token, email and id back to frontend
   // on successful login
   response
     .status(200)
-    .send({ token, email: user.email, userType: user.userType, id: user.id })
+    .send({ token, email: user.email, firstName: user.firstName, surname: user.surname, userType: user.userType, id: user.id })
 })
 
 module.exports = loginRouter

@@ -1,6 +1,14 @@
 const winston = require('winston');
 require('winston-mongodb');
+const Sentry = require('winston-transport-sentry-node').default;
 require('dotenv').config()
+
+const options = {
+  sentry: {
+    dsn: process.env.SENTRY_DSN,
+  },
+  level: 'error'
+};
 
 // Winston logger for logging events to MongoDB in JSON form for no 
 // better security
@@ -19,7 +27,8 @@ const logger = winston.createLogger({
 // If current environment is production
 // send the logs to MongoDB
 if (process.env.NODE_ENV === 'production') {
-  logger.add(new winston.transports.MongoDB({ db: process.env.MONGODB_URL, level: 'error' }));
+  logger.add(new Sentry(options));
+  logger.add(new winston.transports.MongoDB({ db: process.env.MONGODB_URL, level: 'warning' }));
   logger.add(new winston.transports.MongoDB({ db: process.env.MONGODB_URL, level: 'notice' }));
 }
 
