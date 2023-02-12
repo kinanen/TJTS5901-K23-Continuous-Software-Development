@@ -10,6 +10,7 @@ import SignUpChakra from "./components/SignUpChakra";
 import CardsChakra from "./components/CardsChakra";
 import DetailsChakra from "./components/DetailsChakra";
 import TandCChakra from "./components/TandCChakra";
+import { Stack } from "@chakra-ui/react";
 import './App.css';
 
 

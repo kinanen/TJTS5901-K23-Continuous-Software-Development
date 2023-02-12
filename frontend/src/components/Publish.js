@@ -54,15 +54,15 @@ function Form() {
     const itemModelUpdate = (event) => setItemModel(event.target.value);
     const [itemDesc, setItemDesc] = useState('');
     const itemDescUpdate = (event) => setItemDesc(event.target.value);
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState('other');
     const categoryUpdate = (event) => setCategory(event.target.value);
-    const [condition, setCondition] = useState('');
+    const [condition, setCondition] = useState('poor');
     const conditionUpdate = (event) => setCondition(event.target.value);
     const [zipcode, setZipcode] = useState('');
     const zipcodeUpdate = (event) => setZipcode(event.target.value);
     const [price, setPrice] = useState('');
     const priceUpdate = (event) => setPrice(event.target.value);
-    const [currency, setCurrency] = useState('');
+    const [currency, setCurrency] = useState('eur');
     const currencyUpdate = (event) => setCurrency(event.target.value);
 
     //--------------------------- ************** ----------------------------------

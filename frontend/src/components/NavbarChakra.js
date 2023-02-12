@@ -40,7 +40,8 @@ export default function WithSubnavigation() {
         borderBottom={1}
         borderStyle={'solid'}
         borderColor={useColorModeValue('gray.200', 'gray.900')}
-        align={'center'}>
+        align={'center'}
+        >
         <Flex
           flex={{ base: 1, md: 'auto' }}
           ml={{ base: -2 }}
@@ -272,33 +273,35 @@ const MobileNavItem = ({ label, children, href }) => {
 const NAV_ITEMS = [
   {
     label: 'Publish',
-    children: [
+    href: '/publish'
+/*     children: [
       {
         label: 'Publish item',
         subLabel: 'Publish your nice item on auction listings',
         href: '/publish',
       },
-      {
+/*       {
         label: 'Liirum Laarum',
         subLabel: 'Up-and-coming Designers',
         href: '#',
-      },
-    ],
+      }, */
+    //], 
   },
   {
-    label: 'Find Stuff',
-    children: [
+    label: 'View Items',
+    href: '/view'
+/*     children: [
       {
         label: 'Item List',
         subLabel: 'Find your dream item',
         href: '/view',
       },
-      {
+/*       {
         label: 'Blaa blaa',
         subLabel: 'An exclusive list of items',
         href: '#',
-      },
-    ],
+      }, */
+    // ],
   },
   {
     label: 'Home',

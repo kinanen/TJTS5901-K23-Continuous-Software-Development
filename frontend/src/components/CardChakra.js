@@ -11,8 +11,18 @@ import {
     GridItem,
   } from '@chakra-ui/react';
   import { Link as ReachLink } from "react-router-dom";
+  import DetailsChakra from './DetailsChakra';
+  import { useLocation } from "react-router-dom";
   
   export default function CardItem(props) {
+
+    const getId = (e) => {
+      console.log(e.target.id);
+    }
+
+    const location = useLocation();
+    console.log(location);
+
     return (
         <Flex w={'full'} p={8} flex={1} align={'center'} justify={'center'} alignItems='center'>
           <Box
@@ -25,11 +35,12 @@ import {
             p={4}
             mr={0}>
             <Grid templateAreas={`"image header status"
+                  "image model x"
                   "image text x"
                   "image price x"
                   "image button time"
                   `}
-                gridTemplateRows={'1fr 1fr 1fr 1fr'}
+                gridTemplateRows={'1fr 1fr 1fr 1fr 1fr'}
                 gridTemplateColumns={'300px 2fr 1fr'}
                 h='full'
                 p={2}
@@ -48,23 +59,29 @@ import {
               </GridItem>
               <GridItem  area={'header'}>
                 <Heading fontSize={'4xl'} textAlign={'center'}>
-                    {props.header}
+                    {props.name}
                 </Heading>
+              </GridItem>
+              <GridItem  area={'model'} textAlign={'center'} justify={'center'}>
+                <Text fontSize={'lg'} color={'gray.600'} textAlign={'center'} pb={8}>
+                    {props.model}
+                </Text>
               </GridItem>
               <GridItem  area={'text'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={'lg'} color={'gray.600'} textAlign={'center'} pb={8}>
-                    {props.text}
+                    {props.description}
                 </Text>
               </GridItem>
               <GridItem  area={'price'} textAlign={'center'} justify={'center'}>
-                <h2>{props.price} €</h2>
+                <h2>{props.initialPrice} €</h2>
               </GridItem>
               <GridItem area={'button'} textAlign={'center'} justify={'center'}>
                 <Button bg={'#774BCD'}
                   color={'white'}
                   _hover={{
                     bg: '#C7A1FE',
-                  }}><Link as={ReachLink} to='/details'>Details</Link></Button>
+                  }} onClick={getId}><Link as={ReachLink} to={'/details'}  
+                  state={props.id} id={props.id}>Details</Link></Button>
               </GridItem>
               <GridItem  area={'status'} textAlign={'right'}>
                 <Text as='b' fontSize={'lg'} color={'green.600'} textAlign={'right'} pb={8}>

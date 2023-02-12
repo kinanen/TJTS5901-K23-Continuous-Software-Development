@@ -43,7 +43,7 @@ import {
     const emailUpdate = (event) => setEmail(event.target.value);
     const [password, setPassword] = useState('');
     const passwordUpdate = (event) => setPassword(event.target.value);
-    const [userType, setUserType] = useState('');
+    const [userType, setUserType] = useState('buyer');
     const userTypeUpdate = (event) => setUserType(event.target.value);
 
     //--------------------------- ************** ----------------------------------
