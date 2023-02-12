@@ -38,7 +38,7 @@ itemsRouter.post('/', async (request, response) => {
     highestBid: null,
     highestBidder: null,
     startDate: new Date(),
-    endDate: endDate.setHours(endDate.getHours() + 24),
+    endDate: endDate.setHours(startDate.getHours() + 24),
     zipcode: body.zipcode,
     currency: body.currency
   })

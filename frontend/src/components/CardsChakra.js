@@ -1,55 +1,93 @@
 import { VStack } from '@chakra-ui/react';
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import CardChakra from './CardChakra';
 import img3 from '../images/hammer.jpg'
 import img4 from '../images/hammer.jpg'
+
+import axios from 'axios';
+const baseUrl = '/api/items';
 
 // these should be read from the database, as json?
 // then map all instances with below details, which will bse sent as props to collection page
 
 function CardsChakra() {
+
+    const [itemList, setItemList] = useState([]);
+
+    useEffect(() => {
+    const listItems = async () => {
+        await axios.get(baseUrl)
+        .then(response => setItemList(response.data));
+      }
+      listItems();
+    }, []);
+    
+/*     console.log(itemList);
+    itemList.forEach(function (item) {
+        console.log(item);
+    }); */
+
+
+    function msToTime(duration) {
+        let milliseconds = Math.floor((duration % 1000) / 100);
+        let seconds = Math.floor((duration / 1000) % 60);
+        let minutes = Math.floor((duration / (1000 * 60)) % 60);
+        let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+      
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+      
+        if (milliseconds < 0 ) {
+            return "00:00:00";
+        } else { 
+            return hours + ":" + minutes + ":" + seconds;
+        }  
+    }
+
+    const calculateHours = (end) => {
+        let endTime = new Date(end);
+        let timeLeftMS = endTime - Date.now();
+        let timeLeft = msToTime(timeLeftMS);
+        if (timeLeft < 0) {
+            return 0;
+        } else {
+            return timeLeft;
+        }
+    }
+
+    const findStatus = (end) => {
+        let status = '';
+        let endTime = new Date(end);
+        let timeLeftMS = endTime - Date.now();
+        if (timeLeftMS > 0) {
+            status = 'ACTIVE'
+        } else if (timeLeftMS < 0) {
+            status = 'PASSED'
+        } else {
+            status = 'PREPAIRING'
+        }
+        return status
+    }
+    console.log(itemList);
+
     return (
         <VStack>
-            <CardChakra 
+            {itemList.map((item, pos) => (
+                <CardChakra 
+                key={pos}
                 src={img3}
-                header="Nice item for sale"
-                text="Look at this nice item that is for sale"
-                price="9.99"
-                time="02:11"
-                status="Active"
+                name={item.name}
+                model={item.model}
+                description={item.description}
+                initialPrice={item.initialPrice}
+                time={calculateHours(item.endDate)}
+                status={findStatus(item.endDate)}
+                id={item.id}
                 label="Details"
                 path="/details"
             />
-            <CardChakra
-                src={img4}
-                header="Really nice item"
-                text="Look at this really really nice item"
-                price="29.99"
-                time="13:13"
-                status="Active"
-                label="Details"
-                path="/details"
-            />
-            <CardChakra 
-                src={img4}
-                header="Must have"
-                text="You have to have this"
-                price="99.99"
-                time="12:11"
-                status="Active"
-                label="Details"
-                path="/details"
-            />
-            <CardChakra 
-                src={img4}
-                header="Can't live without"
-                text="You most certainly need this one"
-                price="100.00"
-                time="22:11"
-                status="Active"
-                label="Details"
-                path="/details"
-            />
+                ))}
         </VStack>
     );
 }

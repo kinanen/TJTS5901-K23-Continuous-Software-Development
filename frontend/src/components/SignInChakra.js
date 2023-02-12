@@ -44,7 +44,7 @@ export default function SignIn() {
   const emailUpdate = (event) => setEmail(event.target.value);
   const [password, setPassword] = useState('');
   const passwordUpdate = (event) => setPassword(event.target.value);
-  const [userType, setUserType] = useState('');
+  const [userType, setUserType] = useState('buyer');
   const userTypeUpdate = (event) => setUserType(event.target.value);
 
   //--------------------------- ************** ----------------------------------
@@ -112,19 +112,19 @@ export default function SignIn() {
               <FormControl>
                 <FormLabel>User type</FormLabel>
                 <Select onChange={userTypeUpdate}>
-                  <option value="buyer">Buyer</option>
+                  <option value="buyer" >Buyer</option>
                   <option value="seller">Seller</option>
                   <option value="operator">Operator</option>
                 </Select>
               </FormControl>
-              <Stack spacing={6}>
-                <Stack
+              <Stack spacing={6} mt={4}>
+{/*                 <Stack
                   direction={{ base: 'column', sm: 'row' }}
                   align={'start'}
                   justify={'space-between'}>
                   <Checkbox>Remember me</Checkbox>
                   <Link color={'blue.500'} pl={10}>Forgot password?</Link>
-                </Stack>
+                </Stack> */}
                 <Button
                   type='submit'
                   loadingText="Submitting"
@@ -143,7 +143,7 @@ export default function SignIn() {
       </Flex>
       <Flex flex={1}>
         <Image
-          alt={'Login Image'}
+          alt={'SignIn Image'}
           objectFit={'cover'}
           // src={
           //   'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80'
