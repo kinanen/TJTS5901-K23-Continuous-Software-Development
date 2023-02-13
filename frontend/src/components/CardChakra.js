@@ -72,7 +72,7 @@ import {
                 </Text>
               </GridItem>
               <GridItem  area={'price'} textAlign={'center'} justify={'center'}>
-                <h2>Initial price: {props.initialPrice} {props.currency} / Highest bid: {props.initialPrice} {props.currency}</h2>
+                <h2>Initial price: {props.initialPrice} {props.currency} / Highest bid: {props.highestBid} {props.currency}</h2>
               </GridItem>
               <GridItem area={'button'} textAlign={'center'} justify={'center'}>
                 <Button bg={'#774BCD'}
