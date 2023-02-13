@@ -1,0 +1,55 @@
+import { GridItem, Button } from "@chakra-ui/react";
+import { useState } from "react";
+
+
+function PhotoUpload(props) {
+    const [edit, setEdit] = useState(false);
+    const [img, setImg] = useState('');
+
+    const upload = function(event) {
+        event.preventDefault();
+        setEdit(true);
+    }
+
+    const saveImg = function(event) {
+        setImg(event.target.files[0]);
+        console.log(event.target.files[0].name);
+        props.photoUpdate(event.target.files[0].name);
+    }
+
+    if(edit){
+    return(
+        <GridItem colSpan={1}>
+            <Button
+                type="submit"
+                mt={8}
+                loadingText="Submitting"
+                size="lg"
+                bg={'white'}
+                color={'#774BCD'}
+                _hover={{
+                    bg: '#C7A1FE',
+                }}>
+                <input type='file' onChange={saveImg}></input>
+            </Button>
+        </GridItem>
+    )
+    } else {
+        return(
+            <GridItem colSpan={1}>
+                <Button
+                    mt={8}
+                    loadingText="Submitting"
+                    size="lg"
+                    bg={'white'}
+                    color={'#774BCD'}
+                    _hover={{
+                        bg: '#C7A1FE',
+                    }} onClick={upload}>
+                    UPLOAD PHOTO
+                </Button>
+            </GridItem>
+        )
+    }
+}
+    export default PhotoUpload;

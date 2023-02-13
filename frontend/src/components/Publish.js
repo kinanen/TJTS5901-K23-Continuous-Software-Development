@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 
 import axios from 'axios';
+import PhotoUpload from './Photo';
 const baseUrl = '/api/items';
 
 let token = null
@@ -64,6 +65,8 @@ function Form() {
     const priceUpdate = (event) => setPrice(event.target.value);
     const [currency, setCurrency] = useState('eur');
     const currencyUpdate = (event) => setCurrency(event.target.value);
+    const [photo, setPhoto] = useState('');
+    const photoUpdate = (url) => setPhoto(url);
 
     //--------------------------- ************** ----------------------------------
     const handleSubmit = (event) => { // Once the form has been submitted, this function will post to the backend
@@ -72,7 +75,6 @@ function Form() {
         let user = getUser(); 
         console.log(user);
         console.log(token);
-        
 
         const details = {
             name: itemName,
@@ -88,40 +90,16 @@ function Form() {
             //endDate: new Date(),//endDate.setHours(endDate.getHours() + 24),
             zipcode: zipcode,
             currency: currency
+            // uploaded image can be added from variable photo
           };
+          
+          console.log("Image as "+photo);
       
           publish(details);
-        /* 
-        const postURL = "http://localhost:4000/api/staff/" //This should be replaced by our own
-        fetch(postURL, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: itemName,
-                model: itemModel,
-                description: itemDesc,
-                category: category,
-                condition: condition,
-                zipcode: zipcode,
-                // photo url ??
-            })
-        })
-            .then(() => {
-                // Once added, the user will be notified 
-                alert('You have added an item to the system!');
-            }) 
-        */
-        //alert(`Name: ${itemName}, Model: ${itemModel}, Description: ${itemDesc},
-           // Category: ${category}, Condition: ${condition}, Zipcode: ${zipcode},
-           // Price: ${price}, Currency: ${currency}`);
-        // console.log("Tässä tulee tuotteeni:");
-        // console.log(itemName, itemModel, itemDesc, category, condition, zipcode, price, currency);
+        
     }
 
-    //--------------------------- ************** ----------------------------------
+    
 
     return (
         <VStack w="full" h="full" p={10} spacing={10} alignItems="flex-start">
@@ -177,7 +155,8 @@ function Form() {
                             <Input onChange={zipcodeUpdate} placeholder="" />
                         </FormControl>
                     </GridItem>
-                    <GridItem colSpan={1}>
+                    <PhotoUpload photoUpdate={photoUpdate} />
+{/*                     <GridItem colSpan={1}>
                         <Button
                             type="submit"
                             mt={8}
@@ -190,7 +169,7 @@ function Form() {
                             }}>
                             <Link as={ReachLink} to='/uploadphoto'>UPLOAD PHOTO</Link>
                         </Button>
-                    </GridItem>
+                    </GridItem> */}
                     <GridItem colSpan={1}>
                         <FormControl>
                             <FormLabel>Price</FormLabel>
@@ -219,7 +198,6 @@ function Form() {
                                 bg: '#C7A1FE',
                             }}>
                             SUBMIT
-                            {/* <Link as={ReachLink} to='/uploadphoto'>UPLOAD PHOTO</Link> */}
                         </Button>
                     </GridItem>
                 </SimpleGrid>
