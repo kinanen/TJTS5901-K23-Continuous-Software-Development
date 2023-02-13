@@ -11,9 +11,11 @@ function PhotoUpload(props) {
         setEdit(true);
     }
 
-    const saveImg = function(event) {
+    const saveImg = async function(event) {
         setImg(event.target.files[0]);
-        console.log(event.target.files[0].name);
+        let fd = new FormData()
+        fd.append('file', event.target.files[0])
+        props.imageUpdate(fd)
         props.photoUpdate(event.target.files[0].name);
     }
 

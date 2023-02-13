@@ -31,6 +31,7 @@ itemsRouter.post('/', async (request, response) => {
   }
   const body = request.body
 
+  startDate = new Date()
   endDate = new Date()
 
   // Create new Item with the data from the frontend and found user
@@ -44,20 +45,20 @@ itemsRouter.post('/', async (request, response) => {
     seller: user._id,
     highestBid: null,
     highestBidder: null,
-    startDate: new Date(),
-    endDate: endDate.setHours(startDate.getHours() + 24),
+    startDate: startDate,
+    endDate: endDate.setHours(endDate.getHours() + 24),
     zipcode: body.zipcode,
     currency: body.currency,
     photo: null,
     status: 'active'
   })
-
   // Save the item to Database and put it to constant
   const savedItem = await item.save()
   // Save the item to users items in sale
   user.items = user.items.concat(savedItem._id)
   // Save the modified user to Database
   await user.save()
+
   const itemToReturn = await Item
     .findById(savedItem._id)
     .populate('seller', { email: 1 })

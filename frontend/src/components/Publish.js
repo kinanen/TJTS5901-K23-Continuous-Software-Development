@@ -42,9 +42,8 @@ const getUser = () => {
   }
 
   const publish = async details => {
-    console.log(details);
+    //console.log(details);
     const response = await axios.post(baseUrl, details, config())
-    console.log(response.data);
     return response.data
   }
 
@@ -67,9 +66,11 @@ function Form() {
     const currencyUpdate = (event) => setCurrency(event.target.value);
     const [photo, setPhoto] = useState('');
     const photoUpdate = (url) => setPhoto(url);
+    const [img, setImg] = useState('')
+    const imageUpdate = (file) => setImg(file);
 
     //--------------------------- ************** ----------------------------------
-    const handleSubmit = (event) => { // Once the form has been submitted, this function will post to the backend
+    const handleSubmit = async (event) => { // Once the form has been submitted, this function will post to the backend
         event.preventDefault();
 
         let user = getUser(); 
@@ -90,17 +91,16 @@ function Form() {
             //endDate: new Date(),//endDate.setHours(endDate.getHours() + 24),
             zipcode: zipcode,
             currency: currency
-            // uploaded image can be added from variable photo
           };
           
           console.log("Image as "+photo);
       
-          publish(details);
-        
+          const itemResponse = await publish(details);
+
+          if(img !== '') {
+            const response = await axios.put(`${baseUrl}/photo/${itemResponse.id}`, img)
+          }
     }
-
-    
-
     return (
         <VStack w="full" h="full" p={10} spacing={10} alignItems="flex-start">
             <VStack spacing={3} alignItems="flex-start">
@@ -155,7 +155,7 @@ function Form() {
                             <Input onChange={zipcodeUpdate} placeholder="" />
                         </FormControl>
                     </GridItem>
-                    <PhotoUpload photoUpdate={photoUpdate} />
+                    <PhotoUpload photoUpdate={photoUpdate} imageUpdate={imageUpdate} />
 {/*                     <GridItem colSpan={1}>
                         <Button
                             type="submit"

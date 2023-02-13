@@ -93,7 +93,7 @@ import {
         highestBid : bid
       }
 
-      recordBit(newBid);
+      recordBit(id, newBid);
 
     }
 
