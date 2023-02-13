@@ -11,7 +11,6 @@ import {
     GridItem,
   } from '@chakra-ui/react';
   import { Link as ReachLink } from "react-router-dom";
-  import DetailsChakra from './DetailsChakra';
   import { useLocation } from "react-router-dom";
   
   export default function CardItem(props) {
@@ -73,7 +72,7 @@ import {
                 </Text>
               </GridItem>
               <GridItem  area={'price'} textAlign={'center'} justify={'center'}>
-                <h2>{props.initialPrice} €</h2>
+                <h2>Initial price: {props.initialPrice} {props.currency} / Highest bid: {props.highestBid} {props.currency}</h2>
               </GridItem>
               <GridItem area={'button'} textAlign={'center'} justify={'center'}>
                 <Button bg={'#774BCD'}

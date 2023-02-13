@@ -72,7 +72,7 @@ import {
     const recordBit = async (id, newBid) => {
       console.log("is not ready yet to update item "+id);
       console.log(bid);
-      const response = axios.put((baseUrl+ '/' + id), newBid, config())
+      const response = axios.put((baseUrl+ '/' + itemId), newBid, config())
       console.log(response.data);
       return response.data
     }
