@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import NavbarChakra from "./components/NavbarChakra";
 import FooterChakra from "./components/FooterChakra";
 import Publish from "./components/Publish";
@@ -10,7 +10,6 @@ import SignUpChakra from "./components/SignUpChakra";
 import CardsChakra from "./components/CardsChakra";
 import DetailsChakra from "./components/DetailsChakra";
 import TandCChakra from "./components/TandCChakra";
-import { Stack } from "@chakra-ui/react";
 import './App.css';
 
 

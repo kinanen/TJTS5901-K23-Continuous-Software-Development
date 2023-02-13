@@ -2,7 +2,6 @@ import { VStack } from '@chakra-ui/react';
 import {React, useState, useEffect} from 'react';
 import CardChakra from './CardChakra';
 import img3 from '../images/hammer.jpg'
-import img4 from '../images/hammer.jpg'
 
 import axios from 'axios';
 const baseUrl = '/api/items';
@@ -21,12 +20,6 @@ function CardsChakra() {
       }
       listItems();
     }, []);
-    
-/*     console.log(itemList);
-    itemList.forEach(function (item) {
-        console.log(item);
-    }); */
-
 
     function msToTime(duration) {
         let milliseconds = Math.floor((duration % 1000) / 100);
@@ -81,6 +74,8 @@ function CardsChakra() {
                 model={item.model}
                 description={item.description}
                 initialPrice={item.initialPrice}
+                highestBid={item.highestBid}
+                currency={item.currency}
                 time={calculateHours(item.endDate)}
                 status={findStatus(item.endDate)}
                 id={item.id}

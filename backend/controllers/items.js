@@ -31,7 +31,8 @@ itemsRouter.post('/', async (request, response) => {
   }
   const body = request.body
 
-  endDate = new Date()
+  startDate = new Date();
+  endDate = new Date();
 
   // Create new Item with the data from the frontend and found user
   const item = new Item({
@@ -44,8 +45,8 @@ itemsRouter.post('/', async (request, response) => {
     seller: user._id,
     highestBid: null,
     highestBidder: null,
-    startDate: new Date(),
-    endDate: endDate.setHours(startDate.getHours() + 24),
+    startDate: startDate,
+    endDate: endDate.setHours(endDate.getHours() + 24),
     zipcode: body.zipcode,
     currency: body.currency,
     photo: null,
