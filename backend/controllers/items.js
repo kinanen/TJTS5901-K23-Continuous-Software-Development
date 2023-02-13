@@ -24,6 +24,11 @@ itemsRouter.post('/', async (request, response) => {
 
   // Get the user from the token via the userExtractor middleware
   const user = request.user
+
+  // check if the user has the user type "seller" to be allowed to sell items
+  if(user.userType === "buyer") {
+    return response.status(403).json({ error: "user doesn't have the right user type to sell items" })
+  }
   const body = request.body
 
   endDate = new Date()
@@ -43,7 +48,8 @@ itemsRouter.post('/', async (request, response) => {
     endDate: endDate.setHours(startDate.getHours() + 24),
     zipcode: body.zipcode,
     currency: body.currency,
-    photo: null
+    photo: null,
+    status: 'active'
   })
 
   // Save the item to Database and put it to constant
@@ -120,28 +126,36 @@ itemsRouter.put('/:id', async (request, response) => {
     logger.warning("Someone tried to bid on an item without token or with an invalid one")
     return response.status(401).json({ error: 'token missing or invalid' })
   }
-  // new item sent from frontend
-  const newItem = request.body
+
+  // new bid sent from frontend
+  const bid  = request.body.highestBid
   // get the user that bid on the item
   const user = request.user
-  // get the item from database to compare it with new item
+  // if the user has user type for seller, they are not allowed to bid on items
+  if(user.userType === "seller") {
+    return response.status(403).json({ error: "user type is seller, not allowed to bid" })
+  }
+  // get the item from database to compare it with the bid
   const item = await Item.findById(request.params.id)
-
+  
   // If the bid sent is lower than the highest bid or the initial price
   // return with status code 409 Conflict
-  if((newItem.highestBid < item.highestBid) || (newItem.highestBid < item.initialPrice)) {
+  if((bid < item.highestBid) || (bid < item.initialPrice)) {
     return response.status(409).json({ error: "bid was lower than expected" })
   }
 
+  // set the item's highestBid to the bid sent
+  item.highestBid = bid
   // set the item's highest bidder to be the logged in user's id
-  newItem.highestBidder = user.id
+  item.highestBidder = user._id
 
   // update the item with the highest bid and populate the highestBidder field 
   // with the user's name
   const updatedItem = await Item
     .findByIdAndUpdate(
       request.params.id,
-      newItem
+      item,
+      { new: true }
     ).populate('highestBidder', { firstName: 1, surname: 1 })
 
   // respond with code 200 OK and send the updated item in the response

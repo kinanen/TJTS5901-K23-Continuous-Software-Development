@@ -27,7 +27,8 @@ const itemSchema = mongoose.Schema({
   {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Upload'
-  }
+  },
+  status: String
 })
 
 // Transfer the Schema to JSON

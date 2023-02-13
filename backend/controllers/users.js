@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
+const Item = require('../models/item')
 const logger = require('../utils/logger')
 
 // GET all the registered users, only works for operator-user types
@@ -94,7 +95,41 @@ usersRouter.get('/:id', async (request, response) => {
   }
 
   // otherwise respond with code 200 OK and send the user info
-  response.status(200).json(user)
+  response.status(200).json(userFromParams)
 }) 
+
+// DELETE endpoint fo deleting a user
+usersRouter.delete('/:id', async (request, response) => {
+  if (!request.user) {
+    logger.warning("Someone tried to delete user with no token or invalid one")
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+  // get the currently logged in user
+  const user = request.user
+
+  // get the user to be deleted
+  const userToDelete = await User.findById(request.params.id)
+
+  // check if the logged in user has proper authorization
+  if(user.userType !== "operator") {
+    // return if no proper authorization
+    return response.status(409).json({ error: "insufficient authorization" })
+  }
+
+  // check if the user to be deleted has any items
+  if(userToDelete.items.length > 0) {
+    // delete all the items
+    userToDelete.items.forEach(async element => {
+      // delete the items from database, element === item's id
+      await Item.findByIdAndDelete(element)
+    });
+  }
+
+  // delete the user from database
+  await User.findByIdAndDelete(request.params.id)
+  
+  logger.notice(`User ${userToDelete.email} has been deleted successfully`)
+  response.status(204).end()
+})
 
 module.exports = usersRouter
