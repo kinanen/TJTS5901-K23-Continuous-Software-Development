@@ -6,8 +6,10 @@ import {
     Text,
     useColorModeValue,
     VisuallyHidden,
+    Image
   } from '@chakra-ui/react';
   import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+  import Logo from '../images/FF-logo.PNG'
 //   import { ReactNode } from 'react';
   const SocialButton = ({
     children,
@@ -51,6 +53,12 @@ import {
           spacing={4}
           justify={{ base: 'center', md: 'space-between' }}
           align={{ base: 'center', md: 'center' }}>
+          <Image
+          boxSize='40px'
+          objectFit='cover'
+          alt={'FF Logo'}
+          src={Logo}
+        />
           <Text>© 2023 FF auction. All rights reserved</Text>
           <Stack direction={'row'} spacing={6}>
             <SocialButton label={'Twitter'} href={'#'}>
