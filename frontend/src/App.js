@@ -10,6 +10,10 @@ import SignUpChakra from "./components/SignUpChakra";
 import CardsChakra from "./components/CardsChakra";
 import DetailsChakra from "./components/DetailsChakra";
 import TandCChakra from "./components/TandCChakra";
+import SellerChakra from "./components/SellerChakra";
+import BuyerChakra from "./components/BuyerChakra";
+import Profile from "./components/Profile";
+import OperatorChakra from "./components/OperatorChakra";
 import './App.css';
 
 
@@ -31,6 +35,14 @@ export default function App() {
         <Route path="/signup" element={<SignUpChakra />}>
         </Route>
         <Route path="/tandc" element={<TandCChakra />}>
+        </Route>
+        <Route path="/seller" element={<SellerChakra />}>
+        </Route>
+        <Route path="/buyer" element={<BuyerChakra />}>
+        </Route>
+        <Route path="/profile" element={<Profile />}>
+        </Route>
+        <Route path="/operator" element={<OperatorChakra />}>
         </Route>
       </Routes>
       <FooterChakra />

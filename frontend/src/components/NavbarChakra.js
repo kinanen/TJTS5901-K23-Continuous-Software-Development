@@ -22,6 +22,53 @@ import {
   ChevronRightIcon,
 } from '@chakra-ui/icons';
 import { Link as ReachLink } from "react-router-dom";
+import { useState } from 'react';
+
+
+
+  let token = null
+  const STORAGE_KEY = 'loggedAuctionAppUser'
+  
+  const getUser = () => {
+    const loggedUserJSON = window.localStorage.getItem(STORAGE_KEY)
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      token = user.token
+      return user;
+    }
+    return null;
+  }
+  
+
+  let user = getUser();
+
+  if (user ===! null) {
+    console.log("user is "+user.id);
+    console.log("user role is "+user.userType);
+  }
+  
+  let signInDisplay = 'none'
+  let signOutDisplay = 'flex'
+
+  if (user === null) {
+    signInDisplay = 'flex'
+    signOutDisplay = 'none'
+  }
+
+  let pageRef = '/';
+  if (user ===! null) {
+    if (user.userType === 'seller') {
+      console.log("Selleri oli: "+user.userType);
+      pageRef = '/seller';
+    } else if (user.userType === 'buyer') {
+      console.log("Baijeri oli: "+user.userType);
+      pageRef = '/buyer';
+    } else if (user.userType === 'operator') {
+      console.log("Operaattori oli: "+user.userType);
+      pageRef = '/operator';
+    }
+    console.log(pageRef);
+  }
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -70,7 +117,7 @@ export default function WithSubnavigation() {
           </Flex>
         </Flex>
 
-        <Stack
+        <Stack display={signInDisplay}
           flex={{ base: 1, md: 0 }}
           justify={'flex-end'}
           direction={'row'}
@@ -104,6 +151,27 @@ export default function WithSubnavigation() {
             </Link>
           </Button>
         </Stack>
+        <Stack display={signOutDisplay}
+          flex={{ base: 1, md: 0 }}
+          justify={'flex-end'}
+          direction={'row'}
+          spacing={6}>
+          <Button
+            // onClick={setUser(null)}
+            display={{ base: 'none', md: 'inline-flex' }}
+            fontSize={'sm'}
+            fontWeight={600}
+            color={'white'}
+            bg={'#774BCD'}
+            //href={'#'}
+            _hover={{
+              bg: '#C7A1FE',
+            }}>
+            <Link as={ReachLink} to='/'>
+              Sign Out
+            </Link>
+          </Button>
+        </Stack>
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
@@ -116,18 +184,18 @@ export default function WithSubnavigation() {
 const DesktopNav = () => {
   const linkColor = useColorModeValue('white', 'white');
   const linkHoverColor = useColorModeValue('gray.800', 'gray.800');
-  const popoverContentBgColor = useColorModeValue('gray.800', 'gray.800');
+  //const popoverContentBgColor = useColorModeValue('gray.800', 'gray.800');
 
   return (
     <Stack direction={'row'} spacing={4}>
-      {NAV_ITEMS.map((navItem) => (
+      {/* {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
           <Popover trigger={'hover'} placement={'bottom-start'}>
             <PopoverTrigger>
               <Link
                 as={ReachLink}
                 p={2}
-                to={navItem.href ?? '#'}
+                to={navItem.href}
                 fontSize={'sm'}
                 fontWeight={500}
                 color={linkColor}
@@ -155,13 +223,70 @@ const DesktopNav = () => {
               </PopoverContent>
             )}
           </Popover>
-        </Box>
-      ))}
+        </Box> */}
+        <Box key={'actions'}>
+        <Popover trigger={'hover'} placement={'bottom-start'}>
+          <PopoverTrigger>
+            <Link
+              as={ReachLink}
+              p={2}
+              to={pageRef}
+              fontSize={'sm'}
+              fontWeight={500}
+              color={linkColor}
+              _hover={{
+                textDecoration: 'none',
+                color: linkHoverColor,
+              }}>
+              Signed in Actions
+            </Link>
+          </PopoverTrigger>
+        </Popover>
+      </Box>
+      <Box key={'view'}>
+        <Popover trigger={'hover'} placement={'bottom-start'}>
+          <PopoverTrigger>
+            <Link
+              as={ReachLink}
+              p={2}
+              to={'/view'}
+              fontSize={'sm'}
+              fontWeight={500}
+              color={linkColor}
+              _hover={{
+                textDecoration: 'none',
+                color: linkHoverColor,
+              }}>
+              View items
+            </Link>
+          </PopoverTrigger>
+        </Popover>
+      </Box>
+      <Box key={'home'}>
+        <Popover trigger={'hover'} placement={'bottom-start'}>
+          <PopoverTrigger>
+            <Link
+              as={ReachLink}
+              p={2}
+              to={'/'}
+              fontSize={'sm'}
+              fontWeight={500}
+              color={linkColor}
+              _hover={{
+                textDecoration: 'none',
+                color: linkHoverColor,
+              }}>
+              Home
+            </Link>
+          </PopoverTrigger>
+        </Popover>
+      </Box>
+      {/* ))} */}
     </Stack>
   );
 };
 
-const DesktopSubNav = ({ label, href, subLabel }) => {
+/* const DesktopSubNav = ({ label, href, subLabel }) => {
   return (
     <Link
       as={ReachLink}
@@ -198,7 +323,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
       </Stack>
     </Link>
   );
-};
+}; */
 
 const MobileNav = () => {
   return (
@@ -206,18 +331,20 @@ const MobileNav = () => {
       bg={useColorModeValue('white', 'gray.800')}
       p={4}
       display={{ md: 'none' }}>
-      {NAV_ITEMS.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
-      ))}
+      {/* {NAV_ITEMS.map((navItem) => ( */}
+        <MobileNavItem key={'actions'} label={'Signed in Actions'} href={pageRef} />
+        <MobileNavItem key={'view'} label={'View items'} href={'/view'} />
+        <MobileNavItem key={'home'} label={'Home'} href={'/'} />
+      {/* // ))} */}
     </Stack>
   );
 };
 
-const MobileNavItem = ({ label, children, href }) => {
+const MobileNavItem = ({ label, href }) => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Stack spacing={4} onClick={children && onToggle}>
+    <Stack spacing={4} onClick={onToggle}>
       <Flex
         py={2}
         as={Link}
@@ -232,7 +359,7 @@ const MobileNavItem = ({ label, children, href }) => {
           color={useColorModeValue('gray.600', 'gray.200')}>
           {label}
         </Text>
-        {children && (
+        {/* {children && (
           <Icon
             as={ChevronDownIcon}
             transition={'all .25s ease-in-out'}
@@ -240,7 +367,7 @@ const MobileNavItem = ({ label, children, href }) => {
             w={6}
             h={6}
           />
-        )}
+        )} */}
       </Flex>
 
       <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
@@ -251,42 +378,21 @@ const MobileNavItem = ({ label, children, href }) => {
           borderStyle={'solid'}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
           align={'start'}>
-          {children &&
+          {/* {children &&
             children.map((child) => (
               <Link as={ReachLink} key={child.label} py={2} to={child.href}>
                 {child.label}
               </Link>
-            ))}
+            ))} */}
         </Stack>
       </Collapse>
     </Stack>
   );
 };
 
-//   interface NavItem {
-//     label: string;
-//     subLabel?: string;
-//     children?: Array<NavItem>;
-//     href?: string;
-//   }
+/* console.log(pageRef);
 
 const NAV_ITEMS = [
-  {
-    label: 'Publish',
-    href: '/publish'
-/*     children: [
-      {
-        label: 'Publish item',
-        subLabel: 'Publish your nice item on auction listings',
-        href: '/publish',
-      },
-/*       {
-        label: 'Liirum Laarum',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
-      }, */
-    //], 
-  },
   {
     label: 'View Items',
     href: '/view'
@@ -302,9 +408,9 @@ const NAV_ITEMS = [
         href: '#',
       }, */
     // ],
-  },
+/*   },
   {
-    label: 'Home',
-    href: '/',
+    label: 'Actions',
+    href: {pageRef}
   },
-];
+]; */

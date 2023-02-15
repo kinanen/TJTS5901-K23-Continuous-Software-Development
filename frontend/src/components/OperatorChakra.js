@@ -3,7 +3,6 @@ import {
   Heading,
   Flex,
   Button,
-  Text,
   VStack,
   useBreakpointValue,
   Link,
@@ -11,41 +10,16 @@ import {
 import { Link as ReachLink } from "react-router-dom";
 import Crowd from "../images/confetti.jpg";
 
-let token = null
-  const STORAGE_KEY = 'loggedAuctionAppUser'
-  
-  const getUser = () => {
-    const loggedUserJSON = window.localStorage.getItem(STORAGE_KEY)
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      token = user.token
-      return user;
-    }
-    return null;
-  }
-
-  let user = getUser();
-  if (user ===! null) {
-    console.log("user is "+user.id);
-    console.log("user role is "+user.userType);
-  }
-
-  let signInDisplay = 'none'
-  let signOutDisplay = 'flex'
-
-  if (user === null) {
-    signInDisplay = 'flex'
-    signOutDisplay = 'none'
-  }
-
 export default function WithBackgroundImage() {
   return (
     <Flex
       w={'full'}
       h={'100vh'}
-      backgroundImage={Crowd}
-      backgroundSize={'cover'}
-      backgroundPosition={'center center'}>
+      // backgroundImage={Crowd}
+      // backgroundSize={'cover'}
+      // backgroundPosition={'center center'}
+      // opacity={0.7}
+      >
       <VStack
         w={'full'}
         justify={'center'}
@@ -57,28 +31,20 @@ export default function WithBackgroundImage() {
             fontSize={useBreakpointValue({ base: '3xl', md: '4xl' })} 
             // textAlign={'center'}
             >
-            Welcome to Fast and Furious Auction system!
+            Hi operator!
           </Heading>
           <Heading
             color={'white'}
             fontWeight={700}
             lineHeight={1.2}
             fontSize={useBreakpointValue({ base: '2xl', md: '3xl' })}>
-            This is where you can sell <Text as="span">FAST </Text> 
-            and buy without getting <Text as="span">FURIOUS</Text>.
+            Choose what you want to do
           </Heading>
-          <Text
-            color={'white'}
-            fontWeight={700}
-            lineHeight={1.2}
-            fontSize={useBreakpointValue({ base: '2xl', md: '3xl' })}> 
-            Everything should happen within 24 hours.
-          </Text>
-          <Stack direction={'row'} display={signInDisplay}>
+          <Stack direction={'row'} spacing={8}>
             <Button
               display={{ base: 'none', md: 'inline-flex' }}
               fontSize={'sm'}
-              width={'100px'}
+              width={'150px'}
               fontWeight={600}
               color={'white'}
               bg={'#774BCD'}
@@ -86,14 +52,14 @@ export default function WithBackgroundImage() {
               _hover={{
                 bg: '#C7A1FE',
               }}>
-              <Link as={ReachLink} to='/signin'>
-                Sign In
+              <Link as={ReachLink} to='/view'>
+                View Items
               </Link>
             </Button>
             <Button
               display={{ base: 'none', md: 'inline-flex' }}
               fontSize={'sm'}
-              width={'100px'}
+              width={'150px'}
               fontWeight={600}
               color={'white'}
               bg={'#774BCD'}
@@ -101,16 +67,14 @@ export default function WithBackgroundImage() {
               _hover={{
                 bg: '#C7A1FE',
               }}>
-              <Link as={ReachLink} to='/signup'>
-                Sign Up
+              <Link as={ReachLink} to='/publish'>
+                Publish item
               </Link>
             </Button>
-          </Stack>
-          <Stack direction={'row'} display={signOutDisplay}>
             <Button
               display={{ base: 'none', md: 'inline-flex' }}
               fontSize={'sm'}
-              width={'100px'}
+              width={'150px'}
               fontWeight={600}
               color={'white'}
               bg={'#774BCD'}
@@ -118,8 +82,55 @@ export default function WithBackgroundImage() {
               _hover={{
                 bg: '#C7A1FE',
               }}>
-              <Link as={ReachLink} to='/'>
-                Sign Out
+              <Link as={ReachLink} to='/profile'>
+                View profile
+              </Link>
+            </Button>
+            </Stack>
+            <Stack direction={'row'} spacing={8}>
+            <Button
+              display={{ base: 'none', md: 'inline-flex' }}
+              fontSize={'sm'}
+              width={'150px'}
+              fontWeight={600}
+              color={'white'}
+              bg={'#774BCD'}
+              //href={'#'}
+              _hover={{
+                bg: '#C7A1FE',
+              }}>
+              <Link as={ReachLink} to='#'>
+                View reports
+              </Link>
+            </Button>
+            <Button
+              display={{ base: 'none', md: 'inline-flex' }}
+              fontSize={'sm'}
+              width={'150px'}
+              fontWeight={600}
+              color={'white'}
+              bg={'#774BCD'}
+              //href={'#'}
+              _hover={{
+                bg: '#C7A1FE',
+              }}>
+              <Link as={ReachLink} to='#'>
+                Cancel Auction
+              </Link>
+            </Button>
+            <Button
+              display={{ base: 'none', md: 'inline-flex' }}
+              fontSize={'sm'}
+              width={'150px'}
+              fontWeight={600}
+              color={'white'}
+              bg={'#774BCD'}
+              //href={'#'}
+              _hover={{
+                bg: '#C7A1FE',
+              }}>
+              <Link as={ReachLink} to='#'>
+                Cancel bid
               </Link>
             </Button>
           </Stack>

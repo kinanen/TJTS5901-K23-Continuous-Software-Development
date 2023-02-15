@@ -102,7 +102,7 @@ function Form() {
           }
     }
     return (
-        <VStack w="full" h="full" p={10} spacing={10} alignItems="flex-start">
+        <VStack w="full" h="full" p={10} spacing={10} justify={'center'}>
             <VStack spacing={3} alignItems="flex-start">
                 <Heading size="2xl">Publish your item</Heading>
             </VStack>
