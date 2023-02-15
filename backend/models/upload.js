@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 // The MongoDB Schema for photo upload
 const uploadSchema = new mongoose.Schema({
+  name: String,
   item: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Item'

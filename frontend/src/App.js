@@ -22,7 +22,7 @@ export default function App() {
         </Route>
         <Route path="/view" element={<CardsChakra />}>
         </Route>
-        <Route path="/details" element={<DetailsChakra />}>
+        <Route path={`/details/:id`} element={<DetailsChakra />}>
         </Route>
         <Route path="/publish" element={<Publish />}>
         </Route>

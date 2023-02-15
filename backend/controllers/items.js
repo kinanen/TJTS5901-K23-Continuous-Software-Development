@@ -77,12 +77,14 @@ itemsRouter.put('/photo/:id', upload.single("file"), async (request, response) =
 
   // object for the photo, put the item id to item field
   let imageUploadObject = {
+    name: request.file.originalname,
     item: item._id,
     file: {
       data: request.file.buffer,
       contentType: request.file.mimetype
     }
   }
+
   // object formed with Upload schema
   const uploadObject = new Upload(imageUploadObject);
   // save the photo id to item
@@ -104,7 +106,10 @@ itemsRouter.get('/photo/:id', async (request, response) => {
     return response.status(404).json({ error: "no such photo found with id" })
   }
 
-  response.status(200).json(photo)
+  const contentType = photo.file.contentType
+  const name = photo.name
+
+  response.status(200).json({ photo: photo.file, contentType: contentType, name: name })
 })
 
 // GET a single item from Database

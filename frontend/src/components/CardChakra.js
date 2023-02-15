@@ -1,7 +1,7 @@
 import {
     Flex,
     Box,
-    Image,
+    Image as ChakraImage,
     Heading,
     Text,
     Button,
@@ -12,8 +12,13 @@ import {
   } from '@chakra-ui/react';
   import { Link as ReachLink } from "react-router-dom";
   import { useLocation } from "react-router-dom";
+  import axios from 'axios';
   
   export default function CardItem(props) {
+
+    let photos = new Image()
+    let photo = ""
+    const baseUrl = '/api/items';
 
     const getId = (e) => {
       console.log(e.target.id);
@@ -21,6 +26,23 @@ import {
 
     const location = useLocation();
     console.log(location);
+
+    const setImage = async (id) => {
+      if(!id) {
+        photo = props.src
+        return
+      }
+      let binary = ''
+      const imageData = await axios.get(`${baseUrl}/photo/${id}`)
+      var len = imageData.data.photo.data.data.length
+      for (let index = 0; index < len; index++) {
+        binary += String.fromCharCode(imageData.data.photo.data.data[index]);
+      }
+      const base64encoded = window.btoa(binary)
+      photo = `data:${imageData.data.contentType};base64,${base64encoded}`
+    }
+
+    setImage(props.photo)
 
     return (
         <Flex w={'full'} p={8} flex={1} align={'center'} justify={'center'} alignItems='center'>
@@ -48,12 +70,12 @@ import {
                 // fontWeight='bold'
                 >
               <GridItem  area={'image'}>
-                <Image
+                <ChakraImage
                 rounded={'lg'}
                 height={'full'}
                 width={280}
                 objectFit={'cover'}
-                src={props.src}
+                src={photo}
                 />
               </GridItem>
               <GridItem  area={'header'}>
@@ -79,7 +101,7 @@ import {
                   color={'white'}
                   _hover={{
                     bg: '#C7A1FE',
-                  }} onClick={getId}><Link as={ReachLink} to={'/details'}  
+                  }} onClick={getId}><Link as={ReachLink} to={`/details/${props.id}`}  
                   state={props.id} id={props.id}>Details</Link></Button>
               </GridItem>
               <GridItem  area={'status'} textAlign={'right'}>

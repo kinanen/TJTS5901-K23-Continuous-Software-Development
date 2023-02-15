@@ -6,11 +6,11 @@ import img3 from '../images/hammer.jpg'
 import axios from 'axios';
 const baseUrl = '/api/items';
 
+
 // these should be read from the database, as json?
 // then map all instances with below details, which will bse sent as props to collection page
 
 function CardsChakra() {
-
     const [itemList, setItemList] = useState([]);
 
     useEffect(() => {
@@ -79,8 +79,9 @@ function CardsChakra() {
                 time={calculateHours(item.endDate)}
                 status={findStatus(item.endDate)}
                 id={item.id}
+                photo={item.photo}
                 label="Details"
-                path="/details"
+                path={`/details/${item.id}`}
             />
                 ))}
         </VStack>

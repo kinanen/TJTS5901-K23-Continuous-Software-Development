@@ -59,7 +59,7 @@ import {
           alt={'FF Logo'}
           src={Logo}
         />
-          <Text>© 2023 FF auction. All rights reserved</Text>
+          <Text>© {new Date().getFullYear()} FF auction. All rights reserved</Text>
           <Stack direction={'row'} spacing={6}>
             <SocialButton label={'Twitter'} href={'#'}>
               <FaTwitter />

@@ -3,7 +3,7 @@ import {
     Container,
     Stack,
     Text,
-    Image,
+    Image as ChakraImage,
     Input,
     Flex,
     VStack,
@@ -22,7 +22,6 @@ import {
   const baseUrl = '/api/items';
   
   
-  
   export default function ProductDetails() {
 
     const location = useLocation();
@@ -32,6 +31,8 @@ import {
 
     const [item, setItem] = useState([]);
 
+    let image = ''
+
     useEffect(() => {
     const showItemDetails = async () => {
       await axios.get(baseUrl+ '/' + id)
@@ -39,6 +40,23 @@ import {
       }
       showItemDetails();
     });
+
+    const setImage = async () => {
+      if(!item.photo) {
+        image = Hammer
+        return
+      }
+      let binary = ''
+      const imageData = await axios.get(`${baseUrl}/photo/${item.photo}`)
+      var len = imageData.data.photo.data.data.length
+      for (let index = 0; index < len; index++) {
+        binary += String.fromCharCode(imageData.data.photo.data.data[index]);
+      }
+      const base64encoded = window.btoa(binary)
+      image = `data:${imageData.data.contentType};base64,${base64encoded}`
+    }
+
+    setImage()
 
     let token = null
     const STORAGE_KEY = 'loggedAuctionAppUser'
@@ -92,9 +110,7 @@ import {
       const newBid = {
         highestBid : bid
       }
-
       recordBit(id, newBid);
-
     }
 
     const makeBid = function(event) {
@@ -111,10 +127,10 @@ import {
           spacing={{ base: 8, md: 10 }}
           py={{ base: 18, md: 24 }}>
           <Flex>
-            <Image
+            <ChakraImage
               rounded={'md'}
               alt={'product image'}
-              src={Hammer}
+              src={image}
               fit={'cover'}
               align={'center'}
               w={'100%'}
@@ -223,10 +239,10 @@ import {
           spacing={{ base: 8, md: 10 }}
           py={{ base: 18, md: 24 }}>
           <Flex>
-            <Image
+            <ChakraImage
               rounded={'md'}
               alt={'product image'}
-              src={Hammer}
+              src={image}
               fit={'cover'}
               align={'center'}
               w={'100%'}
