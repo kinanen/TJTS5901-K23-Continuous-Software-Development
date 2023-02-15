@@ -19,8 +19,9 @@ import {
   import axios from 'axios';
   import { useLocation } from "react-router-dom";
   import { useState, useEffect} from 'react';
+  import { bytesToBase64 } from "byte-base64"
+
   const baseUrl = '/api/items';
-  
   
   export default function ProductDetails() {
 
@@ -31,7 +32,7 @@ import {
 
     const [item, setItem] = useState([]);
 
-    let image = ''
+    let image = ""
 
     useEffect(() => {
     const showItemDetails = async () => {
@@ -46,13 +47,8 @@ import {
         image = Hammer
         return
       }
-      let binary = ''
       const imageData = await axios.get(`${baseUrl}/photo/${item.photo}`)
-      var len = imageData.data.photo.data.data.length
-      for (let index = 0; index < len; index++) {
-        binary += String.fromCharCode(imageData.data.photo.data.data[index]);
-      }
-      const base64encoded = window.btoa(binary)
+      const base64encoded = bytesToBase64(imageData.data.photo.data.data)
       image = `data:${imageData.data.contentType};base64,${base64encoded}`
     }
 

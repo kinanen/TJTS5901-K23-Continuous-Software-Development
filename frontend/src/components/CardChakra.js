@@ -13,6 +13,7 @@ import {
   import { Link as ReachLink } from "react-router-dom";
   import { useLocation } from "react-router-dom";
   import axios from 'axios';
+  import { bytesToBase64 } from "byte-base64"
   
   export default function CardItem(props) {
 
@@ -30,16 +31,13 @@ import {
     const setImage = async (id) => {
       if(!id) {
         photo = props.src
+        photos.src = props.src
         return
       }
-      let binary = ''
       const imageData = await axios.get(`${baseUrl}/photo/${id}`)
-      var len = imageData.data.photo.data.data.length
-      for (let index = 0; index < len; index++) {
-        binary += String.fromCharCode(imageData.data.photo.data.data[index]);
-      }
-      const base64encoded = window.btoa(binary)
+      const base64encoded = bytesToBase64(imageData.data.photo.data.data)
       photo = `data:${imageData.data.contentType};base64,${base64encoded}`
+      photos.src = `data:${imageData.data.contentType};base64,${base64encoded}`
     }
 
     setImage(props.photo)
@@ -75,8 +73,7 @@ import {
                 height={'full'}
                 width={280}
                 objectFit={'cover'}
-                src={photo}
-                />
+                src={photo}/>
               </GridItem>
               <GridItem  area={'header'}>
                 <Heading fontSize={'4xl'} textAlign={'center'}>
