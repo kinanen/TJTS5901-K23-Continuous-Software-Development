@@ -59,29 +59,7 @@ import {
     };
 
     login(newuser);
-    /* 
-    const postURL = "http://localhost:4000/api/staff/" //This should be replaced by our own
-    fetch(postURL, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        usertype: userType
-      })
-    })
-      .then(() => {
-        // Once added, the user will be notified 
-        alert('You have added an item to the system!');
-      }) 
-      */
-    //alert(`First Name: ${fname}, Last Name: ${lname}, Email: ${email}, Password: ${password}, User Type: ${userType}`);
   }
-
-  //--------------------------- ************** ----------------------------------
 
     return (
       <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>

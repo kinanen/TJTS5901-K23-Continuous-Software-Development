@@ -1,19 +1,24 @@
 import {
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
   Heading,
   Input,
-  Link,
   Stack,
   Box,
   Image,
   Text,
   Select,
-  useColorModeValue,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  CloseButton,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from '@chakra-ui/react';
+
 import SignInImg from "../images/signin.jpg";
 import { useState } from 'react';
 
@@ -21,23 +26,16 @@ import axios from 'axios';
 const baseUrl = '/api/login';
 
 
-let token = null
+let token = null;
 const STORAGE_KEY = 'loggedAuctionAppUser'
 
 const setUser = (user) => {
   console.log(user)
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user))
-  token = user.token
-  
+  token = user.token  
 }
 
-  const login = async credentials => {
-    console.log(credentials);
-    const response = await axios.post(baseUrl, credentials)
-    console.log(response.data);
-    setUser({email: response.data.email, userType: response.data.userType, id: response.data.id, token: response.data.token});
-    return response.data
-  }
+  
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -47,8 +45,53 @@ export default function SignIn() {
   const [userType, setUserType] = useState('buyer');
   const userTypeUpdate = (event) => setUserType(event.target.value);
 
-  //--------------------------- ************** ----------------------------------
-  const handleSubmit = (event) => { // Once the form has been submitted, this function will post to the backend
+  //const [alertTitle, setAlertTitle] = useState('');
+  const [alertStatus, setAlertStatus] = useState('success');
+  const [alertMessage, setAlertMessage] = useState('');
+  const [display, setDisplay] = useState('none');
+
+  const login = async credentials => {
+    console.log(credentials);
+    try{
+      const response = await axios.post(baseUrl, credentials)
+      console.log(response.data);
+      setUser({email: response.data.email, userType: response.data.userType, id: response.data.id, token: response.data.token});
+      setDisplay('flex');
+      setAlertStatus('success');
+      //setAlertTitle('Success!');
+      setAlertMessage("Your login was successful");
+      return response.data;
+    } catch(error) {
+      console.log(error.response.data.error);
+      setDisplay('flex');
+      setAlertStatus('error');
+      // setAlertTitle('Error!');
+      setAlertMessage(error.response.data.error);
+    }
+  }
+
+  const closeAlert = () => {
+    if (alertStatus === "success") {
+      //setDisplay('none');
+      redirect();
+    } else {
+      setDisplay('none');
+    }
+  }
+
+  const redirect = () => {
+    if (userType === 'seller') {
+      window.location.href = '/seller'
+    } else if (userType === 'operator') {
+    window.location.href = '/operator'
+  } else if (userType === 'buyer') {
+    window.location.href = '/buyer'
+  } else {
+    window.location.href = '/'
+  }
+ }
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     
     const credentials = {
@@ -59,40 +102,22 @@ export default function SignIn() {
 
     login(credentials);
 
-    /* 
-    const postURL = "http://localhost:4000/api/staff/" //This should be replaced by our own
-    fetch(postURL, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        usertype: userType
-      })
-    })
-      .then(() => {
-        // Once added, the user will be notified 
-        alert('You have added an item to the system!');
-      }) 
-      */
-    //alert(`Email: ${email}, Password: ${password}, User Type: ${userType}`);
   }
-
-  //--------------------------- ************** ----------------------------------
 
   return (
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
       <Flex p={8} flex={1} align={'center'} justify={'center'}>
-        {/* <Stack spacing={4} w={'full'} maxW={'md'}> */}
-        {/* <Heading fontSize={'2xl'}>Sign in to your account</Heading> */}
         <Box
           rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
+          bg={'white'}
           boxShadow={'lg'}
           p={8}>
+          <Alert display={display} status={alertStatus}>
+            <AlertIcon />
+            {/* <AlertTitle mr={2}>{alertTitle}</AlertTitle> */}
+            <AlertDescription mr={2}>{alertMessage}</AlertDescription>
+            <CloseButton onClick={closeAlert} />
+          </Alert>
           <Heading fontSize={'4xl'} textAlign={'center'}>
             Sign in
           </Heading>
@@ -101,11 +126,11 @@ export default function SignIn() {
           </Text>
           <Stack spacing={4}>
             <form onSubmit={handleSubmit}>
-              <FormControl id="email">
+              <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input type="email" onChange={emailUpdate} />
               </FormControl>
-              <FormControl id="password">
+              <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
                 <Input type="password" onChange={passwordUpdate} />
               </FormControl>
@@ -145,9 +170,6 @@ export default function SignIn() {
         <Image
           alt={'SignIn Image'}
           objectFit={'cover'}
-          // src={
-          //   'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80'
-          // }
           src={SignInImg}
         />
       </Flex>
