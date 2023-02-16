@@ -2,7 +2,7 @@
 
 ### Paavo:
 
-Set up MongoDB in Azure. Worked on the backend: implemented user login and registration, adding items when logged in, HTTP PUT endpoint for item bidding, GET endpoints for all items, single item, single user and all users, improved winston logging for production/development environments. 
+Set up MongoDB in Azure. Worked on the backend: added application URL to README.md, implemented user login and registration, adding items when logged in, HTTP PUT endpoint for item bidding, GET endpoints for all items, single item, single user and all users, improved winston logging for production/development environments. 
 
 ### Henna:
 
