@@ -10,8 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { Link as ReachLink } from "react-router-dom";
 import Crowd from "../images/confetti.jpg";
-import { useTranslation} from 'react-i18next';
-import i18n from '../i18n/config';
+
 
 let token = null
   const STORAGE_KEY = 'loggedAuctionAppUser'
@@ -41,7 +40,7 @@ let token = null
   }
 
 export default function WithBackgroundImage() {
-  const { t, i18n } = useTranslation();
+
   return (
     <Flex
       w={'full'}
@@ -60,7 +59,6 @@ export default function WithBackgroundImage() {
             fontSize={useBreakpointValue({ base: '3xl', md: '4xl' })} 
             // textAlign={'center'}
             >
-              {t('welcome-message')}
             Welcome to Fast and Furious Auction system!
           </Heading>
           <Heading
