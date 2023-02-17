@@ -21,7 +21,7 @@ import {
 
 import SignInImg from "../images/signin.jpg";
 import { useState } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 const baseUrl = '/api/login';
 
@@ -38,6 +38,7 @@ const setUser = (user) => {
   
 
 export default function SignIn() {
+  const {t} = useTranslation();
   const [email, setEmail] = useState('');
   const emailUpdate = (event) => setEmail(event.target.value);
   const [password, setPassword] = useState('');
@@ -119,27 +120,27 @@ export default function SignIn() {
             <CloseButton onClick={closeAlert} />
           </Alert>
           <Heading fontSize={'4xl'} textAlign={'center'}>
-            Sign in
+            {t('sign-in')}
           </Heading>
           <Text fontSize={'lg'} color={'gray.600'} textAlign={'center'} pb={8}>
-            to your account
+            {t('to-your-account')}
           </Text>
           <Stack spacing={4}>
             <form onSubmit={handleSubmit}>
               <FormControl id="email" isRequired>
-                <FormLabel>Email address</FormLabel>
+                <FormLabel>{t('email')}</FormLabel>
                 <Input type="email" onChange={emailUpdate} />
               </FormControl>
               <FormControl id="password" isRequired>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{t('password')}</FormLabel>
                 <Input type="password" onChange={passwordUpdate} />
               </FormControl>
               <FormControl>
-                <FormLabel>User type</FormLabel>
+                <FormLabel>{t('user-type')}</FormLabel>
                 <Select onChange={userTypeUpdate}>
-                  <option value="buyer" >Buyer</option>
-                  <option value="seller">Seller</option>
-                  <option value="operator">Operator</option>
+                  <option value="buyer" >{t('buyer')}</option>
+                  <option value="seller">{t('seller')}</option>
+                  <option value="operator">{t('operator')}</option>
                 </Select>
               </FormControl>
               <Stack spacing={6} mt={4}>
@@ -159,7 +160,7 @@ export default function SignIn() {
                   _hover={{
                     bg: '#C7A1FE',
                   }}>
-                  Sign In
+                  {t('sign-in')}
                 </Button>
               </Stack>
             </form>
