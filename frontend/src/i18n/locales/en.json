@@ -46,6 +46,43 @@
     "submit-bid": "Submit bid",
     "product-details": "Product Details",
     "other-details": "Other Details: ",
-    "make-bid":  "Make a new bid"
+    "make-bid":  "Make a new bid",
+
+    "hi-operator": "Hi, Operator!",
+    "publish-item": "Publish item",
+    "view-reports": "View reports",
+    "cancel-auction": "Cancel auction",
+    "cancel-bid": "Cancel bid",
+
+    "upload-photo": "UPLOAD PHOTO",
+
+    "your-profile": "Your profile",
+    "auctions": "Auctions",
+    "published-items": " Items published for sale:",
+    "bought-items": "Items purchased with highest bid:",
+
+    "item-name": "Item name",
+    "item-description": "Item description",
+    "item-model": "Item model",
+    "item-category": "Item category",
+    "other": "Other",
+    "device": "Device",
+    "furiture": "Furniture",
+    "clothes": "Clothes",
+    "poor": "Poor",
+    "acceptable": "Acceptable",
+    "good": "Good",
+    "excellent": "Excellent",
+    "new": "New",
+    "item-condition": "Item condition",
+
+    "zip-code": "Zip code",
+    "currency": "Currency",
+    "submit": "SUBMIT",
+
+    "hi-seller": "Hi, Seller!",
+
+    "terms-and-conditions-text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voulptua",
+    "i-agree": "I agree"
 
 }

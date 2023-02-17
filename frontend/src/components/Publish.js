@@ -1,6 +1,7 @@
 import { FormControl, FormLabel, Input, VStack, Link, Heading, SimpleGrid, GridItem, Select, Button } from '@chakra-ui/react';
 import { Link as ReachLink } from "react-router-dom";
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 
 import axios from 'axios';
@@ -48,6 +49,7 @@ const getUser = () => {
   }
 
 function Form() {
+    const {t} = useTranslation();
     const [itemName, setItemName] = useState('');
     const itemNameUpdate = (event) => setItemName(event.target.value);
     const [itemModel, setItemModel] = useState('');
@@ -104,54 +106,54 @@ function Form() {
     return (
         <VStack w="full" h="full" p={10} spacing={10} justify={'center'}>
             <VStack spacing={3} alignItems="flex-start">
-                <Heading size="2xl">Publish your item</Heading>
+                <Heading size="2xl">{t('publish-item')}</Heading>
             </VStack>
             <form onSubmit={handleSubmit}>
                 <SimpleGrid columns={2} columnGap={3} rowGap={6} w="full">
                     <GridItem colSpan={1}>
                         <FormControl>
-                            <FormLabel>Item name</FormLabel>
+                            <FormLabel>{t('item-name')}</FormLabel>
                             <Input onChange={itemNameUpdate} placeholder="" />
                         </FormControl>
                     </GridItem>
                     <GridItem colSpan={1}>
                         <FormControl>
-                            <FormLabel>Model etc.</FormLabel>
+                            <FormLabel>{t('item-model')}</FormLabel>
                             <Input onChange={itemModelUpdate} placeholder="" />
                         </FormControl>
                     </GridItem>
                     <GridItem colSpan={2}>
                         <FormControl>
-                            <FormLabel>Item description</FormLabel>
+                            <FormLabel>{t('item-description')}</FormLabel>
                             <Input onChange={itemDescUpdate} placeholder="Please include additional information of your item" />
                         </FormControl>
                     </GridItem>
                     <GridItem colSpan={1}>
                         <FormControl>
-                            <FormLabel>Category</FormLabel>
+                            <FormLabel>{t('item-category')}</FormLabel>
                             <Select onChange={categoryUpdate}>
-                                <option value="other">Other</option>
-                                <option value="device">Device</option>
-                                <option value="furniture">Furniture</option>
-                                <option value="clothes">Clothes</option>
+                                <option value="other">{t('other')}</option>
+                                <option value="device">{t('device')}</option>
+                                <option value="furniture">{t('furniture')}</option>
+                                <option value="clothes">{t('clothes')}</option>
                             </Select>
                         </FormControl>
                     </GridItem>
                     <GridItem colSpan={1}>
                         <FormControl>
-                            <FormLabel>Condition</FormLabel>
+                            <FormLabel>{t('item-condition')}</FormLabel>
                             <Select onChange={conditionUpdate}>
-                                <option value="poor">Poor</option>
-                                <option value="acceptable">Acceptable</option>
-                                <option value="good">Good</option>
-                                <option value="excellent">Excellent</option>
-                                <option value="new">New</option>
+                                <option value="poor">{t('poor')}Poor</option>
+                                <option value="acceptable">{t('acceptable')}</option>
+                                <option value="good">{t('good')}</option>
+                                <option value="excellent">{t('excellent')}</option>
+                                <option value="new">{t('new')}</option>
                             </Select>
                         </FormControl>
                     </GridItem>
                     <GridItem colSpan={1}>
                         <FormControl>
-                            <FormLabel>Zipcode</FormLabel>
+                            <FormLabel>{t('zip-code')}</FormLabel>
                             <Input onChange={zipcodeUpdate} placeholder="" />
                         </FormControl>
                     </GridItem>
@@ -178,7 +180,7 @@ function Form() {
                     </GridItem>
                     <GridItem colSpan={1}>
                         <FormControl>
-                            <FormLabel>Currency</FormLabel>
+                            <FormLabel>{t('currency')}</FormLabel>
                             <Select onChange={currencyUpdate}>
                                 <option value="eur">EUR</option>
                                 <option value="usd">USD</option>
@@ -197,7 +199,7 @@ function Form() {
                             _hover={{
                                 bg: '#C7A1FE',
                             }}>
-                            SUBMIT
+                            {t('submit')}
                         </Button>
                     </GridItem>
                 </SimpleGrid>

@@ -19,6 +19,7 @@ import {
   import { useLocation } from "react-router-dom";
   import Avatar from "../images/emoticon.png"
   import { useEffect, useState } from 'react';
+  import { useTranslation } from 'react-i18next';
   
   import axios from 'axios';
   const baseUrl = '/api/users';
@@ -49,6 +50,7 @@ import {
 
   
   export default function ProfileCard(props) {
+    const {t} = useTranslation();
 
     const [display, setDisplay] = useState('none');
 
@@ -153,27 +155,27 @@ import {
               </GridItem>
               <GridItem  area={'header'}>
                 <Heading fontSize={'4xl'} textAlign={'center'}>
-                    Your profile
+                    {t('your-profile')}
                 </Heading>
               </GridItem>
               <GridItem  area={'firstname'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={'lg'} color={'gray.600'} textAlign={'center'} pb={8}>
-                    First Name: {userData.firstName}
+                    {t('fname')}: {userData.firstName}
                 </Text>
               </GridItem>
               <GridItem  area={'lastname'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={'lg'} color={'gray.600'} textAlign={'center'} pb={8}>
-                    Last Name: {userData.surname}
+                    {t('lname')}: {userData.surname}
                 </Text>
               </GridItem>
               <GridItem  area={'email'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={'lg'} color={'gray.600'} textAlign={'center'} pb={8}>
-                    Email: {user.email}
+                    {t('email')}: {user.email}
                 </Text>
               </GridItem>
               <GridItem  area={'usertype'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={'lg'} color={'gray.600'} textAlign={'center'} pb={8}>
-                    User Type: {user.userType}
+                    {t('user-type')}: {user.userType}
                 </Text>
               </GridItem>
               <GridItem area={'button'} textAlign={'center'} justify={'center'}>
@@ -188,13 +190,14 @@ import {
                     {/* <Link as={ReachLink} to={'/details'}  
                   state={props.id} id={props.id}>
                     Details</Link> */}
-                    Auctions
+                    {t('auctions')}
                 </Button>
               </GridItem>
               <GridItem area={'list1'} align={'center'} textAlign={'center'} justify={'center'} display={display}>
                 <Stack align={'center'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={'lg'} color={'gray.600'} textAlign={'center'} pb={8}>
-                      Items published for sale:
+                  {t('published-items')}
+                     
                 </Text>
                 <UnorderedList>
                 {published.map((item) => (
@@ -207,7 +210,7 @@ import {
               <GridItem area={'list2'} align={'center'} textAlign={'center'} justify={'center'}display={display}>
               <Stack align={'center'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={'lg'} color={'gray.600'} textAlign={'center'} pb={8}>
-                      Items purchased with highest bid:
+                      {t('bought-items')}
                 </Text>
                 <UnorderedList>
                 {highestbids.map((item) => (

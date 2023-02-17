@@ -46,6 +46,19 @@
     "submit-bid": "Vahvista huuto",
     "product-details": "Tuotteen tiedot",
     "other-details": "Muita tietoja: ",
-    "make-bid":  "Huuda tästä tuotteesta"
+    "make-bid":  "Huuda tästä tuotteesta",
+
+    "hi-operator": "Hei Operaattori!",
+    "publish-item": "Julkaise tuote",
+    "view-reports": "Näytä raportti",
+    "cancel-auction": "Peruuta huutokauppa",
+    "cancel-bid": "Peruuta huuto",
+
+    "your-profile": "Oma profiili",
+    "auctions": "Huutokaupat",
+    "published-items": "Julkaitut huutokaupat: ",
+    "bought-items": "Voittamasi huutokaupat: "
+
+
 }
 
