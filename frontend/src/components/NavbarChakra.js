@@ -23,6 +23,7 @@ import {
 } from '@chakra-ui/icons';
 import { Link as ReachLink } from "react-router-dom";
 import { useState } from 'react';
+import {useTranslation} from 'react-i18next';
 
 
 
@@ -72,6 +73,7 @@ import { useState } from 'react';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
+  const {t} = useTranslation();
 
   return (
     <Box>
@@ -108,7 +110,7 @@ export default function WithSubnavigation() {
             fontFamily={'heading'}
             color={useColorModeValue('white', 'white')}>
             <Link as={ReachLink} to='/'>
-              FAST AND FURIOUS AUCTION
+              {t('f-f-auction')}
             </Link>
           </Text>
 

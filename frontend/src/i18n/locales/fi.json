@@ -1,1 +1,13 @@
-{}
+{    
+    "welcome-message":"Tervetuloa Fast and Furious huutokauppaan!",
+    "sell": "täällä sinä voit myydä ",
+    "fast": "NOPEASTI ",
+    "buy": "ja ostaa ",
+    "furious": "RAIVOSTUMATTA",
+    "everything-in-24h": "Kaikki 24 vain tunnin aikana",
+    "sign-in": "Kirjaudu sisään",
+    "sign-up": "Rekisteröidy",
+    "sign-out": "Kirjaudu ulos",
+    "copyrights": "© 2023 FF huutokaupat. Kaikki oikeudet pidätetään"
+
+}

@@ -10,6 +10,8 @@ import {
   } from '@chakra-ui/react';
   import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
   import Logo from '../images/FF-logo.PNG'
+  import {useTranslation} from 'react-i18next';
+
 //   import { ReactNode } from 'react';
   const SocialButton = ({
     children,
@@ -39,6 +41,7 @@ import {
   };
   
   export default function SmallWithSocial() {
+    const {t} = useTranslation();
     return (
       <Box
         bg={useColorModeValue('gray.50', 'gray.900')}
@@ -59,7 +62,8 @@ import {
           alt={'FF Logo'}
           src={Logo}
         />
-          <Text>© 2023 FF auction. All rights reserved</Text>
+          <Text>
+            {t('copyrights')}</Text>
           <Stack direction={'row'} spacing={6}>
             <SocialButton label={'Twitter'} href={'#'}>
               <FaTwitter />

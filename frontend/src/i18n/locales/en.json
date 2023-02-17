@@ -1,3 +1,13 @@
 {
-    "welcome-message":"Welcome to Fast and Furious Auction system!"
+    "f-f-auction": "FAST AND FURIOUS AUCTION",
+    "welcome-message":"Welcome to Fast and Furious Auction system!",
+    "sell": "This is where you can sell ",
+    "fast": "FAST",
+    "buy": "and buy without getting ",
+    "furious": "FURIOUS",
+    "everything-in-24h": "Everything should happen within 24 hours.",
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up",
+    "sign-out": "Sign Out",
+    "copyrights": "© 2023 FF auction. All rights reserved"
 }
