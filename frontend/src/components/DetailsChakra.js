@@ -19,11 +19,14 @@ import {
   import axios from 'axios';
   import { useLocation } from "react-router-dom";
   import { useState, useEffect} from 'react';
+  import { useTranslation } from 'react-i18next';
+
   const baseUrl = '/api/items';
   
   
   
   export default function ProductDetails() {
+    const {t} = useTranslation();
 
     const location = useLocation();
     //console.log(location.state);
@@ -140,21 +143,21 @@ import {
                 color={'gray.900'}
                 fontWeight={300}
                 fontSize={'1xl'}>
-                Initial price: {item.initialPrice} {item.currency}
+                {t('initial-price')} {item.initialPrice} {item.currency}
               </Text>
               <Text
                 color={'gray.900'}
                 fontWeight={500}
                 fontSize={'2xl'}
                 mb={4}>
-                Highest bid: {item.highestBid} {item.currency}
+                {t('highest-bid')}{item.highestBid} {item.currency}
               </Text>
               <Text
                 color={'gray.900'}
                 fontWeight={500}
                 fontSize={'2xl'}
                 mb={4}>
-                New bid:
+                {t('new-bid')}
                 <Input type='text' onChange={bidUpdate}></Input> 
                 {item.currency}
               </Text>
@@ -166,7 +169,7 @@ import {
                   _hover={{
                     bg: '#C7A1FE',
                   }} onClick={handleSubmit}>   
-              Save
+              {t('submit-bid')}
             </Button>
             </Box>
   
@@ -199,12 +202,12 @@ import {
                   fontWeight={'500'}
                   textTransform={'uppercase'}
                   mb={'4'}>
-                  Product Details
+                  {t('product-details')}
                 </Text>
                 <List spacing={2}>
                   <ListItem>
                     <Text as={'span'} fontWeight={'bold'}>
-                      Other details:
+                      {t('other-details')}
                     </Text>{' '}
                         Blaa blaa
                   </ListItem>
@@ -253,14 +256,14 @@ import {
                 color={'gray.900'}
                 fontWeight={300}
                 fontSize={'1xl'}>
-                Initial price: {item.initialPrice} {item.currency}
+                {t('initial-price')}{item.initialPrice} {item.currency}
               </Text>
               <Text
                 color={'gray.900'}
                 fontWeight={500}
                 fontSize={'2xl'}
                 mb={4}>
-                Highest bid: {item.highestBid} {item.currency}
+                {t('highest-bid')}{item.highestBid} {item.currency}
               </Text>
               <Button
                   loadingText="Submitting"
@@ -270,7 +273,7 @@ import {
                   _hover={{
                     bg: '#C7A1FE',
                   }}onClick={makeBid}>   
-              Make a bid
+              {t('make-bid')}
             </Button>
             </Box>
   
@@ -303,12 +306,12 @@ import {
                   fontWeight={'500'}
                   textTransform={'uppercase'}
                   mb={'4'}>
-                  Product Details
+                  {t('product-details')}
                 </Text>
                 <List spacing={2}>
                   <ListItem>
                     <Text as={'span'} fontWeight={'bold'}>
-                      Other details:
+                      {t('other-details')}
                     </Text>{' '}
                         Blaa blaa
                   </ListItem>

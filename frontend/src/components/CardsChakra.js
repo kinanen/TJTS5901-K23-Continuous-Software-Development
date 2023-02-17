@@ -2,15 +2,16 @@ import { VStack } from '@chakra-ui/react';
 import {React, useState, useEffect} from 'react';
 import CardChakra from './CardChakra';
 import img3 from '../images/hammer.jpg'
-
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 const baseUrl = '/api/items';
+
 
 // these should be read from the database, as json?
 // then map all instances with below details, which will bse sent as props to collection page
 
 function CardsChakra() {
-
+    const {t} = useTranslation();
     const [itemList, setItemList] = useState([]);
 
     useEffect(() => {
@@ -54,11 +55,11 @@ function CardsChakra() {
         let endTime = new Date(end);
         let timeLeftMS = endTime - Date.now();
         if (timeLeftMS > 0) {
-            status = 'ACTIVE'
+            status = t('active')
         } else if (timeLeftMS < 0) {
-            status = 'PASSED'
+            status = t('passed')
         } else {
-            status = 'PREPAIRING'
+            status = t('prepairing')
         }
         return status
     }

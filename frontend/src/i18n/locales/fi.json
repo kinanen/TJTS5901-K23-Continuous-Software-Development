@@ -26,7 +26,26 @@
     "agree": "Hyväksyn ",
     "terms-and-conditions": "käyttöehdot",
     "already-registred": "Oletko jo rekisteröitynyt?",
+    "to-your-account": "omalle käyttäjätilillesi",
 
-    "to-your-account": "omalle käyttäjätilillesi"
+    "hi-buyer": "Hei Ostaja!",
+    "choose-action": "Valitse toiminto",
+    "sign-up-as-seller": "Rekisteröidy myyjäksi",
+    "view-profile": "Näytä profiili",
+
+    "initial-price": "Lähtöhinta: ",
+    "highest-bid": " / Korkein huuto: ",
+    "time-left": "Huutoaikaa jäljellä: ",
+    "details": "Näytä tiedot",
+
+    "active": "AKTIIVINEN",
+    "passed": "PÄÄTTYNYT",
+    "prepairing": "VALMISTELUSSA",
+
+    "new-bid": "Uusi huuto: ",
+    "submit-bid": "Vahvista huuto",
+    "product-details": "Tuotteen tiedot",
+    "other-details": "Muita tietoja: ",
+    "make-bid":  "Huuda tästä tuotteesta"
 }
 

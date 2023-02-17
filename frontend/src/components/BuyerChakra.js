@@ -9,8 +9,10 @@ import {
 } from '@chakra-ui/react';
 import { Link as ReachLink } from "react-router-dom";
 import Crowd from "../images/confetti.jpg";
+import { useTranslation } from 'react-i18next';
 
 export default function WithBackgroundImage() {
+  const {t} = useTranslation();
   return (
     <Flex
       w={'full'}
@@ -31,14 +33,14 @@ export default function WithBackgroundImage() {
             fontSize={useBreakpointValue({ base: '3xl', md: '4xl' })} 
             // textAlign={'center'}
             >
-            Hi buyer!
+              {t('hi-buyer')}
           </Heading>
           <Heading
             color={'white'}
             fontWeight={700}
             lineHeight={1.2}
             fontSize={useBreakpointValue({ base: '2xl', md: '3xl' })}>
-            Choose what you want to do
+            {t('choose-action')}
           </Heading>
           <Stack direction={'row'} spacing={8}>
             <Button
@@ -53,7 +55,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='/view'>
-                View Items
+                {t('view-items')}
               </Link>
             </Button>
             <Button
@@ -68,7 +70,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='/signup'>
-                Sign up as Seller
+                {t('sign-up-as-seller')}
               </Link>
             </Button>
             <Button
@@ -83,7 +85,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='/profile'>
-                View profile
+                {t('view-profile')}
               </Link>
             </Button>
           </Stack>

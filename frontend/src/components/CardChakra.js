@@ -12,8 +12,10 @@ import {
   } from '@chakra-ui/react';
   import { Link as ReachLink } from "react-router-dom";
   import { useLocation } from "react-router-dom";
+  import { useTranslation } from 'react-i18next';
   
   export default function CardItem(props) {
+    const {t} = useTranslation();
 
     const getId = (e) => {
       console.log(e.target.id);
@@ -72,7 +74,7 @@ import {
                 </Text>
               </GridItem>
               <GridItem  area={'price'} textAlign={'center'} justify={'center'}>
-                <h2>Initial price: {props.initialPrice} {props.currency} / Highest bid: {props.highestBid} {props.currency}</h2>
+                <h2>{t('initial-price')}{props.initialPrice} {props.currency}{t('highest-bid')}{props.highestBid} {props.currency}</h2>
               </GridItem>
               <GridItem area={'button'} textAlign={'center'} justify={'center'}>
                 <Button bg={'#774BCD'}
@@ -80,7 +82,7 @@ import {
                   _hover={{
                     bg: '#C7A1FE',
                   }} onClick={getId}><Link as={ReachLink} to={'/details'}  
-                  state={props.id} id={props.id}>Details</Link></Button>
+                  state={props.id} id={props.id}>{t('details')}</Link></Button>
               </GridItem>
               <GridItem  area={'status'} textAlign={'right'}>
                 <Text as='b' fontSize={'lg'} color={'green.600'} textAlign={'right'} pb={8}>
@@ -88,7 +90,7 @@ import {
               </GridItem>
               <GridItem  area={'time'} textAlign={'right'}>
                 <Text as='b' fontSize={'lg'} color={'gray.600'} textAlign={'right'} pb={8}>
-                  Time remaining: {props.time}</Text>
+                  {t('time-left')}{props.time}</Text>
               </GridItem>
             </Grid>
           </Box>
