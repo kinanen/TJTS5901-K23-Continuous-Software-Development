@@ -335,9 +335,9 @@ const MobileNav = () => {
       p={4}
       display={{ md: 'none' }}>
       {/* {NAV_ITEMS.map((navItem) => ( */}
-        <MobileNavItem key={'actions'} label={'Signed in Actions'} href={pageRef} />
-        <MobileNavItem key={'view'} label={'View items'} href={'/view'} />
-        <MobileNavItem key={'home'} label={'Home'} href={'/'} />
+        <MobileNavItem key={'actions'} label={t('signed-in-actions')} href={pageRef} />
+        <MobileNavItem key={'view'} label={t('view-items')} href={'/view'} />
+        <MobileNavItem key={'home'} label={t('home')} href={'/'} />
       {/* // ))} */}
     </Stack>
   );

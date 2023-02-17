@@ -12,5 +12,18 @@
     "sign-in": "Sign In",
     "sign-up": "Sign Up",
     "sign-out": "Sign Out",
-    "copyrights": "© 2023 FF auction. All rights reserved"
+    "sign-up-text": "to enjoy all of our cool features",
+    "copyrights": "© 2023 FF auction. All rights reserved",
+
+    "fname": "First name",
+    "lname": "Last name",
+    "email": "Email address",
+    "password": "Password",
+    "user-type": "User type",
+    "buyer": "Buyer",
+    "seller": "Seller",
+    "operator": "Operator",
+    "agree": "I agree to ",
+    "terms-and-conditions": "terms and conditions",
+    "already-registred": "Already registred?"
 }

@@ -21,6 +21,7 @@ import {
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
   import { Link as ReachLink } from "react-router-dom";
   import SignUpImg from "../images/signup.jpg";
+  import { useTranslation } from 'react-i18next';
 
   import axios from 'axios';
   const baseUrl = '/api/users';
@@ -60,7 +61,7 @@ import {
 
     login(newuser);
   }
-
+    const { t } = useTranslation();
     return (
       <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
         <Flex p={8} flex={1} align={'center'} justify={'center'}>
@@ -70,33 +71,33 @@ import {
             boxShadow={'lg'}
             p={8}>
             <Heading fontSize={'4xl'} textAlign={'center'}>
-              Sign up
+              {t('sign-up')}
             </Heading>
             <Text fontSize={'lg'} color={'gray.600'} textAlign={'center'} pb={8}>
-              to enjoy all of our cool features
+              {t('sign-up-text')}
               </Text>
             <form onSubmit={handleSubmit}>  
               <Stack spacing={4}>
                 <HStack>
                   <Box>
                     <FormControl id="firstName" isRequired>
-                      <FormLabel>First Name</FormLabel>
+                      <FormLabel>{t('fname')}</FormLabel>
                       <Input type="text" onChange={fnameUpdate}/>
                     </FormControl>
                   </Box>
                   <Box>
                     <FormControl id="lastName" isRequired>
-                      <FormLabel>Last Name</FormLabel>
+                      <FormLabel>{t('lname')}</FormLabel>
                       <Input type="text" onChange={lnameUpdate} />
                     </FormControl>
                   </Box>
                 </HStack>
                 <FormControl id="email" isRequired>
-                  <FormLabel>Email address</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <Input type="email" onChange={emailUpdate} />
                 </FormControl>
                 <FormControl id="password" isRequired>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>{t('password')} </FormLabel>
                   <InputGroup>
                     <Input type={showPassword ? 'text' : 'password'} onChange={passwordUpdate} />
                     <InputRightElement h={'full'}>
@@ -111,15 +112,17 @@ import {
                   </InputGroup>
                 </FormControl>
                 <FormControl>
-                  <FormLabel>User type</FormLabel>
+                  <FormLabel>{t('user-type')}</FormLabel>
                     <Select onChange={userTypeUpdate}>
-                      <option value="buyer">Buyer</option>
-                      <option value="seller">Seller</option>
-                      <option value="operator">Operator</option>
+                      <option value="buyer">{t('buyer')}</option>
+                      <option value="seller">{t('seller')}</option>
+                      <option value="operator">{t('operator')}</option>
                     </Select>
                 </FormControl>
                 <FormControl>
-                  <Checkbox defaultChecked>I agree to <Link color={'blue.400'} as={ReachLink} to='/tandc'>terms and conditions</Link></Checkbox>
+                  <Checkbox defaultChecked>
+                    {t('agree')}<Link color={'blue.400'} as={ReachLink} to='/tandc'> {t('terms-and-conditions')} </Link>
+                    </Checkbox>
                 </FormControl>
                 <Stack spacing={10} pt={2}>
                   <Button
@@ -131,12 +134,12 @@ import {
                     _hover={{
                       bg: '#C7A1FE',
                     }}>
-                    Sign up
+                    {t('sign-up')}
                   </Button>
                 </Stack>
                 <Stack pt={6}>
                   <Text align={'center'}>
-                    Already a user? <Link color={'blue.400'} as={ReachLink} to='/signin'>Login</Link>
+                    {t('already-registred')} <Link color={'blue.400'} as={ReachLink} to='/signin'>{t('sign-in')}</Link>
                   </Text>
                 </Stack>
               </Stack>

@@ -1,4 +1,8 @@
 {    
+    "f-f-auction": "FAST AND FURIOUS AUCTION",
+    "signed-in-actions": "Kirjautuneiden toiminnot",
+    "view-items": "Näytä myytävät",
+    "home": "Etusivu",
     "welcome-message":"Tervetuloa Fast and Furious huutokauppaan!",
     "sell": "täällä sinä voit myydä ",
     "fast": "NOPEASTI ",
@@ -8,6 +12,19 @@
     "sign-in": "Kirjaudu sisään",
     "sign-up": "Rekisteröidy",
     "sign-out": "Kirjaudu ulos",
-    "copyrights": "© 2023 FF huutokaupat. Kaikki oikeudet pidätetään"
+    "sign-up-text": "päästäksesi nauttimaan kaikista huutokaupan makeista ominaisuuksista",
+    "copyrights": "© 2023 FF huutokaupat. Kaikki oikeudet pidätetään",
+    
+    "fname": "Etunimi",
+    "lname": "Sukunimi",
+    "email": "Sähköposti osoite",
+    "password": "Salasana",
+    "user-type": "Käyttäjä ryhmä",
+    "buyer": "Ostaja",
+    "seller": "Myyjä",
+    "operator": "Operaattori",
+    "agree": "Hyväksyn ",
+    "terms-and-conditions": "käyttöehdot",
+    "already-registred": "Oletko jo rekisteröitynyt?"
 
 }
