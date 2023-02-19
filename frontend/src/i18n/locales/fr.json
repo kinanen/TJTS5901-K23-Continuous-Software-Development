@@ -1,1 +1,88 @@
-{}
+{
+    "f-f-auction": "FAST AND FURIOUS AUCTION",
+    "signed-in-actions": "Signed in Actions",
+    "view-items": "Voire les objets",
+    "home": "Accueil",
+    "welcome-message":"Bienvenu dans le système d'enchère Fast and Furious",
+    "sell": "C'est ici que vous pouvez vendre ",
+    "fast": "RAPIDE",
+    "buy": "et acheter ",
+    "furious": "FURIOUS",
+    "everything-in-24h": "Tout se passe dans un délais de 24 heures",
+    "sign-in": "Se connecter",
+    "sign-up": "S'inscrire",
+    "sign-out": "Déconnexion",
+    "sign-up-text": "pour profiter de toutes nos fonctionnalités",
+    "copyrights": "© 2023 FF auction. Tous droits reservés",
+
+    "fname": "Prénom",
+    "lname": "Nom",
+    "email": "Adresse mail",
+    "password": "Mot de passe",
+    "user-type": "Type d'utilisateur",
+    "buyer": "Acheteur",
+    "seller": "Vendeur",
+    "operator": "Opérateur",
+    "agree": "Je consens à ",
+    "terms-and-conditions": "conditions générales",
+    "already-registred": "Déjà inscrit ?",
+    "to-your-account": "vers votre compte",
+
+    "hi-buyer": "Bonjour, vendeur!",
+    "choose-action": "choisisez une action",
+    "sign-up-as-seller": "S'inscrire en tant que vendeur",
+    "view-profile": "Voir Profile",
+
+    "initial-price": "Prix de départ: ",
+    "highest-bid": " / Plus haute enchère: ",
+    "time-left": "Temps restant: ",
+    "details": "Détails",
+
+    "active": "ACTIF",
+    "passed": "PASSÉ",
+    "prepairing": "EN PREPARATION",
+
+    "new-bid": "Nouvelle enchère: ",
+    "submit-bid": "Soumettre l'enchère",
+    "product-details": "Détails du produit",
+    "other-details": "Autre détails: ",
+    "make-bid":  "Faire une nouvelle enchère",
+
+    "hi-operator": "Bonjour, Opérateur!",
+    "publish-item": "Publier un objet",
+    "view-reports": "Voir les rapports",
+    "cancel-auction": "Annuler la vente",
+    "cancel-bid": "Annuler l'enchère",
+
+    "upload-photo": "TÉLÉCHARGER PHOTO",
+
+    "your-profile": "Votre profile",
+    "auctions": "Ventes",
+    "published-items": " Objets publiés pour la vente:",
+    "bought-items": "Objets achetés avec la plus grande enchère:",
+
+    "item-name": "Nom de l'objet",
+    "item-description": "Description de l'objet",
+    "item-model": "Modéle de l'article",
+    "item-category": "Catégorie de l'article",
+    "other": "Autre",
+    "device": "Appareil",
+    "furiture": "Mobilier",
+    "clothes": "Vêtement",
+    "poor": "Mauvais",
+    "acceptable": "Acceptable",
+    "good": "Bon",
+    "excellent": "Excellent",
+    "new": "Neuf",
+    "item-condition": "Condition",
+
+    "zip-code": "Code zip",
+    "currency": "Monnaie",
+    "submit": "SOUMETTRE",
+
+    "hi-seller": "Bonjour, Vendeur!",
+
+    "terms-and-conditions-text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voulptua",
+    "i-agree": "J'accepte"
+
+}
