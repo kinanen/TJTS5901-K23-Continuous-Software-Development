@@ -1,12 +1,13 @@
 const itemsRouter = require('express').Router()
 const Item = require('../models/item')
+const User = require('../models/user')
 const Upload = require('../models/upload')
 const logger = require('../utils/logger')
 const multer  = require('multer')
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// GET all the items from Database
+// GET endpoint for all the items from Database
 itemsRouter.get('/', async (request, response) => {
     const items = await Item
     .find({})
@@ -15,7 +16,16 @@ itemsRouter.get('/', async (request, response) => {
     response.json(items)
 })
 
-// POST the new item to Database
+// GET endpoint for the active items from Database
+itemsRouter.get('/active', async (request, response) => {
+  const items = await Item
+  .find({ status: 'active' })
+  .find({ status: 'active' }).populate('seller', { firstName: 1, surname: 1 })
+  
+  response.json(items)
+})
+
+// POST endpoint for the new item to Database
 itemsRouter.post('/', async (request, response) => {
   if (!request.user) {
     logger.warning("Someone tried to add an item with no token or invalid token")
@@ -96,18 +106,22 @@ itemsRouter.put('/photo/:id', upload.single("file"), async (request, response) =
   response.status(200).json(uploadProcess)
 })
 
+// GET endpoint for single photo
 itemsRouter.get('/photo/:id', async (request, response) => {
   const photo = await Upload.findById(request.params.id)
 
+  // if no photo can be found
   if(!photo) {
     logger.error("Could not find a photo with given id")
+    // respond with code 404 Not Found
     return response.status(404).json({ error: "no such photo found with id" })
   }
 
+  // otherwise repond with code 200 OK and the photo
   response.status(200).json(photo)
 })
 
-// GET a single item from Database
+// GET endpoint for a single item from Database
 itemsRouter.get('/:id', async (request, response) => {
   const item = await Item.findById(request.params.id)
   // if there's no item found, respond with code 404 Not Found
@@ -161,6 +175,25 @@ itemsRouter.put('/:id', async (request, response) => {
 
   // respond with code 200 OK and send the updated item in the response
   logger.notice(`User ${user.email} bid on item ${item.id}`)
+  response.status(200).json(updatedItem)
+})
+
+// PUT endpoint to update the item's status
+itemsRouter.put('/status/:id', async (request, response) => {
+  // get the item from database to compare it with the bid
+  const item = await Item.findById(request.params.id)
+
+  // set the item's status to one from request
+  item.status = request.body.status
+  
+  // update the item on database with new status
+  const updatedItem = await Item
+    .findByIdAndUpdate(
+      request.params.id,
+      item,
+      { new: true }
+    )
+
   response.status(200).json(updatedItem)
 })
 
