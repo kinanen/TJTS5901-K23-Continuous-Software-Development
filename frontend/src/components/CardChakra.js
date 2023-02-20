@@ -27,20 +27,40 @@ import {
           <Box
           // alignItems='center'
             minW='90%'
-            maxW='90%'
+            maxW='90%' 
             rounded={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
+            bg={'white'}
             boxShadow={'lg'}
             p={4}
             mr={0}>
-            <Grid templateAreas={`"image header status"
-                  "image model x"
-                  "image text x"
-                  "image price x"
-                  "image button time"
-                  `}
-                gridTemplateRows={'1fr 1fr 1fr 1fr 1fr'}
-                gridTemplateColumns={'300px 2fr 1fr'}
+            <Grid templateAreas={{
+              base: `"status"
+              "header"
+              "model"
+              "text"
+              "price"
+              "button"
+              "time"`  
+              , sm: `"status"
+                "header"
+                "model"
+                "text"
+                "price"
+                "button"
+                "time"`  
+                  , md:`"header status"
+                    "model x"
+                    "text x"
+                    "price x"
+                    "button time"` 
+                    , lg: `"image header status"
+                      "image model x"
+                      "image text x"
+                      "image price x"
+                      "image button time"
+                `}}
+                //gridTemplateRows={'1fr 1fr 1fr 1fr 1fr'}
+                gridTemplateColumns={{sm: '1fr', md: '2fr 1fr' , lg: '200px 3fr 1fr'}}
                 h='full'
                 p={2}
                 gap='1'
@@ -49,45 +69,48 @@ import {
                 >
               <GridItem  area={'image'}>
                 <Image
+                display={{base: 'none', sm: 'none', md:'none', lg: 'inline-flex'}}
                 rounded={'lg'}
-                height={'full'}
-                width={280}
+                height={'90%'}
+                width={200}
                 objectFit={'cover'}
                 src={props.src}
                 />
               </GridItem>
-              <GridItem  area={'header'}>
-                <Heading fontSize={'4xl'} textAlign={'center'}>
+              <GridItem h={[4,6,8,10]} area={'header'}>
+                <Heading fontSize={{base: 'lg', sm:'xl', md:'2xl', lg:'3xl'}} textAlign={'center'}>
                     {props.name}
                 </Heading>
               </GridItem>
-              <GridItem  area={'model'} textAlign={'center'} justify={'center'}>
-                <Text fontSize={'lg'} color={'gray.600'} textAlign={'center'} pb={8}>
+              <GridItem h={[4,6,6,6]}  area={'model'} textAlign={'center'} justify={'center'}>
+                <Text fontSize={{base: 'xs', sm:'sm', md:'md', lg:'lg'}} color={'gray.600'} textAlign={'center'} pb={[2,4,6,8]}>
                     {props.model}
                 </Text>
               </GridItem>
-              <GridItem  area={'text'} textAlign={'center'} justify={'center'}>
-                <Text fontSize={'lg'} color={'gray.600'} textAlign={'center'} pb={8}>
+              <GridItem h={[10,10,8,6]}   area={'text'} textAlign={'center'} justify={'center'}>
+                <Text fontSize={{base: 'xs', sm:'sm', md:'md', lg:'lg'}} color={'gray.600'} textAlign={'center'} pb={[2,4,6,8]}>
                     {props.description}
                 </Text>
               </GridItem>
-              <GridItem  area={'price'} textAlign={'center'} justify={'center'}>
-                <h2>Initial price: {props.initialPrice} {props.currency} / Highest bid: {props.highestBid} {props.currency}</h2>
+              <GridItem h={[10,10,8,8]}  area={'price'} textAlign={'center'} justify={'center'}>
+                <Text fontSize={{base: 'xs', sm:'sm', md:'md', lg:'lg'}} color={'gray.600'} textAlign={'center'} pb={[2,4,6,8]}>
+                  Initial price: {props.initialPrice} {props.currency} / Highest bid: {props.highestBid} {props.currency}</Text>
               </GridItem>
-              <GridItem area={'button'} textAlign={'center'} justify={'center'}>
-                <Button bg={'#774BCD'}
+              <GridItem  h={[4,6,8,8]} mb={[2,4,6,8]} area={'button'} textAlign={'center'} justify={'center'}>
+                <Button size={{base: 'xs', sm: 'sm', md: 'sm', lg: 'md'}}
+                zIndex={'auto'} bg={'#774BCD'}
                   color={'white'}
                   _hover={{
                     bg: '#C7A1FE',
                   }} onClick={getId}><Link as={ReachLink} to={'/details'}  
                   state={props.id} id={props.id}>Details</Link></Button>
               </GridItem>
-              <GridItem  area={'status'} textAlign={'right'}>
-                <Text as='b' fontSize={'lg'} color={'green.600'} textAlign={'right'} pb={8}>
+              <GridItem h={[4,6,8,10]} area={'status'} textAlign={{base: 'center', sm: 'center', md: 'right', lg: 'right'}}>
+                <Text as='b' fontSize={{base: 'xs', sm:'sm', md:'md', lg:'lg'}} color={'green.600'} textAlign={'right'} pb={[2,4,6,8]}>
                      {props.status}</Text>
               </GridItem>
-              <GridItem  area={'time'} textAlign={'right'}>
-                <Text as='b' fontSize={'lg'} color={'gray.600'} textAlign={'right'} pb={8}>
+              <GridItem h={[4,6,8,10]} area={'time'} textAlign={{base: 'center', sm: 'center', md: 'right', lg: 'right'}}>
+                <Text as='b' fontSize={{base: 'xs', sm:'sm', md:'md', lg:'lg'}} color={'gray.600'} textAlign={'right'} pb={[2,4,6,8]}>
                   Time remaining: {props.time}</Text>
               </GridItem>
             </Grid>

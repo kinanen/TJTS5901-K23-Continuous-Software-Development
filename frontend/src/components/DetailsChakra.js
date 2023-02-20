@@ -11,7 +11,7 @@ import {
     Heading,
     SimpleGrid,
     StackDivider,
-    useColorModeValue,
+    Divider,
     List,
     ListItem,
   } from '@chakra-ui/react';
@@ -173,25 +173,27 @@ import {
             <Stack
               spacing={{ base: 4, sm: 6 }}
               direction={'column'}
-              divider={
+              /* divider={
                 <StackDivider
                 color={'gray.900'}
                 />
-              }>
-              <VStack spacing={{ base: 4, sm: 6 }}>
+              } */
+              >
+              {/* <VStack spacing={{ base: 4, sm: 6 }}>
                 <Text
                   color={'gray.900'}
                   fontSize={'2xl'}
                   fontWeight={'300'}>
                   {item.description}
                 </Text>
-{/*                 <Text fontSize={'lg'}>
+{                 <Text fontSize={'lg'}>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
                   aliquid amet at delectus doloribus dolorum expedita hic, ipsum
                   maxime modi nam officiis porro, quae, quisquam quos
                   reprehenderit velit? Natus, totam.
-                </Text> */}
-              </VStack>
+                </Text> }
+              </VStack> */}
+              <Divider size={'lg'} borderColor={'#774BCD'}></Divider>
               <Box>
                 <Text
                   fontSize={{ base: '16px', lg: '18px' }}
@@ -201,14 +203,21 @@ import {
                   mb={'4'}>
                   Product Details
                 </Text>
-                <List spacing={2}>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  {item.description}
+                </Text>
+
+                {/* <List spacing={2}>
                   <ListItem>
                     <Text as={'span'} fontWeight={'bold'}>
                       Other details:
                     </Text>{' '}
                         Blaa blaa
                   </ListItem>
-                </List>
+                </List> */}
               </Box>
             </Stack>
           </Stack>
@@ -277,25 +286,27 @@ import {
             <Stack
               spacing={{ base: 4, sm: 6 }}
               direction={'column'}
-              divider={
-                <StackDivider
-                color={'gray.900'}
-                />
-              }>
-              <VStack spacing={{ base: 4, sm: 6 }}>
+              // divider={
+              //   <StackDivider
+              //   color={'gray.900'}
+              //   />
+              // }
+              >
+              {/* <VStack spacing={{ base: 4, sm: 6 }}>
                 <Text
                   color={'gray.900'}
                   fontSize={'2xl'}
                   fontWeight={'300'}>
                   {item.description}
                 </Text>
-{/*                 <Text fontSize={'lg'}>
+{                <Text fontSize={'lg'}>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
                   aliquid amet at delectus doloribus dolorum expedita hic, ipsum
                   maxime modi nam officiis porro, quae, quisquam quos
                   reprehenderit velit? Natus, totam.
-                </Text> */}
-              </VStack>
+                </Text> }
+              </VStack>*/}
+              <Divider size={'lg'} borderColor={'#774BCD'}></Divider>
               <Box>
                 <Text
                   fontSize={{ base: '16px', lg: '18px' }}
@@ -305,14 +316,20 @@ import {
                   mb={'4'}>
                   Product Details
                 </Text>
-                <List spacing={2}>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  {item.description}
+                </Text>
+                {/* <List spacing={2}>
                   <ListItem>
                     <Text as={'span'} fontWeight={'bold'}>
                       Other details:
                     </Text>{' '}
                         Blaa blaa
                   </ListItem>
-                </List>
+                </List> */}
               </Box>
             </Stack>
           </Stack>

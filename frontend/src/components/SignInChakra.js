@@ -56,10 +56,11 @@ export default function SignIn() {
       const response = await axios.post(baseUrl, credentials)
       console.log(response.data);
       setUser({email: response.data.email, userType: response.data.userType, id: response.data.id, token: response.data.token});
-      setDisplay('flex');
-      setAlertStatus('success');
+      //setDisplay('flex');
+      //setAlertStatus('success');
       //setAlertTitle('Success!');
-      setAlertMessage("Your login was successful");
+      //setAlertMessage("Your login was successful");
+      redirect();
       return response.data;
     } catch(error) {
       console.log(error.response.data.error);
@@ -101,6 +102,7 @@ export default function SignIn() {
     };
 
     login(credentials);
+    
 
   }
 

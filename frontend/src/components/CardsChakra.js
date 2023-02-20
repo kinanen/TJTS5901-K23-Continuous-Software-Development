@@ -1,10 +1,13 @@
-import { VStack } from '@chakra-ui/react';
-import {React, useState, useEffect} from 'react';
+import { VStack, Select, FormControl, FormLabel, Stack, Button, HStack } from '@chakra-ui/react';
+import {React, useState, useEffect, useRef} from 'react';
 import CardChakra from './CardChakra';
 import img3 from '../images/hammer.jpg'
+//import emailjs from '@emailjs/browser';
 
 import axios from 'axios';
 const baseUrl = '/api/items';
+
+
 
 // these should be read from the database, as json?
 // then map all instances with below details, which will bse sent as props to collection page
@@ -13,6 +16,9 @@ function CardsChakra() {
 
     const [itemList, setItemList] = useState([]);
 
+    const [currency, setCurrency] = useState('eur');
+    const currencyUpdate = (event) => setCurrency(event.target.value);
+
     useEffect(() => {
     const listItems = async () => {
         await axios.get(baseUrl)
@@ -20,6 +26,13 @@ function CardsChakra() {
       }
       listItems();
     }, []);
+
+    /* const findExchangeRates = () => {
+        return axios.get("https://sdw-wsrest.ecb.europa.eu/help/")
+              .then((response) => console.log(response.data));
+    } 
+
+    findExchangeRates();*/
 
     function msToTime(duration) {
         let milliseconds = Math.floor((duration % 1000) / 100);
@@ -64,7 +77,50 @@ function CardsChakra() {
     }
     console.log(itemList);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("currency is now "+currency);
+    }
+
+    /* const form = useRef();
+    const sendEmail = (e) => {
+        e.preventDefault();
+    
+        emailjs.sendForm('service_mbzsi4j', 'contact_form', form.current, 'vpv8xFI6aDigQvtdr')
+          .then((result) => {
+              console.log(result.text);
+          }, (error) => {
+              console.log(error.text);
+          });
+      }; */
+
     return (
+        <>
+        <HStack alignItems={'right'} textAlign={'right'} justifyContent={'right'} mr={10}>
+            <form w={'100px'} onSubmit={handleSubmit} display={'inline-flex'}> 
+                <FormControl>
+                    <FormLabel fontSize={'xs'} textAlign={'right'}>Currency</FormLabel>
+                    <Select size="xs" onChange={currencyUpdate}>
+                        <option value="eur">EUR</option>
+                        <option value="usd">USD</option>
+                        <option value="gbp">GBP</option>
+                    </Select>
+                </FormControl>
+                <Stack spacing={10} pt={2}>
+                    <Button
+                        type='submit'
+                        loadingText="Submitting"
+                        size="xs"
+                        bg={'#774BCD'}
+                        color={'white'}
+                        _hover={{
+                        bg: '#C7A1FE',
+                        }}>
+                        Save
+                    </Button>
+                </Stack>
+            </form>
+        </HStack>
         <VStack>
             {itemList.map((item, pos) => (
                 <CardChakra 
@@ -73,9 +129,9 @@ function CardsChakra() {
                 name={item.name}
                 model={item.model}
                 description={item.description}
-                initialPrice={item.initialPrice}
-                highestBid={item.highestBid}
-                currency={item.currency}
+                initialPrice={item.initialPrice} // tähän valitulla currencyllä lask hinta
+                highestBid={item.highestBid} // tähän valitulla currencyllä lask hinta
+                currency={item.currency} // tähän valittu currency
                 time={calculateHours(item.endDate)}
                 status={findStatus(item.endDate)}
                 id={item.id}
@@ -84,6 +140,7 @@ function CardsChakra() {
             />
                 ))}
         </VStack>
+        </>
     );
 }
 

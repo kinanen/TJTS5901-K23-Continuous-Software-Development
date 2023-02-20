@@ -1,5 +1,5 @@
 
-import React from "react";
+import {React, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import NavbarChakra from "./components/NavbarChakra";
 import FooterChakra from "./components/FooterChakra";
@@ -14,13 +14,17 @@ import SellerChakra from "./components/SellerChakra";
 import BuyerChakra from "./components/BuyerChakra";
 import Profile from "./components/Profile";
 import OperatorChakra from "./components/OperatorChakra";
+import Email from "./components/Email";
+import AuctionsList from "./components/AuctionsList";
 import './App.css';
 
 
 export default function App() {
+
   return (
     <div>
       <NavbarChakra />
+      <div>
       <Routes>
         <Route exact path="/" element={<Home />}>
         </Route>
@@ -44,7 +48,12 @@ export default function App() {
         </Route>
         <Route path="/operator" element={<OperatorChakra />}>
         </Route>
+        <Route path="/email" element={<Email />}>
+        </Route>
+        <Route path="/auctions" element={<AuctionsList />}>
+        </Route>
       </Routes>
+      </div>
       <FooterChakra />
     </div>
   );

@@ -4,11 +4,9 @@ import {
   Flex,
   Button,
   VStack,
-  useBreakpointValue,
   Link,
 } from '@chakra-ui/react';
 import { Link as ReachLink } from "react-router-dom";
-import Crowd from "../images/confetti.jpg";
 import { useTranslation, Trans, withTranslation } from 'react-i18next';
 
 export default function WithBackgroundImage() {
@@ -16,21 +14,16 @@ export default function WithBackgroundImage() {
     <Flex
       w={'full'}
       h={'100vh'}
-      // backgroundImage={Crowd}
-      // backgroundSize={'cover'}
-      // backgroundPosition={'center center'}
-      // opacity={0.7}
       >
       <VStack
         w={'full'}
         justify={'center'}
-        px={useBreakpointValue({ base: 4, md: 8 })}
+        px={{ base: 4, sm: 6, md: 8, lg: 10 }}
         bgGradient={'linear(to-r, blackAlpha.600, transparent)'}>
-        <Stack maxW={'2xl'} align={'flex-start'} spacing={6}>
+        <Stack maxW={'2xl'} align={'flex-start'} spacing={[2,4,6]}>
           <Heading 
             color={'white'}
-            fontSize={useBreakpointValue({ base: '3xl', md: '4xl' })} 
-            // textAlign={'center'}
+            fontSize={{ base: '2xl', sm: '3xl', md: '4xl', xl: '4xl' }} 
             >
             Hi buyer!
           </Heading>
@@ -38,18 +31,16 @@ export default function WithBackgroundImage() {
             color={'white'}
             fontWeight={700}
             lineHeight={1.2}
-            fontSize={useBreakpointValue({ base: '2xl', md: '3xl' })}>
+            fontSize={{ base: '2xl', sm: '3xl', md: '4xl', xl: '4xl' }}>
             Choose what you want to do
           </Heading>
-          <Stack direction={'row'} spacing={8}>
+          <Stack direction={{base: 'column', md: 'row'}} spacing={[2,4,6,8]}>
             <Button
-              display={{ base: 'none', md: 'inline-flex' }}
-              fontSize={'sm'}
-              width={'100px'}
+              fontSize={{base:'sm', sm: 'sm', md: 'md', lg: 'lg'}}
+              width={'auto'}
               fontWeight={600}
               color={'white'}
               bg={'#774BCD'}
-              //href={'#'}
               _hover={{
                 bg: '#C7A1FE',
               }}>
@@ -58,13 +49,11 @@ export default function WithBackgroundImage() {
               </Link>
             </Button>
             <Button
-              display={{ base: 'none', md: 'inline-flex' }}
-              fontSize={'sm'}
-              width={'150px'}
+              fontSize={{base:'sm', sm: 'sm', md: 'md', lg: 'lg'}}
+              width={'auto'}
               fontWeight={600}
               color={'white'}
               bg={'#774BCD'}
-              //href={'#'}
               _hover={{
                 bg: '#C7A1FE',
               }}>
@@ -73,13 +62,11 @@ export default function WithBackgroundImage() {
               </Link>
             </Button>
             <Button
-              display={{ base: 'none', md: 'inline-flex' }}
-              fontSize={'sm'}
-              width={'100px'}
+              fontSize={{base:'sm', sm: 'sm', md: 'md', lg: 'lg'}}
+              width={'auto'}
               fontWeight={600}
               color={'white'}
               bg={'#774BCD'}
-              //href={'#'}
               _hover={{
                 bg: '#C7A1FE',
               }}>

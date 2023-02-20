@@ -5,7 +5,7 @@ import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18n.use(Backend)
-    //.use(LanguageDetector)
+    .use(LanguageDetector)
     .use(initReactI18next)
     .init({
         lng:'fi',
@@ -20,6 +20,6 @@ i18n.use(Backend)
         defaultNS: 'translations'
     });
 
-i18n.languages = [en, fi, fr];
+//i18n.languages = [en, fi, fr];
 
 export default i18n;

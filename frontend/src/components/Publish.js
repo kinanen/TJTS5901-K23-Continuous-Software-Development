@@ -84,11 +84,6 @@ function Form() {
             category: category,
             condition: condition,
             initialPrice: price,
-            //seller: user,
-            //highestBid: null,
-            //highestBidder: null,
-            //startDate: new Date(),
-            //endDate: new Date(),//endDate.setHours(endDate.getHours() + 24),
             zipcode: zipcode,
             currency: currency
           };

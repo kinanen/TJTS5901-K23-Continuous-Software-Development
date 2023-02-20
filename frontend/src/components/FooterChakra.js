@@ -40,7 +40,7 @@ import {
   
   export default function SmallWithSocial() {
     return (
-      <Box
+      <Box position={'sticky'}bottom={0}right={0}left={0} zIndex={50}
         bg={useColorModeValue('gray.50', 'gray.900')}
         //bgGradient='linear(to-t, #EB3757, #F0884F)'
         //bg={'#774BCD'}
