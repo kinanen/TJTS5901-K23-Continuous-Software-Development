@@ -22,9 +22,10 @@ import {
   ChevronRightIcon,
 } from '@chakra-ui/icons';
 import { Link as ReachLink } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {useTranslation} from 'react-i18next';
 import { t } from 'i18next';
+
 
 
 
@@ -35,16 +36,19 @@ import { t } from 'i18next';
     const loggedUserJSON = window.localStorage.getItem(STORAGE_KEY)
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      token = user.token
-      return user;
+      if (user !== null) {
+        token = user.token
+        return user;
+      }
     }
     return null;
   }
+
   
 
   let user = getUser();
 
-  if (user ===! null) {
+  if (user !== null) {
     console.log("user is "+user.id);
     console.log("user role is "+user.userType);
   }
@@ -57,27 +61,42 @@ import { t } from 'i18next';
     signOutDisplay = 'none'
   }
 
-  let pageRef = '/';
-  if (user ===! null) {
-    if (user.userType === 'seller') {
-      console.log("Selleri oli: "+user.userType);
-      pageRef = '/seller';
-    } else if (user.userType === 'buyer') {
-      console.log("Baijeri oli: "+user.userType);
-      pageRef = '/buyer';
-    } else if (user.userType === 'operator') {
-      console.log("Operaattori oli: "+user.userType);
-      pageRef = '/operator';
-    }
-    console.log(pageRef);
-  }
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
+  const [pageRef, setPageRef] = useState('/signin');
   const {t} = useTranslation();
 
+  useEffect(() => {
+  if (user !== null) {
+    if (user.userType === 'seller') {
+      setPageRef('/seller');
+    } else if (user.userType === 'buyer') {
+      setPageRef('/buyer');
+    } else if (user.userType === 'operator') {
+      setPageRef('/operator');
+    } 
+  } else {
+    setPageRef('/signin');
+  }
+
+  console.log(pageRef);
+},[pageRef]);
+
+  //----------for sign out----------
+  const logOut = () => {
+    console.log("you logged out");
+    window.localStorage.removeItem(STORAGE_KEY)
+    token = null
+    signInDisplay = 'flex'
+    signOutDisplay = 'none' 
+    user = null;
+    setPageRef('/signin');
+  }
+  //--------------------------------
+
   return (
-    <Box>
+    <Box position={'sticky'}top={0}right={0}left={0} zIndex={50}>
       <Flex
         bgGradient='linear(to-b, #EB3757, #F0884F)'
         //bgGradient='linear(to-b, gray.300, yellow.400, pink.200)'
@@ -116,7 +135,7 @@ export default function WithSubnavigation() {
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav />
+            <DesktopNav pageRef={pageRef} />
           </Flex>
         </Flex>
 
@@ -160,7 +179,7 @@ export default function WithSubnavigation() {
           direction={'row'}
           spacing={6}>
           <Button
-            // onClick={setUser(null)}
+            onClick={logOut}
             display={{ base: 'none', md: 'inline-flex' }}
             fontSize={'sm'}
             fontWeight={600}
@@ -178,62 +197,44 @@ export default function WithSubnavigation() {
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
+        <MobileNav pageRef={pageRef} signInDisplay={signInDisplay} signOutDisplay={signOutDisplay} />
+        <Flex
+        ml={4}
+        py={2}
+        as={Link}
+        href={'/'}
+        justify={'space-between'}
+        align={'center'}
+        _hover={{
+          textDecoration: 'none',
+        }}>
+        <Text
+          onClick={logOut}
+          display={signOutDisplay}
+          fontWeight={600}
+          color={useColorModeValue('gray.600', 'gray.200')}>
+          {'Sign Out'}
+        </Text>
+      </Flex>
       </Collapse>
     </Box>
   );
 }
 
-const DesktopNav = () => {
+const DesktopNav = (props) => {
   const linkColor = useColorModeValue('white', 'white');
   const linkHoverColor = useColorModeValue('gray.800', 'gray.800');
   //const popoverContentBgColor = useColorModeValue('gray.800', 'gray.800');
 
   return (
     <Stack direction={'row'} spacing={4}>
-      {/* {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
-          <Popover trigger={'hover'} placement={'bottom-start'}>
-            <PopoverTrigger>
-              <Link
-                as={ReachLink}
-                p={2}
-                to={navItem.href}
-                fontSize={'sm'}
-                fontWeight={500}
-                color={linkColor}
-                _hover={{
-                  textDecoration: 'none',
-                  color: linkHoverColor,
-                }}>
-                {navItem.label}
-              </Link>
-            </PopoverTrigger>
-
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={'xl'}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={'xl'}
-                minW={'sm'}>
-                <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
-          </Popover>
-        </Box> */}
         <Box key={'actions'}>
         <Popover trigger={'hover'} placement={'bottom-start'}>
           <PopoverTrigger>
             <Link
               as={ReachLink}
               p={2}
-              to={pageRef}
+              to={props.pageRef}
               fontSize={'sm'}
               fontWeight={500}
               color={linkColor}
@@ -289,61 +290,24 @@ const DesktopNav = () => {
   );
 };
 
-/* const DesktopSubNav = ({ label, href, subLabel }) => {
-  return (
-    <Link
-      as={ReachLink}
-      to={href}
-      role={'group'}
-      display={'block'}
-      p={2}
-      rounded={'md'}
-      _hover={{ bg: useColorModeValue('pink.40', 'gray.900') }}>
-      <Stack direction={'row'} align={'center'}>
-        <Box>
-          <Text
-            transition={'all .3s ease'}
-            _groupHover={{ color: 'pink.400' }}
-            fontWeight={500}>
-            {label}
-          </Text>
-          <Text
-            fontSize={'sm'}
-            color={'white'}
-            _hover={{ color: 'pink.400' }}
-          >{subLabel}</Text>
-        </Box>
-        <Flex
-          transition={'all .3s ease'}
-          transform={'translateX(-10px)'}
-          opacity={0}
-          _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
-          justify={'flex-end'}
-          align={'center'}
-          flex={1}>
-          <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
-        </Flex>
-      </Stack>
-    </Link>
-  );
-}; */
 
-const MobileNav = () => {
+
+const MobileNav = (props) => {
   return (
     <Stack
       bg={useColorModeValue('white', 'gray.800')}
       p={4}
       display={{ md: 'none' }}>
-      {/* {NAV_ITEMS.map((navItem) => ( */}
-        <MobileNavItem key={'actions'} label={t('signed-in-actions')} href={pageRef} />
-        <MobileNavItem key={'view'} label={t('view-items')} href={'/view'} />
-        <MobileNavItem key={'home'} label={t('home')} href={'/'} />
-      {/* // ))} */}
+        <MobileNavItem key={'actions'} label={t('signed-in-actions')} href={props.pageRef} itemDisplay={'flex'} />
+        <MobileNavItem key={'view'} label={t('view-items')} href={'/view'} itemDisplay={'flex'} />
+        <MobileNavItem key={'home'} label={t('home')} href={'/'} itemDisplay={'flex'} />
+        <MobileNavItem key={'signin'} label={'Sign in'} href={'/signin'} itemDisplay={props.signInDisplay} />
+        <MobileNavItem key={'signup'} label={'Sign up'} href={'/signup'} itemDisplay={props.signInDisplay} />
     </Stack>
   );
 };
 
-const MobileNavItem = ({ label, href }) => {
+const MobileNavItem = ({ label, href, itemDisplay }) => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -358,19 +322,11 @@ const MobileNavItem = ({ label, href }) => {
           textDecoration: 'none',
         }}>
         <Text
+          display={itemDisplay}
           fontWeight={600}
           color={useColorModeValue('gray.600', 'gray.200')}>
           {label}
         </Text>
-        {/* {children && (
-          <Icon
-            as={ChevronDownIcon}
-            transition={'all .25s ease-in-out'}
-            transform={isOpen ? 'rotate(180deg)' : ''}
-            w={6}
-            h={6}
-          />
-        )} */}
       </Flex>
 
       <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
@@ -381,39 +337,9 @@ const MobileNavItem = ({ label, href }) => {
           borderStyle={'solid'}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
           align={'start'}>
-          {/* {children &&
-            children.map((child) => (
-              <Link as={ReachLink} key={child.label} py={2} to={child.href}>
-                {child.label}
-              </Link>
-            ))} */}
         </Stack>
       </Collapse>
     </Stack>
   );
 };
 
-/* console.log(pageRef);
-
-const NAV_ITEMS = [
-  {
-    label: 'View Items',
-    href: '/view'
-/*     children: [
-      {
-        label: 'Item List',
-        subLabel: 'Find your dream item',
-        href: '/view',
-      },
-/*       {
-        label: 'Blaa blaa',
-        subLabel: 'An exclusive list of items',
-        href: '#',
-      }, */
-    // ],
-/*   },
-  {
-    label: 'Actions',
-    href: {pageRef}
-  },
-]; */

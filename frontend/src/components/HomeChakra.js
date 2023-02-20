@@ -20,18 +20,25 @@ let token = null
     const loggedUserJSON = window.localStorage.getItem(STORAGE_KEY)
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      token = user.token
-      return user;
+      if (user !== null) {
+        token = user.token
+        return user;
+      }
     }
     return null;
   }
+  
 
   let user = getUser();
+
+  console.log("Welcome to homepage, user is :"+user);
+
   if (user ===! null) {
     console.log("user is "+user.id);
     console.log("user role is "+user.userType);
   }
 
+  // this is missing signInDisplay--> flex when user logs out
   let signInDisplay = 'none'
   let signOutDisplay = 'flex'
 
@@ -39,6 +46,8 @@ let token = null
     signInDisplay = 'flex'
     signOutDisplay = 'none'
   }
+
+
 
 export default function WithBackgroundImage() {
   const { t } = useTranslation();
@@ -110,8 +119,9 @@ export default function WithBackgroundImage() {
               </Link>
             </Button>
           </Stack>
-          <Stack direction={'row'} display={signOutDisplay}>
+          {/* <Stack direction={'row'} display={signOutDisplay}>
             <Button
+              onClick={logOut}
               display={{ base: 'none', md: 'inline-flex' }}
               fontSize={'sm'}
               width={'100px'}
@@ -126,7 +136,7 @@ export default function WithBackgroundImage() {
                 {t('sign-out')}
               </Link>
             </Button>
-          </Stack>
+          </Stack> */}
         </Stack>
       </VStack>
     </Flex>
