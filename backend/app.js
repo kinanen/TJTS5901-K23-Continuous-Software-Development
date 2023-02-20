@@ -10,6 +10,7 @@ const { userExtractor } = require('./utils/middleware')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const itemsRouter = require('./controllers/items')
+//require('express-async-errors')
 
 // Connecting to the database using mongoose
 mongoose.connect(config.MONGODB_URL)

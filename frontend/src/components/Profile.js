@@ -61,8 +61,6 @@ import {
   
   export default function ProfileCard(props) {
     const {t} = useTranslation();
-
-    const {t} = useTranslation();
     const [display, setDisplay] = useState('none');
 
     let user = getUser(); 
