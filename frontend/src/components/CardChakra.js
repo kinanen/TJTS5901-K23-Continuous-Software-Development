@@ -6,12 +6,10 @@ import {
     Text,
     Button,
     Link,
-    useColorModeValue,
     Grid,
     GridItem,
   } from '@chakra-ui/react';
   import { Link as ReachLink } from "react-router-dom";
-  import { useLocation } from "react-router-dom";
   import { useTranslation } from 'react-i18next';
   
   export default function CardItem(props) {
@@ -21,8 +19,6 @@ import {
       console.log(e.target.id);
     }
 
-    const location = useLocation();
-    console.log(location);
 
     return (
         <Flex w={'full'} p={8} flex={1} align={'center'} justify={'center'} alignItems='center'>
