@@ -1,3 +1,4 @@
+const path = require('path')
 const config = require('./utils/config')
 const express = require('express')
 const Sentry = require('@sentry/node');
@@ -50,6 +51,10 @@ app.use(Sentry.Handlers.tracingHandler());
 app.use('/api/items', userExtractor, itemsRouter)
 app.use('/api/users', userExtractor, usersRouter)
 app.use('/api/login', loginRouter)
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+});
 
 app.get('/server-info', (req, res) => {
     res.send('<p>This will (hopefully) show the same server info as the Python file app.py</p>')
