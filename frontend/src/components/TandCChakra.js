@@ -13,6 +13,7 @@ import {
   } from '@chakra-ui/react';
   import { CheckIcon } from '@chakra-ui/icons';
   import { Link as ReachLink } from "react-router-dom";
+  import { useTranslation } from "react-i18next";
   
   // Replace test data with your own
   const features = Array.apply(null, Array(8)).map(function (x, i) {
@@ -24,14 +25,13 @@ import {
   });
   
   export default function GridListWithHeading() {
+    const {t} = useTranslation();
     return (
       <Box p={4} h={'full'}>
         <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
-          <Heading fontSize={'3xl'}>Terms and Conditions</Heading>
+          <Heading fontSize={'3xl'}>{t('terms-and-conditions')}</Heading>
           <Text color={'gray.600'} fontSize={'xl'}>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-            sed diam voluptua.
+            {t('terms-and-conditions-text')}
           </Text>
         </Stack>
   
@@ -58,7 +58,7 @@ import {
             _hover={{
                 bg: '#C7A1FE',
             }}>
-            <Link as={ReachLink} to='/signup'>I agree</Link>
+            <Link as={ReachLink} to='/signup'>{t('i-agree')}</Link>
             </Button>
         </Container>
       </Box>

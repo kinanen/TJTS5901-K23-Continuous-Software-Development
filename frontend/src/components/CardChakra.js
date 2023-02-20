@@ -105,7 +105,7 @@ import {
                   _hover={{
                     bg: '#C7A1FE',
                   }} onClick={getId}><Link as={ReachLink} to={'/details'}  
-                  state={props.id} id={props.id}>Details</Link></Button>
+                  state={props.id} id={props.id}>{t('details')}</Link></Button>
               </GridItem>
               <GridItem h={[4,6,8,10]} area={'status'} textAlign={{base: 'center', sm: 'center', md: 'right', lg: 'right'}}>
                 <Text as='b' fontSize={{base: 'xs', sm:'sm', md:'md', lg:'lg'}} color={'green.600'} textAlign={'right'} pb={[2,4,6,8]}>

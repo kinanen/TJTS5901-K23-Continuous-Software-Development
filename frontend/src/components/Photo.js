@@ -1,10 +1,12 @@
 import { GridItem, Button } from "@chakra-ui/react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 
 function PhotoUpload(props) {
     const [edit, setEdit] = useState(false);
     const [img, setImg] = useState('');
+    const {t} = useTranslation();
 
     const upload = function(event) {
         event.preventDefault();
@@ -48,7 +50,7 @@ function PhotoUpload(props) {
                     _hover={{
                         bg: '#C7A1FE',
                     }} onClick={upload}>
-                    UPLOAD PHOTO
+                    {t('upload-photo')}
                 </Button>
             </GridItem>
         )

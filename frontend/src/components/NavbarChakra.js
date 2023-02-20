@@ -130,7 +130,7 @@ export default function WithSubnavigation() {
             fontFamily={'heading'}
             color={useColorModeValue('white', 'white')}>
             <Link as={ReachLink} to='/'>
-              FAST AND FURIOUS AUCTION
+              {t('f-f-auction')}
             </Link>
           </Text>
 
@@ -155,7 +155,7 @@ export default function WithSubnavigation() {
               bg: '#C7A1FE',
             }}>
             <Link as={ReachLink} to='/signin'>
-              Sign In
+              {t('sign-in')}
             </Link>
           </Button>
           <Button
@@ -169,7 +169,7 @@ export default function WithSubnavigation() {
               bg: '#C7A1FE',
             }}>
             <Link as={ReachLink} to='/signup'>
-              Sign Up
+              {t('sign-up')}
             </Link>
           </Button>
         </Stack>
@@ -190,7 +190,7 @@ export default function WithSubnavigation() {
               bg: '#C7A1FE',
             }}>
             <Link as={ReachLink} to='/'>
-              Sign Out
+              {t('sign-out')}
             </Link>
           </Button>
         </Stack>
@@ -242,7 +242,7 @@ const DesktopNav = (props) => {
                 textDecoration: 'none',
                 color: linkHoverColor,
               }}>
-              Signed in Actions
+                {t('signed-in-actions')}
             </Link>
           </PopoverTrigger>
         </Popover>
@@ -261,7 +261,7 @@ const DesktopNav = (props) => {
                 textDecoration: 'none',
                 color: linkHoverColor,
               }}>
-              View items
+                {t('view-items')}
             </Link>
           </PopoverTrigger>
         </Popover>
@@ -280,7 +280,7 @@ const DesktopNav = (props) => {
                 textDecoration: 'none',
                 color: linkHoverColor,
               }}>
-              Home
+                {t('home')}
             </Link>
           </PopoverTrigger>
         </Popover>

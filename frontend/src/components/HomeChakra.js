@@ -10,8 +10,8 @@ import {
 } from '@chakra-ui/react';
 import { Link as ReachLink } from "react-router-dom";
 import Crowd from "../images/confetti.jpg";
-import { useTranslation} from 'react-i18next';
-import i18n from '../i18n/config';
+import {useTranslation} from 'react-i18next';
+
 
 let token = null
   const STORAGE_KEY = 'loggedAuctionAppUser'
@@ -50,7 +50,7 @@ let token = null
 
 
 export default function WithBackgroundImage() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <Flex
       w={'full'}
@@ -68,24 +68,24 @@ export default function WithBackgroundImage() {
             color={'white'}
             fontSize={useBreakpointValue({ base: '3xl', md: '4xl' })} 
             // textAlign={'center'}
-            >
-              {t('welcome-message')}
-            Welcome to Fast and Furious Auction system!
+            >{t('welcome-message')}
           </Heading>
           <Heading
             color={'white'}
             fontWeight={700}
             lineHeight={1.2}
             fontSize={useBreakpointValue({ base: '2xl', md: '3xl' })}>
-            This is where you can sell <Text as="span">FAST </Text> 
-            and buy without getting <Text as="span">FURIOUS</Text>.
+              {t('sell')}
+            <Text as="span">{t('fast')}</Text> 
+            {t('buy')}
+            <Text as="span">{t('furious')}</Text>.
           </Heading>
           <Text
             color={'white'}
             fontWeight={700}
             lineHeight={1.2}
-            fontSize={useBreakpointValue({ base: '2xl', md: '3xl' })}> 
-            Everything should happen within 24 hours.
+            fontSize={useBreakpointValue({ base: '2xl', md: '3xl' })}>
+              {t('everything-in-24h')} 
           </Text>
           <Stack direction={'row'} display={signInDisplay}>
             <Button
@@ -100,7 +100,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='/signin'>
-                Sign In
+                {t('sign-in')}
               </Link>
             </Button>
             <Button
@@ -115,7 +115,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='/signup'>
-                Sign Up
+                {t('sign-up')}
               </Link>
             </Button>
           </Stack>
@@ -133,7 +133,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='/'>
-                Sign Out
+                {t('sign-out')}
               </Link>
             </Button>
           </Stack> */}

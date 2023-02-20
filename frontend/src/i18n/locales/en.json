@@ -1,3 +1,88 @@
 {
-    "welcome-message":"Welcome to Fast and Furious Auction system!"
+    "f-f-auction": "FAST AND FURIOUS AUCTION",
+    "signed-in-actions": "Signed in Actions",
+    "view-items": "View Items",
+    "home": "Home",
+    "welcome-message":"Welcome to Fast and Furious Auction system!",
+    "sell": "This is where you can sell ",
+    "fast": "FAST",
+    "buy": "and buy without getting ",
+    "furious": "FURIOUS",
+    "everything-in-24h": "Everything should happen within 24 hours.",
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up",
+    "sign-out": "Sign Out",
+    "sign-up-text": "to enjoy all of our cool features",
+    "copyrights": "© 2023 FF auction. All rights reserved",
+
+    "fname": "First name",
+    "lname": "Last name",
+    "email": "Email address",
+    "password": "Password",
+    "user-type": "User type",
+    "buyer": "Buyer",
+    "seller": "Seller",
+    "operator": "Operator",
+    "agree": "I agree to ",
+    "terms-and-conditions": "terms and conditions",
+    "already-registred": "Already registred?",
+    "to-your-account": "to your account",
+
+    "hi-buyer": "Hi, Buyer!",
+    "choose-action": "Choose what you want to do",
+    "sign-up-as-seller": "Sign up as a Seller",
+    "view-profile": "View Profile",
+
+    "initial-price": "Initial price: ",
+    "highest-bid": " / Highest bid: ",
+    "time-left": "Time remaining: ",
+    "details": "Details",
+
+    "active": "ACTIVE",
+    "passed": "PASSED",
+    "prepairing": "PREPAIRING",
+
+    "new-bid": "New bid: ",
+    "submit-bid": "Submit bid",
+    "product-details": "Product Details",
+    "other-details": "Other Details: ",
+    "make-bid":  "Make a new bid",
+
+    "hi-operator": "Hi, Operator!",
+    "publish-item": "Publish item",
+    "view-reports": "View reports",
+    "cancel-auction": "Cancel auction",
+    "cancel-bid": "Cancel bid",
+
+    "upload-photo": "UPLOAD PHOTO",
+
+    "your-profile": "Your profile",
+    "auctions": "Auctions",
+    "published-items": " Items published for sale:",
+    "bought-items": "Items purchased with highest bid:",
+
+    "item-name": "Item name",
+    "item-description": "Item description",
+    "item-model": "Item model",
+    "item-category": "Item category",
+    "other": "Other",
+    "device": "Device",
+    "furiture": "Furniture",
+    "clothes": "Clothes",
+    "poor": "Poor",
+    "acceptable": "Acceptable",
+    "good": "Good",
+    "excellent": "Excellent",
+    "new": "New",
+    "item-condition": "Item condition",
+
+    "zip-code": "Zip code",
+    "currency": "Currency",
+    "submit": "SUBMIT",
+
+    "hi-seller": "Hi, Seller!",
+
+    "terms-and-conditions-text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voulptua",
+    "i-agree": "I agree"
+
 }

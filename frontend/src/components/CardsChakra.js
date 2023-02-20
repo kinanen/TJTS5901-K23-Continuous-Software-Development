@@ -15,7 +15,7 @@ const baseUrl = '/api/items';
 // then map all instances with below details, which will bse sent as props to collection page
 
 function CardsChakra() {
-
+    const {t} = useTranslation();
     const [itemList, setItemList] = useState([]);
 
     const [currency, setCurrency] = useState('eur');
@@ -69,11 +69,11 @@ function CardsChakra() {
         let endTime = new Date(end);
         let timeLeftMS = endTime - Date.now();
         if (timeLeftMS > 0) {
-            status = 'ACTIVE'
+            status = t('active')
         } else if (timeLeftMS < 0) {
-            status = 'PASSED'
+            status = t('passed')
         } else {
-            status = 'PREPAIRING'
+            status = t('prepairing')
         }
         return status
     }

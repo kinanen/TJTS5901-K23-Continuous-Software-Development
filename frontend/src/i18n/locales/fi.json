@@ -1,1 +1,88 @@
-{}
+{    
+    "f-f-auction": "FAST AND FURIOUS AUCTION",
+    "signed-in-actions": "Kirjautuneiden toiminnot",
+    "view-items": "Näytä myytävät",
+    "home": "Etusivu",
+    "welcome-message":"Tervetuloa Fast and Furious huutokauppaan!",
+    "sell": "täällä sinä voit myydä ",
+    "fast": "NOPEASTI ",
+    "buy": "ja ostaa ",
+    "furious": "RAIVOSTUMATTA",
+    "everything-in-24h": "Kaikki 24 vain tunnin aikana",
+    "sign-in": "Kirjaudu sisään",
+    "sign-up": "Rekisteröidy",
+    "sign-out": "Kirjaudu ulos",
+    "sign-up-text": "päästäksesi nauttimaan kaikista huutokaupan makeista ominaisuuksista",
+    "copyrights": "© 2023 FF huutokaupat. Kaikki oikeudet pidätetään",
+    
+    "fname": "Etunimi",
+    "lname": "Sukunimi",
+    "email": "Sähköposti osoite",
+    "password": "Salasana",
+    "user-type": "Käyttäjä ryhmä",
+    "buyer": "Ostaja",
+    "seller": "Myyjä",
+    "operator": "Operaattori",
+    "agree": "Hyväksyn ",
+    "terms-and-conditions": "käyttöehdot",
+    "already-registred": "Oletko jo rekisteröitynyt?",
+    "to-your-account": "omalle käyttäjätilillesi",
+
+    "hi-buyer": "Hei Ostaja!",
+    "choose-action": "Valitse toiminto",
+    "sign-up-as-seller": "Rekisteröidy myyjäksi",
+    "view-profile": "Näytä profiili",
+
+    "initial-price": "Lähtöhinta: ",
+    "highest-bid": " / Korkein huuto: ",
+    "time-left": "Huutoaikaa jäljellä: ",
+    "details": "Näytä tiedot",
+
+    "active": "AKTIIVINEN",
+    "passed": "PÄÄTTYNYT",
+    "prepairing": "VALMISTELUSSA",
+
+    "new-bid": "Uusi huuto: ",
+    "submit-bid": "Vahvista huuto",
+    "product-details": "Tuotteen tiedot",
+    "other-details": "Muita tietoja: ",
+    "make-bid":  "Huuda tästä tuotteesta",
+
+    "hi-operator": "Hei Operaattori!",
+    "publish-item": "Julkaise tuote",
+    "view-reports": "Näytä raportti",
+    "cancel-auction": "Peruuta huutokauppa",
+    "cancel-bid": "Peruuta huuto",
+
+    "your-profile": "Oma profiili",
+    "auctions": "Huutokaupat",
+    "published-items": "Julkaitut huutokaupat: ",
+    "bought-items": "Voittamasi huutokaupat: ",
+
+    "item-name": "Tuotteen otsikko",
+    "item-description": "Tuotteen kuvaus",
+    "item-model": "Tuotteen malli",
+    "item-category": "Tuotteen kategoria",
+    "other": "Muu",
+    "device": "Laite",
+    "furiture": "Kaluste",
+    "clothes": "Vaate",
+    "poor": "Huono",
+    "acceptable": "Tyydyttävä",
+    "good": "Hyvä",
+    "excellent": "Erinomainen",
+    "new": "Uusi",
+    "item-condition": "Tuotteen kunto",
+
+    "zip-code": "Postinumero",
+    "currency": "Valuutta",
+    "submit": "LÄHETÄ",
+
+    "hi-seller": "Hei, Myyjä!",
+
+    "terms-and-conditions-text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voulptua",
+    "i-agree": "Hyväksyn"
+
+
+}
+

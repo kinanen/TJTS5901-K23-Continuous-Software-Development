@@ -30,7 +30,7 @@ export default function WithBackgroundImage() {
             fontSize={{ base: '2xl', sm: '3xl', md: '4xl', xl: '4xl' }} 
             // textAlign={'center'}
             >
-            Hi seller!
+            {t('hi-seller')}
           </Heading>
           <Heading
             color={'white'}
@@ -51,7 +51,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='/view'>
-                View Items
+                {t('view-items')}
               </Link>
             </Button>
             <Button
@@ -64,7 +64,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='/publish'>
-                Publish item
+                {t('publish-item')}
               </Link>
             </Button>
             <Button
@@ -77,7 +77,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='/profile'>
-                View profile
+                {t('view-profile')}
               </Link>
             </Button>
           </Stack>

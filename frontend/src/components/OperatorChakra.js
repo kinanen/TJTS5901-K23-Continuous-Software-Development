@@ -28,7 +28,7 @@ export default function WithBackgroundImage() {
             color={'white'}
             fontSize={{ base: '2xl', sm: '3xl', md: '4xl', xl: '4xl' }}
             >
-            Hi operator!
+            {t('hi.operator')}
           </Heading>
           <Heading
             color={'white'}
@@ -48,7 +48,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='/view'>
-                View Items
+                {t('view-items')}
               </Link>
             </Button>
             <Button
@@ -61,7 +61,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='/publish'>
-                Publish item
+                {t('publish-item')}
               </Link>
             </Button>
             <Button
@@ -74,7 +74,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='/profile'>
-                View profile
+                {t('view-profile')}
               </Link>
             </Button>
             </Stack>
@@ -89,7 +89,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='#'>
-                View reports
+                {t('view-reports')}
               </Link>
             </Button>
             <Button
@@ -102,7 +102,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='#'>
-                Cancel Auction
+                {t('cancel-auction')}
               </Link>
             </Button>
             <Button
@@ -115,7 +115,7 @@ export default function WithBackgroundImage() {
                 bg: '#C7A1FE',
               }}>
               <Link as={ReachLink} to='#'>
-                Cancel bid
+                {t('cancel-bid')}
               </Link>
             </Button>
           </Stack>
