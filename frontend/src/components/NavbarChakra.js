@@ -23,6 +23,9 @@ import {
 } from '@chakra-ui/icons';
 import { Link as ReachLink } from "react-router-dom";
 import { useState, useEffect } from 'react';
+import {useTranslation} from 'react-i18next';
+import { t } from 'i18next';
+
 
 
 
@@ -62,6 +65,7 @@ import { useState, useEffect } from 'react';
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const [pageRef, setPageRef] = useState('/signin');
+  const {t} = useTranslation();
 
   useEffect(() => {
   if (user !== null) {
@@ -294,9 +298,9 @@ const MobileNav = (props) => {
       bg={useColorModeValue('white', 'gray.800')}
       p={4}
       display={{ md: 'none' }}>
-        <MobileNavItem key={'actions'} label={'Signed in Actions'} href={props.pageRef} itemDisplay={'flex'} />
-        <MobileNavItem key={'view'} label={'View items'} href={'/view'} itemDisplay={'flex'} />
-        <MobileNavItem key={'home'} label={'Home'} href={'/'} itemDisplay={'flex'} />
+        <MobileNavItem key={'actions'} label={t('signed-in-actions')} href={props.pageRef} itemDisplay={'flex'} />
+        <MobileNavItem key={'view'} label={t('view-items')} href={'/view'} itemDisplay={'flex'} />
+        <MobileNavItem key={'home'} label={t('home')} href={'/'} itemDisplay={'flex'} />
         <MobileNavItem key={'signin'} label={'Sign in'} href={'/signin'} itemDisplay={props.signInDisplay} />
         <MobileNavItem key={'signup'} label={'Sign up'} href={'/signup'} itemDisplay={props.signInDisplay} />
     </Stack>

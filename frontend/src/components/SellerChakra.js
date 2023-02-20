@@ -8,8 +8,12 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { Link as ReachLink } from "react-router-dom";
+import Crowd from "../images/confetti.jpg";
+import { useTranslation } from 'react-i18next';
+
 
 export default function WithBackgroundImage() {
+  const {t} = useTranslation();
   return (
     <Flex
       w={'full'}
@@ -33,7 +37,7 @@ export default function WithBackgroundImage() {
             fontWeight={700}
             lineHeight={1.2}
             fontSize={{ base: '2xl', sm: '3xl', md: '4xl', xl: '4xl' }}>
-            Choose what you want to do
+            {t('choose-action')}
           </Heading>
           <Stack direction={{base: 'column', md: 'row'}} spacing={[2,4,6,8]}>
             <Button

@@ -27,6 +27,7 @@ import {
   import { Link as ReachLink } from "react-router-dom";
   import Avatar from "../images/emoticon.png"
   import { useEffect, useState, useRef } from 'react';
+  import { useTranslation } from 'react-i18next';
   
   import axios from 'axios';
   import { ArrowForwardIcon, ArrowBackIcon } from '@chakra-ui/icons';
@@ -60,6 +61,7 @@ import {
   
   export default function ProfileCard(props) {
 
+    const {t} = useTranslation();
     const [display, setDisplay] = useState('none');
 
     let user = getUser(); 
@@ -320,27 +322,27 @@ import {
               </GridItem>
               <GridItem  area={'header'}>
                 <Heading fontSize={{base:'2xl', sm:'3xl', md: '4xl', lg:'4xl'}} mb={[2,4,6,8]} textAlign={'center'}>
-                    Your profile
+                {t('your-profile')}
                 </Heading>
               </GridItem>
               <GridItem  area={'firstname'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={{base:'md', sm:'lg', md: 'lg', lg:'lg'}} color={'gray.600'} textAlign={'center'} pb={[2,4,6,8]}>
-                    First Name: {userData.firstName}
+                {t('fname')}: {userData.firstName}
                 </Text>
               </GridItem>
               <GridItem  area={'lastname'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={{base:'md', sm:'lg', md: 'lg', lg:'lg'}} color={'gray.600'} textAlign={'center'} pb={[2,4,6,8]}>
-                    Last Name: {userData.surname}
+                {t('lname')}: {userData.surname}
                 </Text>
               </GridItem>
               <GridItem  area={'email'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={{base:'md', sm:'lg', md: 'lg', lg:'lg'}} color={'gray.600'} textAlign={'center'} pb={[2,4,6,8]}>
-                    Email: {user.email}
+                {t('email')}: {user.email}
                 </Text>
               </GridItem>
               <GridItem  area={'usertype'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={{base:'md', sm:'lg', md: 'lg', lg:'lg'}} color={'gray.600'} textAlign={'center'} pb={[2,4,6,8]}>
-                    User Type: {user.userType}
+                {t('user-type')}: {user.userType}
                 </Text>
               </GridItem>
               <GridItem area={'button'} textAlign={'center'} justify={'center'}>
@@ -352,7 +354,7 @@ import {
                     bg: '#C7A1FE',
                   }} 
                   onClick={showAuctions}>
-                    Auctions
+                    {t('auctions')}
                 </Button>
                 <Button
                   display={successDisplay} 
@@ -370,7 +372,7 @@ import {
               <GridItem area={'list1'} align={'center'} textAlign={'center'} justify={'center'} display={display}>
                 <Stack align={'center'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={{base:'md', sm:'lg', md: 'lg', lg:'lg'}} color={'gray.600'} textAlign={'center'} pb={8}>
-                      Items published for sale:
+                {t('published-items')}:
                 </Text>
                 <UnorderedList>
                 {published.map((item) => (
@@ -383,7 +385,7 @@ import {
               <GridItem area={'list2'} align={'center'} textAlign={'center'} justify={'center'}display={display}>
               <Stack align={'center'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={{base:'md', sm:'lg', md: 'lg', lg:'lg'}} color={'gray.600'} textAlign={'center'} pb={8}>
-                      Items purchased with highest bid:
+                {t('bought-items')}:
                 </Text>
                 <UnorderedList>
                 {highestbids.map((item) => (

@@ -3,6 +3,8 @@ import {React, useState, useEffect, useRef} from 'react';
 import CardChakra from './CardChakra';
 import img3 from '../images/hammer.jpg'
 //import emailjs from '@emailjs/browser';
+import { useTranslation } from 'react-i18next';
+
 
 import axios from 'axios';
 const baseUrl = '/api/items';

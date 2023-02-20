@@ -34,6 +34,7 @@ import {
   import { ViewIcon, ViewOffIcon, CheckIcon } from '@chakra-ui/icons';
   import { Link as ReachLink } from "react-router-dom";
   import SignUpImg from "../images/signup.jpg";
+  import { useTranslation } from 'react-i18next';
 
   import axios from 'axios';
   const baseUrl = '/api/users';
@@ -58,6 +59,8 @@ import {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef();
+
+    const {t} = useTranslation();
 
     const login = async credentials => {
       console.log(credentials);
@@ -166,7 +169,7 @@ import {
                     </Select>
                 </FormControl>
                 <FormControl>
-                  <Checkbox required>I agree to <Link color={'blue.400'} onClick={onOpen}>terms and conditions</Link></Checkbox>
+                  <Checkbox required>{t('agree')} <Link color={'blue.400'} onClick={onOpen}>{t('terms-and-conditions')}</Link></Checkbox>
                 </FormControl>
                 <Stack spacing={10} pt={2}>
                   <Button
