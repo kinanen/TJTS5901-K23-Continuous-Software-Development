@@ -17,6 +17,7 @@ import {
   CloseButton,
   AlertDialogContent,
   AlertDialogOverlay,
+  Link
 } from '@chakra-ui/react';
 
 import SignInImg from "../images/signin.jpg";
@@ -83,16 +84,19 @@ export default function SignIn() {
 
   const redirect = () => {
     if (userType === 'seller') {
+      window.location.assign('/seller');
       //window.location.href = '/seller'
-      window.location.href = 'https://fastandfurious.azurewebsites.net/seller'
+      //window.location.href = 'https://fastandfurious.azurewebsites.net/seller'
     } else if (userType === 'operator') {
-    //window.location.href = '/operator'
-    window.location.href = 'https://fastandfurious.azurewebsites.net/operator'
+      window.location.assign('/operator');
+      //window.location.href = '/operator'
+      //window.location.href = 'https://fastandfurious.azurewebsites.net/operator'
   } else if (userType === 'buyer') {
+    window.location.assign('/buyer');  
     //window.location.href = '/buyer'
-    window.location.href = 'https://fastandfurious.azurewebsites.net/buyer'
+      //window.location.href = 'https://fastandfurious.azurewebsites.net/buyer'
   } else {
-    window.location.href = '/'
+    window.location.assign = '/'
   }
  }
 
@@ -157,6 +161,8 @@ export default function SignIn() {
                   <Link color={'blue.500'} pl={10}>Forgot password?</Link>
                 </Stack> */}
                 <Button
+                  //as={Link}
+                  //href={'/'}
                   type='submit'
                   loadingText="Submitting"
                   size="lg"
