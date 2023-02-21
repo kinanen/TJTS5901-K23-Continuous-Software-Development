@@ -85,19 +85,20 @@ export default function SignIn() {
 
   const redirect = () => {
     if (userType === 'seller') {
-      window.location.assign('https://fastandfurious.azurewebsites.net');
-      //window.location.href = '/seller'
+      //window.location.assign('https://fastandfurious.azurewebsites.net');
+      window.location.href = '/seller'
       //window.location.href = 'https://fastandfurious.azurewebsites.net/seller'
     } else if (userType === 'operator') {
-      window.location.assign('https://fastandfurious.azurewebsites.net');
-      //window.location.href = '/operator'
+      //window.location.assign('https://fastandfurious.azurewebsites.net');
+      window.location.href = '/operator'
       //window.location.href = 'https://fastandfurious.azurewebsites.net/operator'
   } else if (userType === 'buyer') {
-    window.location.assign('https://fastandfurious.azurewebsites.net');  
-    //window.location.href = '/buyer'
+    //window.location.assign('https://fastandfurious.azurewebsites.net');  
+    window.location.href = '/buyer'
       //window.location.href = 'https://fastandfurious.azurewebsites.net/buyer'
   } else {
-    window.location.assign = ('https://fastandfurious.azurewebsites.net');
+    window.location.href = '/'
+    //window.location.assign = ('https://fastandfurious.azurewebsites.net');
   }
  }
 
