@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 // Mongoose Schema for the user with relevant fields
 const userSchema = mongoose.Schema({
@@ -10,23 +10,25 @@ const userSchema = mongoose.Schema({
   items: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Item'
-    }
+      ref: "Item",
+    },
   ],
-})
+  passwordTries: { type: Number, default: 0 },
+  locked: { type: Boolean, default: false },
+});
 
 // Set the Schema to JSON
-userSchema.set('toJSON', {
+userSchema.set("toJSON", {
   transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
     // the passwordHash should not be revealed
-    delete returnedObject.passwordHash
-  }
-})
+    delete returnedObject.passwordHash;
+  },
+});
 
 // Create User model with the Schema
-const User = mongoose.model('User', userSchema)
+const User = mongoose.model("User", userSchema);
 
-module.exports = User
+module.exports = User;

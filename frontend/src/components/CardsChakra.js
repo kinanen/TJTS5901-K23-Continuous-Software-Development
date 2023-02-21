@@ -6,11 +6,8 @@ import img3 from '../images/hammer.jpg'
 //import emailjs from '@emailjs/browser';
 import { useTranslation } from 'react-i18next';
 
-
 import axios from 'axios';
 const baseUrl = '/api/items';
-
-
 
 // these should be read from the database, as json?
 // then map all instances with below details, which will bse sent as props to collection page
@@ -27,7 +24,7 @@ function CardsChakra(props) {
 
     useEffect(() => {
         const listItems = async () => {
-            await axios.get(baseUrl)
+            await axios.get(`${baseUrl}/active`)
             .then(response => setItemList(response.data));
         }
         listItems();
@@ -142,14 +139,19 @@ function CardsChakra(props) {
         }
     }
 
-    const findStatus = (end) => {
+    const setStatus = async (id) => {
+        await axios.put(`${baseUrl}/status/${id}`, { status: "passed" })
+    }
+
+    const findStatus = (item) => {
         let status = '';
-        let endTime = new Date(end);
+        let endTime = new Date(item.endDate);
         let timeLeftMS = endTime - Date.now();
         if (timeLeftMS > 0) {
             status = t('active')
         } else if (timeLeftMS < 0) {
             status = t('passed')
+            setStatus(item.id)
         } else {
             status = t('prepairing')
         }
@@ -211,7 +213,7 @@ function CardsChakra(props) {
                 highestBid={item.highestBid} // tähän valitulla currencyllä lask hinta
                 currency={currency} // tähän valittu currency
                 time={calculateHours(item.endDate)}
-                status={findStatus(item.endDate)}
+                status={findStatus(item)}
                 id={item.id}
                 label="Details"
                 path="/details"

@@ -1,3 +1,4 @@
+const path = require('path')
 const config = require('./utils/config')
 const express = require('express')
 const Sentry = require('@sentry/node');
@@ -10,6 +11,7 @@ const { userExtractor } = require('./utils/middleware')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const itemsRouter = require('./controllers/items')
+//require('express-async-errors')
 
 // Connecting to the database using mongoose
 mongoose.connect(config.MONGODB_URL)
@@ -50,6 +52,10 @@ app.use(Sentry.Handlers.tracingHandler());
 app.use('/api/items', userExtractor, itemsRouter)
 app.use('/api/users', userExtractor, usersRouter)
 app.use('/api/login', loginRouter)
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+});
 
 app.get('/server-info', (req, res) => {
     res.send('<p>This will (hopefully) show the same server info as the Python file app.py</p>')

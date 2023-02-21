@@ -7,14 +7,7 @@ const Item = require('../models/item')
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
-initialUser = {
-    email: "testi@mail.com",
-    firstName: "Testi",
-    surname: "Testinen",
-    userType: "Seller",
-    passwordHash: "testi",
-    items: []
-}
+const initialUser = helper.initialUser;
 
 beforeAll(async () => {
     await User.deleteMany({})
@@ -26,10 +19,12 @@ beforeAll(async () => {
 // response.body:  { error: 'token missing or invalid' } FAIL
 test('a user is returned', async () => {
     const response = await api.get('/api/users')
+    
     console.log(
         'response.body: ',
         response.body
     )
+   
     const name = response.body
     expect(name).toEqual('Testi')
 })
