@@ -55,6 +55,9 @@ sast:
     ## SAST customization:
     ##   https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
     stage: test
+    artifacts:
+      reports:
+        sast: sast.xml
 
 deploy to staging:
   stage: staging
