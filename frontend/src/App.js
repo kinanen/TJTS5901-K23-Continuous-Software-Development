@@ -40,7 +40,7 @@ export default function App() {
   }
 
 
-console.log("From App: Currency is "+currency+" and rate is "+rate);
+//console.log("From App: Currency is "+currency+" and rate is "+rate);
 
   return (
     <div>

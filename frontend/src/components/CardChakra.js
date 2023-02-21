@@ -20,7 +20,7 @@ import {
     const baseUrl = '/api/items';
 
     const getId = (e) => {
-      console.log(e.target.id);
+      //console.log(e.target.id);
     }
 
     let detailState = [];
@@ -31,7 +31,7 @@ import {
     newState.bid = props.highestBid;
     newState.rate = props.rate;
     detailState.push(newState);
-    console.log(newState);
+    //console.log(newState);
 
     const setImage = async (id) => {
       if(!id) {
@@ -110,16 +110,16 @@ import {
                     {props.model}
                 </Text>
               </GridItem>
-              <GridItem h={[10,10,8,6]}   area={'text'} textAlign={'center'} justify={'center'}>
+              <GridItem h={[10,10,12,12]}   area={'text'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={{base: 'xs', sm:'sm', md:'md', lg:'lg'}} color={'gray.600'} textAlign={'center'} pb={[2,4,6,8]}>
                     {props.description}
                 </Text>
               </GridItem>
-              <GridItem h={[10,10,8,8]}  area={'price'} textAlign={'center'} justify={'center'}>
+              <GridItem h={[10,10,8,6]}  area={'price'} textAlign={'center'} justify={'center'}>
                 <Text fontSize={{base: 'xs', sm:'sm', md:'md', lg:'lg'}} color={'gray.600'} textAlign={'center'} pb={[2,4,6,8]}>
                 {t('initial-price')} {props.initialPrice} {props.currency} / {t('highest-bid')} {props.highestBid} {props.currency}</Text>
               </GridItem>
-              <GridItem  h={[4,6,8,8]} mb={[2,4,6,8]} area={'button'} textAlign={'center'} justify={'center'}>
+              <GridItem  h={[4,4,4,4]} mb={[2,4,6,8]} area={'button'} textAlign={'center'} justify={'center'}>
                 <Button size={{base: 'xs', sm: 'sm', md: 'sm', lg: 'md'}}
                 zIndex={'auto'} bg={'#774BCD'}
                   color={'white'}
