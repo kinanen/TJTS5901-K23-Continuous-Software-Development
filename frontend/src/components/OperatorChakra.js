@@ -88,7 +88,7 @@ export default function WithBackgroundImage() {
               _hover={{
                 bg: '#C7A1FE',
               }}>
-              <Link as={ReachLink} to='#'>
+              <Link as={ReachLink} to='/auctions'>
                 {t('view-reports')}
               </Link>
             </Button>

@@ -24,60 +24,13 @@ import { CheckCircleIcon, InfoIcon, WarningIcon} from '@chakra-ui/icons'
 import axios from 'axios';
 const baseUrl = '/api/items';
 
-const calculateTimeLeft = () => {
-    let year = new Date().getFullYear();
-    
-    //let difference = +new Date(`10/01/${year}`) - +new Date();
-    let difference = +new Date(`10/01/${year}`) - +new Date();
-  
-    let timeLeft = {};
-  
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60)
-      };
-    }
-  
-    console.log(timeLeft);
-    return timeLeft;
-  }
 
 // these should be read from the database, as json?
 // then map all instances with below details, which will bse sent as props to collection page
 
-function AuctionsList() {
+function AuctionsList(props) {
 
     const [itemList, setItemList] = useState([]);
-    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
-
-    const timerComponents = [];
-
-    Object.keys(timeLeft).forEach((interval) => {
-        if (!timeLeft[interval]) {
-            return;
-    }
-
-    timerComponents.push(
-    <span>
-        {timeLeft[interval]} {interval}{" "}
-    </span>
-    );
-    });
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setTimeLeft(calculateTimeLeft());
-        }, 1000);
-  
-        return () => clearTimeout(timer);
-    });
-
-
-  
 
     useEffect(() => {
         const listItems = async () => {
@@ -89,7 +42,7 @@ function AuctionsList() {
     }, []);
 
    
-
+    console.log("From Auctions list " + props.curr +" and "+ props.rate);
 
     function msToTime(duration) {
         let milliseconds = Math.floor((duration % 1000) / 100);
@@ -133,7 +86,7 @@ function AuctionsList() {
         return status
     }
 
-    const findIcon = (end) => {
+/*     const findIcon = (end) => {
         let icon = '';
         let endTime = new Date(end);
         let timeLeftMS = endTime - Date.now();
@@ -145,23 +98,31 @@ function AuctionsList() {
             icon = {InfoIcon}
         }
         return icon
-    }
+    } */
 
     console.log(itemList);
 
-    const form = useRef();
-    const sendEmail = (e) => {
-        e.preventDefault();
-    
-        emailjs.sendForm('service_mbzsi4j', 'contact_form', form.current, 'vpv8xFI6aDigQvtdr')
-          .then((result) => {
-              console.log(result.text);
-          }, (error) => {
-              console.log(error.text);
-          });
-      };
-
-
+    const tableRow = itemList.map((item, pos) => {
+        let price = item.initialPrice;
+        let bid = item.highestBid;
+        //let rate = findRate(currency);
+        let rate = props.rate;
+        let priceInCurr = Math.round(price * rate);
+        let bidInCurr = Math.round(bid * rate);
+        return (
+            <Tr key={pos}>
+                {/* <Td><Icon as={findIcon(item.endDate)}></Icon></Td> */}
+                <Td>{findStatus(item.endDate)}</Td>
+                <Td>{item.name}</Td>
+                <Td>{item.model}</Td>
+                {/* <Td>{item.description}</Td> */}
+                <Td>{props.curr}</Td>
+                <Td isNumeric>{priceInCurr}</Td>
+                <Td isNumeric>{bidInCurr}</Td>
+                <Td isNumeric>{calculateHours(item.endDate)}</Td>
+            </Tr>
+        )
+    });
 
     return (
         <VStack mt={20}>
@@ -182,28 +143,22 @@ function AuctionsList() {
                             </Tr>
                         </Thead>
                         <Tbody>
-                        {itemList.map((item, pos) => (
+                            {tableRow}
+                        {/* {itemList.map((item, pos) => (
                             <Tr key={pos}>
-                                {/* <Td><Icon as={findIcon(item.endDate)}></Icon></Td> */}
                                 <Td>{findStatus(item.endDate)}</Td>
                                 <Td>{item.name}</Td>
                                 <Td>{item.model}</Td>
-                                {/* <Td>{item.description}</Td> */}
                                 <Td>{item.currency}</Td>
                                 <Td isNumeric>{item.initialPrice}</Td>
                                 <Td isNumeric>{item.highestBid}</Td>
                                 <Td isNumeric>{calculateHours(item.endDate)}</Td>
                             </Tr>
-                            ))}
+                            ))} */}
                         </Tbody>
                     </Table>
                 </TableContainer>
                 </Box>
-                <div>
-                    <h1>Hacktoberfest Countdown</h1>
-                    <h2>With React Hooks!</h2>
-                    {timerComponents.length ? timerComponents : <span>Time's up!</span>}
-                </div>
         </VStack>
     );
 }

@@ -25,6 +25,7 @@ import { Link as ReachLink } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import {useTranslation} from 'react-i18next';
 import { t } from 'i18next';
+import Currency from '../components/Currency'
 
 
 
@@ -66,6 +67,7 @@ export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const [pageRef, setPageRef] = useState('/signin');
   const {t} = useTranslation();
+ 
 
   useEffect(() => {
   if (user !== null) {
@@ -103,10 +105,10 @@ export default function WithSubnavigation() {
         //bg={useColorModeValue('white', 'gray.800')}
         color='white'
         //color={useColorModeValue('white', 'white')}
-        minH={'60px'}
+        minH={'40px'}
         py={{ base: 2 }}
         px={{ base: 4 }}
-        borderBottom={1}
+        borderBottom={'none'}
         borderStyle={'solid'}
         borderColor={useColorModeValue('gray.200', 'gray.900')}
         align={'center'}
@@ -147,6 +149,7 @@ export default function WithSubnavigation() {
           <Button
             display={{ base: 'none', md: 'inline-flex' }}
             fontSize={'sm'}
+            size={'sm'}
             fontWeight={600}
             color={'white'}
             bg={'#774BCD'}
@@ -161,6 +164,7 @@ export default function WithSubnavigation() {
           <Button
             display={{ base: 'none', md: 'inline-flex' }}
             fontSize={'sm'}
+            size={'sm'}
             fontWeight={600}
             color={'white'}
             bg={'#774BCD'}
@@ -180,6 +184,7 @@ export default function WithSubnavigation() {
           spacing={6}>
           <Button
             onClick={logOut}
+            size={'sm'}
             display={{ base: 'none', md: 'inline-flex' }}
             fontSize={'sm'}
             fontWeight={600}
