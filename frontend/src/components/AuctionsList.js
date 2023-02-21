@@ -14,12 +14,23 @@ import { VStack,
     TableCaption,
     TableContainer,
     Icon,
+    Checkbox,
+    Input,
+    Flex,
+    Button,
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogContent,
+    AlertDialogOverlay,
+    AlertDialogHeader,
+    AlertDialogFooter,
+    useDisclosure,
  } from '@chakra-ui/react';
 import {React, useState, useEffect, useRef} from 'react';
-import CardChakra from './CardChakra';
-import img3 from '../images/hammer.jpg'
-import emailjs from '@emailjs/browser';
-import { CheckCircleIcon, InfoIcon, WarningIcon} from '@chakra-ui/icons'
+//import CardChakra from './CardChakra';
+//import img3 from '../images/hammer.jpg'
+//import emailjs from '@emailjs/browser';
+//import { CheckCircleIcon, InfoIcon, WarningIcon} from '@chakra-ui/icons'
 
 import axios from 'axios';
 const baseUrl = '/api/items';
@@ -32,17 +43,18 @@ function AuctionsList(props) {
 
     const [itemList, setItemList] = useState([]);
 
+
+    const listItems = async () => {
+        await axios.get(baseUrl)
+        .then(response => setItemList(response.data));
+    }
+
     useEffect(() => {
-        const listItems = async () => {
-            await axios.get(baseUrl)
-            .then(response => setItemList(response.data));
-        }
         listItems();
-        console.log("luettiin tuotteet")
     }, []);
 
    
-    console.log("From Auctions list " + props.curr +" and "+ props.rate);
+    //console.log("From Auctions list " + props.curr +" and "+ props.rate);
 
     function msToTime(duration) {
         let milliseconds = Math.floor((duration % 1000) / 100);
@@ -86,29 +98,36 @@ function AuctionsList(props) {
         return status
     }
 
-/*     const findIcon = (end) => {
-        let icon = '';
-        let endTime = new Date(end);
-        let timeLeftMS = endTime - Date.now();
-        if (timeLeftMS > 0) {
-            icon = {CheckCircleIcon}
-        } else if (timeLeftMS < 0) {
-            icon = {WarningIcon}
-        } else {
-            icon = {InfoIcon}
-        }
-        return icon
-    } */
+    //console.log(itemList);
 
-    console.log(itemList);
+
+    const deleteItem = async (id) => {
+        try {
+        const response = await axios.delete(baseUrl+ '/' + id)
+        console.log(response.data)
+        return response.data;  
+        } catch (error) {
+            console.log(error.response.data.error)
+        }
+        listItems();
+    }
+
+    const handleChange = (event) => {
+        console.log("item to delete is " +event.target.value);
+        deleteItem(event.target.value)
+        listItems();
+    }
+
+    /* const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelRef = useRef(); */
 
     const tableRow = itemList.map((item, pos) => {
         let price = item.initialPrice;
         let bid = item.highestBid;
         //let rate = findRate(currency);
         let rate = props.rate;
-        let priceInCurr = Math.round(price * rate);
-        let bidInCurr = Math.round(bid * rate);
+        let priceInCurr = (price * rate).toFixed(2);
+        let bidInCurr = (bid * rate).toFixed(2);
         return (
             <Tr key={pos}>
                 {/* <Td><Icon as={findIcon(item.endDate)}></Icon></Td> */}
@@ -120,8 +139,9 @@ function AuctionsList(props) {
                 <Td isNumeric>{priceInCurr}</Td>
                 <Td isNumeric>{bidInCurr}</Td>
                 <Td isNumeric>{calculateHours(item.endDate)}</Td>
-            </Tr>
-        )
+                <Td><Checkbox key={item.id}  value={item.id} onChange={handleChange}></Checkbox></Td>
+                </Tr>
+            )
     });
 
     return (
@@ -140,6 +160,7 @@ function AuctionsList(props) {
                                 <Th isNumeric>Initial Price</Th>
                                 <Th isNumeric>Highest Bid</Th>
                                 <Th isNumeric>Time remaining</Th>
+                                <Th>Delete</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
@@ -158,6 +179,42 @@ function AuctionsList(props) {
                         </Tbody>
                     </Table>
                 </TableContainer>
+                {/* <Flex alignItems={'right'} justify={'flex-end'} mt={5} mb={5}>
+                <Button onClick={onOpen} size="sm"
+                  bg={"#774BCD"}
+                  color={"white"}
+                  _hover={{
+                    bg: "#C7A1FE",
+                  }}>
+                    Delete Item
+                </Button>
+                </Flex>
+                <AlertDialog
+                    isOpen={isOpen}
+                    leastDestructiveRef={cancelRef}
+                    onClose={onClose}
+                >
+                <AlertDialogOverlay>
+                <AlertDialogContent>
+                    <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                    Delete Customer
+                    </AlertDialogHeader>
+
+                    <AlertDialogBody>
+                    Are you sure? You can't undo this action afterwards.
+                    </AlertDialogBody>
+
+                    <AlertDialogFooter>
+                    <Button ref={cancelRef} onClick={onClose}>
+                        Cancel
+                    </Button>
+                    <Button colorScheme='red' onClick={onClose} ml={3}>
+                        Delete
+                    </Button>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+                </AlertDialogOverlay>
+                </AlertDialog> */}
                 </Box>
         </VStack>
     );

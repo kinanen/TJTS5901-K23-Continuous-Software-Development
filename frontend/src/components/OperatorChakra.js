@@ -28,7 +28,7 @@ export default function WithBackgroundImage() {
             color={'white'}
             fontSize={{ base: '2xl', sm: '3xl', md: '4xl', xl: '4xl' }}
             >
-            {t('hi.operator')}
+            {t('hi-operator')}
           </Heading>
           <Heading
             color={'white'}
@@ -101,7 +101,7 @@ export default function WithBackgroundImage() {
               _hover={{
                 bg: '#C7A1FE',
               }}>
-              <Link as={ReachLink} to='#'>
+              <Link as={ReachLink} to='/auctions'>
                 {t('cancel-auction')}
               </Link>
             </Button>

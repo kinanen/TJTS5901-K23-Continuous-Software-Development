@@ -14,6 +14,10 @@ import {
     Divider,
     List,
     ListItem,
+    Alert, 
+    AlertDescription, 
+    AlertIcon, 
+    CloseButton,
   } from '@chakra-ui/react';
   import Hammer from '../images/hammer.jpg';
   import axios from 'axios';
@@ -31,9 +35,10 @@ import {
     const location = useLocation();
     //console.log(location.state);
 
-    let state = location.state;
-    console.log(state[0]);
+    //let state = location.state;
+    //console.log(state[0]);
     let id = location.state[0].id;
+    //console.log("id on "+id);
     //let currency = location.state[0].currency;
     let currency = props.curr;
     //let iPrice = location.state[0].price;
@@ -42,19 +47,35 @@ import {
     let rate = props.rate;
 
     
-    console.log("From Details: Currency is "+props.curr+" and rate is "+props.rate);
+    //console.log("From Details: Currency is "+props.curr+" and rate is "+props.rate);
+
+    const [alertStatus, setAlertStatus] = useState("success");
+    const [alertMessage, setAlertMessage] = useState("");
+    const [display, setDisplay] = useState("none");
 
     const [item, setItem] = useState([]);
 
-    let iPrice = Math.round(item.initialPrice * rate);
+    let iPrice = (item.initialPrice * rate).toFixed(2);
 
-    useEffect(() => {
+    
+    
     const showItemDetails = async () => {
+      try {
       await axios.get(baseUrl+ '/' + id)
         .then(response => setItem(response.data));
+      } catch (error) {
+        console.log(error.response.data.error);
+        setDisplay('flex');
+        setAlertStatus('error');
+        setAlertMessage(error.response.data.error);
       }
+    };
+    
+    
+    useEffect(() => {
       showItemDetails();
-    });
+    },[]);
+
 
     let token = null
     const STORAGE_KEY = 'loggedAuctionAppUser'
@@ -80,36 +101,48 @@ import {
     }
 
 
-    let itemBid = Math.round(item.highestBid * rate);
+    let itemBid = (item.highestBid * rate).toFixed(2);
 
     const [edit, setEdit] = useState(false);
     const [bid, setBid] = useState(0);
     const bidUpdate = (event) =>  {
-      let eurBid = event.target.value / rate
+      let eurBid = (event.target.value / rate).toFixed(2);
       setBid(eurBid);
     }
     let itemId = item.id;
 
     //----------this needs the update ref to backend----------
+
     const recordBit = async (id, newBid) => {
-      console.log("is not ready yet to update item "+id);
-      console.log(bid);
-      const response = axios.put((baseUrl+ '/' + itemId), newBid, config())
-      console.log(response.data);
-      return response.data
+      try{
+      const response = await axios.put((baseUrl+ '/' + itemId), newBid, config())
+      //console.log(response);
+      //return response.data
+      showItemDetails();
+      } catch (error) {
+        console.log(error.response.data.error);
+        setDisplay("flex");
+        console.log(display);
+        setAlertStatus("error");
+        console.log(alertStatus);
+        // setAlertTitle('Error!');
+        setAlertMessage(error.response.data.error);
+        console.log(alertMessage);
+      }  
     }
-    //--------------------------------------------------------
     
+    //--------------------------------------------------------
+
     const handleSubmit = (event) => {
       event.preventDefault();
 
       let id = itemId;
-      console.log("bid made for item "+id)
+      //console.log("bid made for item "+id)
       setEdit(false);
 
       let user = getUser(); 
-      console.log(user);
-      console.log(token);
+      //console.log(user);
+      //console.log(token);
 
       const newBid = {
         highestBid : bid
@@ -118,16 +151,41 @@ import {
       recordBit(id, newBid);
 
     }
+      
+      const makeBid = function(event) {
+        let user = getUser(); 
+        if (user !== null) {
+          setEdit(true);
+        } else {
+          //console.log("sun täytyy kirjautua");
+          setDisplay('flex');
+          //console.log(display);
+          setAlertStatus('error');
+          //console.log(alertStatus);
+          setAlertMessage("You need to sign in to make a bid");
+          //console.log(alertMessage);
+        }
+      }
+      
 
-    const makeBid = function(event) {
-      setEdit(true);
-      console.log("Item "+ itemId+ " now clicked for bid");
-      console.log("New bid is "+ bid);
+    const closeAlert = () => {
+      if (alertStatus === "success") {
+        //setDisplay('none');
+        //redirect();
+      } else {
+        setDisplay("none");
+      }
     };
 
     if(edit){
     return (
       <Container w={'80%'} maxW={'6xl'}>
+        <Alert display={display} status={alertStatus}>
+              <AlertIcon />
+              {/* <AlertTitle mr={2}>{alertTitle}</AlertTitle> */}
+              <AlertDescription mr={2}>{alertMessage}</AlertDescription>
+              <CloseButton onClick={closeAlert} />
+        </Alert>
         <SimpleGrid
           columns={{ base: 1, lg: 2 }}
           spacing={{ base: 8, md: 10 }}
@@ -140,7 +198,7 @@ import {
               fit={'cover'}
               align={'center'}
               w={'100%'}
-              h={{ base: '100%', sm: '400px', lg: '500px' }}
+              h={{ base: '100%', sm: '100px', md: '200px', lg: '400px' }}
             />
           </Flex>
           <Stack spacing={{ base: 6, md: 10 }}>
@@ -197,26 +255,8 @@ import {
             <Stack
               spacing={{ base: 4, sm: 6 }}
               direction={'column'}
-              /* divider={
-                <StackDivider
-                color={'gray.900'}
-                />
-              } */
               >
-              {/* <VStack spacing={{ base: 4, sm: 6 }}>
-                <Text
-                  color={'gray.900'}
-                  fontSize={'2xl'}
-                  fontWeight={'300'}>
-                  {item.description}
-                </Text>
-{                 <Text fontSize={'lg'}>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-                  aliquid amet at delectus doloribus dolorum expedita hic, ipsum
-                  maxime modi nam officiis porro, quae, quisquam quos
-                  reprehenderit velit? Natus, totam.
-                </Text> }
-              </VStack> */}
+              
               <Divider size={'lg'} borderColor={'#774BCD'}></Divider>
               <Box>
                 <Text
@@ -232,6 +272,24 @@ import {
                   fontSize={{ base: '16px', lg: '18px' }}
                   fontWeight={'300'}>
                   {item.description}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Category: {item.category}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Condition: {item.condition}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Location zipcode: {item.zipcode}
                 </Text>
 
                 {/* <List spacing={2}>
@@ -251,6 +309,12 @@ import {
   } else {
     return (
       <Container w={'80%'} maxW={'6xl'}>
+        <Alert display={display} status={alertStatus}>
+              <AlertIcon />
+              {/* <AlertTitle mr={2}>{alertTitle}</AlertTitle> */}
+              <AlertDescription mr={2}>{alertMessage}</AlertDescription>
+              <CloseButton onClick={closeAlert} />
+        </Alert>
         <SimpleGrid
           columns={{ base: 1, lg: 2 }}
           spacing={{ base: 8, md: 10 }}
@@ -345,8 +409,27 @@ import {
                 <Text
                   color={'gray.900'}
                   fontSize={{ base: '16px', lg: '18px' }}
-                  fontWeight={'300'}>
+                  fontWeight={'300'}
+                  mb={4}>
                   {item.description}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Category: {item.category}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Condition: {item.condition}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Location zipcode: {item.zipcode}
                 </Text>
                 {/* <List spacing={2}>
                   <ListItem>

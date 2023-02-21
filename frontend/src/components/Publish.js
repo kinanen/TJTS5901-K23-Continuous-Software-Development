@@ -1,4 +1,11 @@
-import { FormControl, FormLabel, Input, VStack, Link, Heading, SimpleGrid, GridItem, Select, Button } from '@chakra-ui/react';
+import { FormControl, FormLabel, Input, VStack, Link, Heading, SimpleGrid, GridItem, Select, Button,
+    Alert, 
+    AlertDescription, 
+    AlertIcon, 
+    CloseButton,
+    NumberInputField,
+    NumberInput, 
+} from '@chakra-ui/react';
 import { Link as ReachLink } from "react-router-dom";
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -42,11 +49,7 @@ const getUser = () => {
     }
   }
 
-  const publish = async details => {
-    //console.log(details);
-    const response = await axios.post(baseUrl, details, config())
-    return response.data
-  }
+  
 
 function Form(props) {
     const {t} = useTranslation();
@@ -71,7 +74,60 @@ function Form(props) {
     const [img, setImg] = useState('')
     const imageUpdate = (file) => setImg(file);
 
+    const [alertStatus, setAlertStatus] = useState("success");
+    const [alertMessage, setAlertMessage] = useState("");
+    const [display, setDisplay] = useState("none");
+
     console.log("From Publish " + props.curr +" and "+ props.rate);
+
+    const publish = async details => {
+        console.log(details);
+        try {
+        const response = await axios.post(baseUrl, details, config())
+        redirect();
+        return response.data
+         } catch(error) {
+            //console.log("otettiin kiinni")
+            //console.log(error.response.data);
+            setDisplay("flex");
+            setAlertStatus("error");
+            // setAlertTitle('Error!');
+            setAlertMessage(error.response.data.error);
+        }
+      }
+    
+      const closeAlert = () => {
+        if (alertStatus === "success") {
+          //setDisplay('none');
+          //redirect();
+        } else {
+          setDisplay("none");
+        }
+      };
+
+      let user = getUser();
+      let userType = user.userType;
+
+      const redirect = () => {
+        if (userType === 'seller') {
+          //window.location.assign('https://fastandfurious.azurewebsites.net');
+          window.location.href = '/seller'
+          //window.location.href = 'https://fastandfurious.azurewebsites.net/seller'
+        } else if (userType === 'operator') {
+          //window.location.assign('https://fastandfurious.azurewebsites.net');
+          window.location.href = '/operator'
+          //window.location.href = 'https://fastandfurious.azurewebsites.net/operator'
+      } else if (userType === 'buyer') {
+        //window.location.assign('https://fastandfurious.azurewebsites.net');  
+        window.location.href = '/buyer'
+          //window.location.href = 'https://fastandfurious.azurewebsites.net/buyer'
+      } else {
+        window.location.href = '/'
+        //window.location.assign = ('https://fastandfurious.azurewebsites.net');
+      }
+     }
+    
+
 
     //--------------------------- ************** ----------------------------------
     const handleSubmit = async (event) => { // Once the form has been submitted, this function will post to the backend
@@ -101,8 +157,14 @@ function Form(props) {
           }
     }
     return (
-        <VStack w="full" h="full" p={10} spacing={10} justify={'center'}>
+        <VStack w="full" h="full" p={10} spacing={10} justify={'center'}> 
             <VStack spacing={3} alignItems="flex-start">
+            <Alert display={display} status={alertStatus}>
+              <AlertIcon />
+              {/* <AlertTitle mr={2}>{alertTitle}</AlertTitle> */}
+              <AlertDescription mr={2}>{alertMessage}</AlertDescription>
+              <CloseButton onClick={closeAlert} />
+            </Alert>
                 <Heading size="2xl">{t('publish-item')}</Heading>
             </VStack>
             <form onSubmit={handleSubmit}>
@@ -110,7 +172,7 @@ function Form(props) {
                     <GridItem colSpan={1}>
                         <FormControl>
                             <FormLabel>{t('item-name')}</FormLabel>
-                            <Input onChange={itemNameUpdate} placeholder="" />
+                            <Input required onChange={itemNameUpdate} placeholder="" />
                         </FormControl>
                     </GridItem>
                     <GridItem colSpan={1}>
@@ -122,7 +184,7 @@ function Form(props) {
                     <GridItem colSpan={2}>
                         <FormControl>
                             <FormLabel>{t('item-description')}</FormLabel>
-                            <Input onChange={itemDescUpdate} placeholder="Please include additional information of your item" />
+                            <Input required onChange={itemDescUpdate} placeholder={t('descript-placeh')} />
                         </FormControl>
                     </GridItem>
                     <GridItem colSpan={1}>
@@ -140,7 +202,7 @@ function Form(props) {
                         <FormControl>
                             <FormLabel>{t('item-condition')}</FormLabel>
                             <Select onChange={conditionUpdate}>
-                                <option value="poor">{t('poor')}Poor</option>
+                                <option value="poor">{t('poor')}</option>
                                 <option value="acceptable">{t('acceptable')}</option>
                                 <option value="good">{t('good')}</option>
                                 <option value="excellent">{t('excellent')}</option>
@@ -151,24 +213,10 @@ function Form(props) {
                     <GridItem colSpan={1}>
                         <FormControl>
                             <FormLabel>{t('zip-code')}</FormLabel>
-                            <Input onChange={zipcodeUpdate} placeholder="" />
+                            <Input required onChange={zipcodeUpdate} placeholder="" />
                         </FormControl>
                     </GridItem>
                     <PhotoUpload photoUpdate={photoUpdate} imageUpdate={imageUpdate} />
-{/*                     <GridItem colSpan={1}>
-                        <Button
-                            type="submit"
-                            mt={8}
-                            loadingText="Submitting"
-                            size="lg"
-                            bg={'white'}
-                            color={'#774BCD'}
-                            _hover={{
-                                bg: '#C7A1FE',
-                            }}>
-                            <Link as={ReachLink} to='/uploadphoto'>UPLOAD PHOTO</Link>
-                        </Button>
-                    </GridItem> */}
                     <GridItem colSpan={1}>
                         <FormControl>
                             <FormLabel>Price</FormLabel>

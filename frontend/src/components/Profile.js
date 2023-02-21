@@ -98,7 +98,7 @@ import {
 
     console.log(userList);
     userList.forEach(element => {
-      console.log(element);
+      //console.log(element);
     })
 
     const findInfo = (id) =>{
@@ -173,15 +173,15 @@ import {
       }
     }
 
-    let sellerMessage = "You have managed to sell following items:"
-    let buyerMessage = "You have managed to buy following items:"
+    let sellerMessage = ""
+    let buyerMessage = ""
     let itemInfoSeller = [];
     let itemInfoBuyer = [];
 
     itemList.forEach(element => {
       let timeLeft = calculateHours(element.endDate);
       if (timeLeft === 0) {
-        console.log(element.name +": auction has passed")
+        //console.log(element.name +": auction has passed")
         if ((element.seller.id === user.id) && (element.highestBidder !== null)) {
           let newInfo = {};
           newInfo.status = "auction has passed"
@@ -195,16 +195,28 @@ import {
           newInfo.status = "auction has passed"
           newInfo.name = element.name;
           //newInfo.fromid = element.seller.id;
-          console.log(element.seller.id);
+          //console.log(element.seller.id);
           newInfo.from = findInfo(element.seller.id); 
           itemInfoBuyer.push(newInfo);
         }
       } else {
-        console.log(element.name+": auction is still active")
+        //console.log(element.name+": auction is still active")
       }     
     });
 
     let successDisplay = 'auto';
+
+    if (itemInfoBuyer.length === 0) {
+      buyerMessage = '';
+    } else {
+      buyerMessage = t('items-bought')
+    }
+
+    if (itemInfoSeller.length === 0) {
+      sellerMessage = '';
+    } else {
+      sellerMessage = t('items-sold')
+    }
 
     if ((itemInfoBuyer.length === 0) && (itemInfoSeller.length === 0)) {
       successDisplay = ('none');
@@ -230,7 +242,7 @@ import {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize={{base: 'sm', sm: 'sm', md: 'md', xl: 'lg'}} fontWeight='bold'>
-              Successful Auctions!
+            {t('successful-auctions')}
             </AlertDialogHeader>
             <AlertDialogBody fontSize={{base: 'sm', sm: 'sm', md: 'md', xl: 'lg'}}>
               <Text>{sellerMessage}</Text>
@@ -240,6 +252,7 @@ import {
               <Text >{item.name}, sold to {item.to}</Text>
               </HStack>
               ))}
+              <Text >{t('contact-buyer')}</Text>
               <Divider size={'lg'} borderColor={'#774BCD'}></Divider>
               <Text>{buyerMessage}</Text>
               {itemInfoBuyer.map((item, pos) => (
@@ -248,13 +261,14 @@ import {
               <Text >{item.name}, from {item.from}</Text>
               </HStack>
               ))}
+              <Text >{t('contact-seller')}</Text>
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
-                Cancel
+              {t('cancel')}
               </Button>
               <Button colorScheme='green' onClick={onClose} ml={3}>
-                OK
+              {t('ok')}
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -366,7 +380,7 @@ import {
                     bg: '#C7A1FE',
                   }} 
                   onClick={onOpen}>
-                    Success!
+                  {t('success')}
                 </Button>
               </GridItem>
               <GridItem area={'list1'} align={'center'} textAlign={'center'} justify={'center'} display={display}>

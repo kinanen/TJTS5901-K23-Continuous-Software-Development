@@ -15,11 +15,11 @@ const baseUrl = '/api/items';
 function CardsChakra(props) {
     const {t} = useTranslation();
     const [itemList, setItemList] = useState([]);
-    const [currencyList, setCurrencyList] = useState([]);
+    //const [currencyList, setCurrencyList] = useState([]);
 
-    const [currency, setCurrency] = useState('EUR');
+    /* const [currency, setCurrency] = useState('EUR');
     const currencyUpdate = (event) => setCurrency(event.target.value);
-    const [rate, setRate] = useState(1);
+    const [rate, setRate] = useState(1); */
     
 
     useEffect(() => {
@@ -30,7 +30,7 @@ function CardsChakra(props) {
         listItems();
     }, []);
 
-    console.log("From CardsChakra: Currency is "+props.curr+" and rate is "+props.rate);
+    //console.log("From CardsChakra: Currency is "+props.curr+" and rate is "+props.rate);
 
     /* const findExchangeRates = async () => {
         console.log("nyt kokeillaan kursseja");
@@ -39,15 +39,15 @@ function CardsChakra(props) {
         return response.data;
     }  */
 
-    useEffect(() => {
+    /* useEffect(() => {
         const findExchangeRates = async () => {
             await axios.get("https://sdw-wsrest.ecb.europa.eu/service/data/EXR/D..EUR.SP00.A?startPeriod=2023-01-01&lastNObservations=1&format=jsondata")
             .then(response => setCurrencyList(response.data));
         }
         findExchangeRates();
-    },[]);
+    },[]); */
 
-    let currLegend = [
+    /* let currLegend = [
     {index:100, key:"EUR", name:"Euro"},{index:0, key:"AUD", name:"Australian dollar"},
     {index:1, key:"BGN", name:"Bulgarian lev"},{index:2, key:"BRL", name:"Brazilian real"},
     {index:3, key:"CAD", name:"Canadian dollar"},{index:4, key:"CHF", name:"Swiss franc"},
@@ -63,9 +63,9 @@ function CardsChakra(props) {
     {index:23, key:"RON", name:"Romanian leu"},{index:24, key:"SEK", name:"Swedish krona"},
     {index:25, key:"SGD", name:"Singapore dollar"},{index:26, key:"THB", name:"Thai baht"},
     {index:27, key:"TRY", name:"Turkish lira"},{index:28, key:"USD", name:"US dollar"},
-    {index:29, key:"ZAR", name:"South African rand"}];
+    {index:29, key:"ZAR", name:"South African rand"}]; */
 
-    let currLegendMap = new Map();
+    /* let currLegendMap = new Map();
     let index = 0;
     for (let arvo of currLegend) {
         currLegendMap.set(index, arvo.key);
@@ -87,9 +87,9 @@ function CardsChakra(props) {
             indexRate += 1;
         }
         console.log(ratesMap);
-    }
+    } */
 
-    const findRate = (currency) => {
+/*     const findRate = (currency) => {
         let index = '';
         for (let [key, value] of currLegendMap.entries()) {
             if (value === currency) {
@@ -104,11 +104,11 @@ function CardsChakra(props) {
             }
         }
         return rate;
-    } 
+    } */ 
 
-    console.log("nyt haetaan indeksiä");
+    /* console.log("nyt haetaan indeksiä");
     let rateToUse = findRate('ILS');
-    console.log(rateToUse);
+    //console.log(rateToUse); */
     
 
     function msToTime(duration) {
@@ -132,6 +132,7 @@ function CardsChakra(props) {
         let endTime = new Date(end);
         let timeLeftMS = endTime - Date.now();
         let timeLeft = msToTime(timeLeftMS);
+        //console.log("aikaa jäljellä "+timeLeft);
         if (timeLeft < 0) {
             return 0;
         } else {
@@ -144,9 +145,15 @@ function CardsChakra(props) {
     }
 
     const findStatus = (item) => {
+        //console.log(item);
         let status = '';
         let endTime = new Date(item.endDate);
         let timeLeftMS = endTime - Date.now();
+        //console.log(item.startDate);
+        //console.log(item.endDate);
+        //console.log(endTime);
+        //console.log(Date.now());
+        //console.log("aikaa jäljellä "+timeLeftMS);
         if (timeLeftMS > 0) {
             status = t('active')
         } else if (timeLeftMS < 0) {
@@ -159,13 +166,15 @@ function CardsChakra(props) {
     }
     console.log(itemList);
 
+    
+
     const cards = itemList.map((item, pos) => {
         let price = item.initialPrice;
         let bid = item.highestBid;
         //let rate = findRate(currency);
         let rate = props.rate;
-        let priceInCurr = Math.round(price * rate);
-        let bidInCurr = Math.round(bid * rate);
+        let priceInCurr = (price * rate).toFixed(2);
+        let bidInCurr = (bid * rate).toFixed(2);
         return(
         <CardChakra 
             key={pos}
@@ -177,7 +186,7 @@ function CardsChakra(props) {
             highestBid={bidInCurr} // tähän valitulla currencyllä lask hinta
             currency={props.curr} // tähän valittu currency
             time={calculateHours(item.endDate)}
-            status={findStatus(item.endDate)}
+            status={findStatus(item)}
             id={item.id}
             rate={props.rate}
             label="Details"

@@ -197,4 +197,17 @@ itemsRouter.put('/status/:id', async (request, response) => {
   response.status(200).json(updatedItem)
 })
 
+itemsRouter.delete('/:id', async (request, response) => {
+  const itemToDelete = Item.findById(request.params.id)
+
+  if(!itemToDelete) {
+    return response.status(404).json({ error: "no item found with given id" })
+  }
+
+  await Item.findByIdAndDelete(request.params.id)
+
+  response.status(204).end()
+})
+
+
 module.exports = itemsRouter
