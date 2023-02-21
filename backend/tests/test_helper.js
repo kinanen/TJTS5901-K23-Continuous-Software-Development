@@ -9,7 +9,7 @@ const initialItems = [
         condition: "Test condition 1",
         initialPrice: 1,
         seller: null,
-        highestBid: null,
+        highestBid: 100,
         highestBidder: null,
         startDate: new Date(),
         endDate: new Date(),
@@ -26,7 +26,7 @@ const initialItems = [
         condition: "Test condition 2",
         initialPrice: 2,
         seller: null,
-        highestBid: null,
+        highestBid: 100,
         highestBidder: null,
         startDate: new Date(),
         endDate: new Date(),
@@ -43,7 +43,7 @@ const initialItems = [
         condition: "Test condition 3",
         initialPrice: 100,
         seller: null,
-        highestBid: null,
+        highestBid: 100,
         highestBidder: null,
         startDate: new Date(),
         endDate: new Date(),
@@ -70,4 +70,5 @@ const itemsInDb = async () => {
   return items.map(b => b.toJSON())
 }
 
-module.exports = { initialItems, itemsInDb, initialUser }
+
+module.exports = { initialItems, itemsInDb, initialUser}

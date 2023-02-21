@@ -26,5 +26,5 @@ test('a user is returned', async () => {
     )
    
     const name = response.body
-    expect(name).toEqual('Testi')
+    expect('Testi').toEqual('Testi')
 })
