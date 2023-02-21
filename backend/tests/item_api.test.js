@@ -45,31 +45,31 @@ test("a specific item is within the returned items", async () => {
   expect(names).toContain("Test item 1");
 });
 
-describe("addition of a item", () => {
+describe("addition of an item", () => {
   let token;
   let buyerToken;
   beforeEach(async () => {
     await User.deleteMany({});
 
     const passwordHash = await bcrypt.hash("sekret", 10);
-    const user = new User({ username: "root", passwordHash });
+    const user = new User({ email:"root@root", firstName: "root", surname: "root", passwordHash });
 
     await user.save();
 
     const response = await api
       .post("/api/login")
-      .send({ username: "root", password: "sekret" });
+      .send({ email: "root@root", password: "sekret" });
 
     token = response.body.token;
 
-    const buyer = new User({ username: "buyer", userType: "buyer", passwordHash });
+    const buyer = new User({ email: "bob@buyer", firstName: "Bob", surname: "buyer", userType: "buyer", passwordHash });
     await buyer.save();
 
     const buyerResponse = await api
-    .post("/api/login")
-    .send({ username: "buyer", password: "sekret" });
+      .post("/api/login")
+      .send({ email: "bob@buyer", password: "sekret", userType: "buyer" });
 
-  buyerToken = buyerResponse.body.token;
+    buyerToken = buyerResponse.body.token;
   });
 
   test("item cannot be added without token", async () => {
@@ -155,10 +155,10 @@ describe("addition of a item", () => {
     }
 
     await api
-    .post("/api/items")
-    .send(newItem)
-    .set("Authorization", `bearer ${buyerToken}`)
-    .expect(403);
+      .post("/api/items")
+      .send(newItem)
+      .set("Authorization", `bearer ${buyerToken}`)
+      .expect(403);
 
     const response = await api.get("/api/items");
 
@@ -180,7 +180,7 @@ test("get item by id, item exists", async () => {
   expect(itemResponse.body.name).toBe(item.name);
 });
 
-test("get item by, item not exsisting ", async () => {
+test("get item by id, item not exsisting ", async () => {
   const response = await api
     .get("/api/items")
   const item = response.body[0];
@@ -195,11 +195,12 @@ test("get item by, item not exsisting ", async () => {
 
 describe("bidding on an item and changing item's status", () => {
   let token;
+  let user;
   beforeEach(async () => {
     await User.deleteMany({});
 
     const passwordHash = await bcrypt.hash("sekret", 10);
-    const user = new User({ username: "root", passwordHash });
+    user = new User({ username: "root", passwordHash });
 
     await user.save();
 
@@ -225,7 +226,7 @@ describe("bidding on an item and changing item's status", () => {
 
     const itemResponse = await api.get(`/api/items/${itemId}`);
     expect(itemResponse.body.highestBid).toEqual(newBid);
-    expect(itemResponse.body.highestBidder).toEqual("root")
+    expect(itemResponse.body.highestBidder).toEqual(user.id)
 
   });
 
