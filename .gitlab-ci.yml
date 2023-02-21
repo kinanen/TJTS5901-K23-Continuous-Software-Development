@@ -71,8 +71,9 @@ test:
   
   before_script:
     - cd backend
-    
+
   script:
+      - npm install
       ## Run tests with coverage reporting
       - npm test -- --coverage
       ## Run basic reporting for badge
