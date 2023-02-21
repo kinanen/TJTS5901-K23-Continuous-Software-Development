@@ -19,6 +19,16 @@ import {
       console.log(e.target.id);
     }
 
+    let detailState = [];
+    let newState = {};
+    newState.id = props.id;
+    newState.currency = props.currency;
+    newState.price = props.initialPrice;
+    newState.bid = props.highestBid;
+    newState.rate = props.rate;
+    detailState.push(newState);
+    console.log(newState);
+
 
     return (
         <Flex w={'full'} p={8} flex={1} align={'center'} justify={'center'} alignItems='center'>
@@ -101,7 +111,7 @@ import {
                   _hover={{
                     bg: '#C7A1FE',
                   }} onClick={getId}><Link as={ReachLink} to={'/details'}  
-                  state={props.id} id={props.id}>{t('details')}</Link></Button>
+                  state={detailState} id={props.id}>{t('details')}</Link></Button>
               </GridItem>
               <GridItem h={[4,6,8,10]} area={'status'} textAlign={{base: 'center', sm: 'center', md: 'right', lg: 'right'}}>
                 <Text as='b' fontSize={{base: 'xs', sm:'sm', md:'md', lg:'lg'}} color={'green.600'} textAlign={'right'} pb={[2,4,6,8]}>

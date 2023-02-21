@@ -25,15 +25,28 @@ import {
   
   
   
-  export default function ProductDetails() {
+  export default function ProductDetails(props) {
     const {t} = useTranslation();
 
     const location = useLocation();
     //console.log(location.state);
 
-    let id = location.state;
+    let state = location.state;
+    console.log(state[0]);
+    let id = location.state[0].id;
+    //let currency = location.state[0].currency;
+    let currency = props.curr;
+    //let iPrice = location.state[0].price;
+    //let hBid = location.state[0].bid;
+    //let rate = location.state[0].rate;
+    let rate = props.rate;
+
+    
+    console.log("From Details: Currency is "+props.curr+" and rate is "+props.rate);
 
     const [item, setItem] = useState([]);
+
+    let iPrice = Math.round(item.initialPrice * rate);
 
     useEffect(() => {
     const showItemDetails = async () => {
@@ -66,9 +79,15 @@ import {
       }
     }
 
+
+    let itemBid = Math.round(item.highestBid * rate);
+
     const [edit, setEdit] = useState(false);
     const [bid, setBid] = useState(0);
-    const bidUpdate = (event) => setBid(event.target.value);
+    const bidUpdate = (event) =>  {
+      let eurBid = event.target.value / rate
+      setBid(eurBid);
+    }
     let itemId = item.id;
 
     //----------this needs the update ref to backend----------
@@ -143,14 +162,16 @@ import {
                 color={'gray.900'}
                 fontWeight={300}
                 fontSize={'1xl'}>
-                {t('initial-price')} {item.initialPrice} {item.currency}
+                {t('initial-price')} {iPrice} {currency} 
+                {/* {item.initialPrice} {item.currency} */}
               </Text>
               <Text
                 color={'gray.900'}
                 fontWeight={500}
                 fontSize={'2xl'}
                 mb={4}>
-                {t('highest-bid')}{item.highestBid} {item.currency}
+                {t('highest-bid')} {itemBid} {currency} 
+                {/* {item.highestBid} {item.currency} */}
               </Text>
               <Text
                 color={'gray.900'}
@@ -159,7 +180,7 @@ import {
                 mb={4}>
                 {t('new-bid')}
                 <Input type='text' onChange={bidUpdate}></Input> 
-                {item.currency}
+                {currency}
               </Text>
               <Button
                   loadingText="Submitting"
@@ -265,14 +286,16 @@ import {
                 color={'gray.900'}
                 fontWeight={300}
                 fontSize={'1xl'}>
-                {t('initial-price')}{item.initialPrice} {item.currency}
+                {t('initial-price')} {iPrice} {currency}
+                {/* {item.initialPrice} {item.currency} */}
               </Text>
               <Text
                 color={'gray.900'}
                 fontWeight={500}
                 fontSize={'2xl'}
                 mb={4}>
-                {t('highest-bid')}{item.highestBid} {item.currency}
+                {t('highest-bid')} {itemBid} {currency}
+                {/* {item.highestBid} {item.currency} */}
               </Text>
               <Button
                   loadingText="Submitting"

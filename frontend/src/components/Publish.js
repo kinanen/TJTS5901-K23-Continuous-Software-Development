@@ -48,7 +48,7 @@ const getUser = () => {
     return response.data
   }
 
-function Form() {
+function Form(props) {
     const {t} = useTranslation();
     const [itemName, setItemName] = useState('');
     const itemNameUpdate = (event) => setItemName(event.target.value);
@@ -70,6 +70,8 @@ function Form() {
     const photoUpdate = (url) => setPhoto(url);
     const [img, setImg] = useState('')
     const imageUpdate = (file) => setImg(file);
+
+    console.log("From Publish " + props.curr +" and "+ props.rate);
 
     //--------------------------- ************** ----------------------------------
     const handleSubmit = async (event) => { // Once the form has been submitted, this function will post to the backend
