@@ -20,13 +20,13 @@ import {
   import { useLocation } from "react-router-dom";
   import { useState, useEffect} from 'react';
   import { useTranslation } from 'react-i18next';
+  import { bytesToBase64 } from "byte-base64"
 
   const baseUrl = '/api/items';
   
-  
-  
   export default function ProductDetails(props) {
     const {t} = useTranslation();
+    let image = ""
 
     const location = useLocation();
     //console.log(location.state);
@@ -55,6 +55,18 @@ import {
       }
       showItemDetails();
     });
+
+    const setImage = async () => {
+      if(!item.photo) {
+        image = Hammer
+        return
+      }
+      const imageData = await axios.get(`${baseUrl}/photo/${item.photo}`)
+      const base64encoded = bytesToBase64(imageData.data.photo.data.data)
+      image = `data:${imageData.data.contentType};base64,${base64encoded}`
+    }
+
+    setImage()
 
     let token = null
     const STORAGE_KEY = 'loggedAuctionAppUser'

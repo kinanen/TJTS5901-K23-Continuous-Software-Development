@@ -139,6 +139,7 @@ function CardsChakra(props) {
         }
     }
 
+    // set the item's on database status to passed
     const setStatus = async (id) => {
         await axios.put(`${baseUrl}/status/${id}`, { status: "passed" })
     }
@@ -177,7 +178,7 @@ function CardsChakra(props) {
             highestBid={bidInCurr} // tähän valitulla currencyllä lask hinta
             currency={props.curr} // tähän valittu currency
             time={calculateHours(item.endDate)}
-            status={findStatus(item.endDate)}
+            status={findStatus(item)}
             id={item.id}
             rate={props.rate}
             label="Details"

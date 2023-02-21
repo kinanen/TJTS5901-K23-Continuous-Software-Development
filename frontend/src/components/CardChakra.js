@@ -11,9 +11,13 @@ import {
   } from '@chakra-ui/react';
   import { Link as ReachLink } from "react-router-dom";
   import { useTranslation } from 'react-i18next';
+  import axios from 'axios';
+  import { bytesToBase64 } from "byte-base64"
   
   export default function CardItem(props) {
     const {t} = useTranslation();
+    let photo = ""
+    const baseUrl = '/api/items';
 
     const getId = (e) => {
       console.log(e.target.id);
@@ -29,7 +33,18 @@ import {
     detailState.push(newState);
     console.log(newState);
 
+    const setImage = async (id) => {
+      if(!id) {
+        photo = props.src
+        return
+      }
+      const imageData = await axios.get(`${baseUrl}/photo/${id}`)
+      const base64encoded = bytesToBase64(imageData.data.photo.data.data)
+      photo = `data:${imageData.data.contentType};base64,${base64encoded}`
+    }
 
+    setImage(props.photo)
+    
     return (
         <Flex w={'full'} p={8} flex={1} align={'center'} justify={'center'} alignItems='center'>
           <Box
