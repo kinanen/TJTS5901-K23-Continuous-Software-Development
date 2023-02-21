@@ -61,6 +61,7 @@ import {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef();
 
+    const { t } = useTranslation();
 
     const login = async credentials => {
       console.log(credentials);
