@@ -81,7 +81,7 @@ test:
       ## Generate detailed report for gitlab annotations.
       #- coverage xml -o coverage.xml
 
-  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
   artifacts:
     reports:
       coverage_report:
