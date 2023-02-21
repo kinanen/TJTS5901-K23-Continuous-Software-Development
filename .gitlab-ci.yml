@@ -1,6 +1,7 @@
 ## Stage names in the pipeline.
 stages:
   - build
+  - test
   - staging
   - deploy
 
@@ -13,6 +14,8 @@ variables:
   ## (Optional) More verbose output from pipeline. Enabling it might reveal secrets.
   #CI_DEBUG_TRACE: "true"
 
+include:
+  - template: Jobs/SAST.gitlab-ci.yml
 
 ## Use buildkit to build the container.
 ## Buildkit: https://github.com/moby/buildkit
@@ -44,6 +47,47 @@ build:
           --local dockerfile=. \
           --opt build-arg:CI_COMMIT_SHA=${CI_COMMIT_SHA} \
           --output type=image,name=${DOCKER_IMAGE_NAME}:${DOCKER_TAG},push=true
+
+sast:
+    ## Static Application Security Test
+    ## You can override the included template(s) by including variable overrides
+    ## SAST customization:
+    ##   https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+    stage: test
+
+test:
+  ## Optional: include stage and environment name
+  stage: test
+  image: ${DOCKER_IMAGE_NAME}:${DOCKER_TAG}
+  variables:
+    ## Setup variable pointin to mongo service
+    ## Notice: the `mongo` address might not work.
+    TEST_MONGODB_URL: mongodb://mongodb/fastandfurious-test
+
+  ## When job is started, also start these things
+  services:
+    - name: mongo:4.2  # update to reflect same version used on production
+      alias: mongodb
+  
+  before_script:
+    - cd backend
+
+  script:
+      - npm install
+      ## Run tests with coverage reporting
+      - npm test -- --coverage --coverageReporters=cobertura
+      ## Run basic reporting for badge
+      #- coverage report
+      ## Generate detailed report for gitlab annotations.
+      #- coverage xml -o coverage.xml
+
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: cobertura-coverage.xml
+
 
 deploy to staging:
   stage: staging

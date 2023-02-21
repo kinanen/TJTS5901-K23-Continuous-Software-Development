@@ -41,6 +41,7 @@ import {
 
   
   export default function SignUp() {
+    const { t } = useTranslation();
     const [showPassword, setShowPassword] = useState(false);
     const [fname, setFname] = useState('');
     const fnameUpdate = (event) => setFname(event.target.value);
@@ -61,7 +62,6 @@ import {
     const cancelRef = useRef();
 
     const { t } = useTranslation();
-
 
     const login = async credentials => {
       console.log(credentials);

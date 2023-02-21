@@ -8,6 +8,7 @@ import {
     Center,
 } from '@chakra-ui/react';
 import {React, useState, useEffect} from 'react';
+import i18next from 'i18next';
 
 import axios from 'axios';
 
@@ -15,13 +16,12 @@ import axios from 'axios';
 
 export default function Locals(props) {
 
-    
-    const updateLocals = (lang) => {
-        
-        console.log("language is now "+lang);
-    }
     //props.saveRate('');
     //props.saveCurrency('');
+
+    const changeLanguage = (selected) => {
+        i18next.changeLanguage(selected.target.value); 
+    }   
 
 return (
 
@@ -30,10 +30,10 @@ return (
             <FormControl>
                 <Center>
                 <FormLabel fontSize={'xs'} m={0} mr={1} p={0}>Language</FormLabel>
-                <Select size="xs" onChange={updateLocals} mr={2}>
-                    <option value='EN'>EN</option>
-                    <option value='FI'>FI</option>
-                    <option value='FR'>FR</option>
+                <Select size="xs" onChange={changeLanguage} mr={2}>
+                    <option value='en'>EN</option>
+                    <option value='fi'>FI</option>
+                    <option value='fr'>FR</option>
                 </Select>
                 </Center>
             </FormControl>

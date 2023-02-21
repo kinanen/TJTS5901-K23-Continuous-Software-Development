@@ -9,7 +9,7 @@ const initialItems = [
         condition: "Test condition 1",
         initialPrice: 1,
         seller: null,
-        highestBid: null,
+        highestBid: 100,
         highestBidder: null,
         startDate: new Date(),
         endDate: new Date(),
@@ -26,7 +26,7 @@ const initialItems = [
         condition: "Test condition 2",
         initialPrice: 2,
         seller: null,
-        highestBid: null,
+        highestBid: 100,
         highestBidder: null,
         startDate: new Date(),
         endDate: new Date(),
@@ -34,7 +34,27 @@ const initialItems = [
         currency: "Test currency 2",
         photo: null,
         status: "Test status 2"
-    }]
+    },
+    {
+        name: "Test item 4",
+        model: "Test model 4",
+        description: "Test description 4",
+        category: "Test category 4",
+        condition: "Test condition 3",
+        initialPrice: 100,
+        seller: null,
+        highestBid: 100,
+        highestBidder: null,
+        startDate: new Date(),
+        endDate: new Date(),
+        zipcode: "Test zipcode 3",
+        currency: "Test currency 3",
+        photo: null,
+        status: "active"
+    }
+    ]
+
+
 
 initialUser = {
         email: "testi@mail.com",
@@ -50,4 +70,5 @@ const itemsInDb = async () => {
   return items.map(b => b.toJSON())
 }
 
-module.exports = { initialItems, itemsInDb, initialUser }
+
+module.exports = { initialItems, itemsInDb, initialUser}

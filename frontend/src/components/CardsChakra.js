@@ -140,6 +140,7 @@ function CardsChakra(props) {
         }
     }
 
+    // set the item's on database status to passed
     const setStatus = async (id) => {
         await axios.put(`${baseUrl}/status/${id}`, { status: "passed" })
     }

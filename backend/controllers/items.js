@@ -152,10 +152,23 @@ itemsRouter.put('/:id', async (request, response) => {
   }
   // get the item from database to compare it with the bid
   const item = await Item.findById(request.params.id)
+
+  /*
+  // check if the bidder's id matches with the item's seller
+  if(user._id.toString() === item.seller.toString()) {
+    return response.status(403).json({ error: "seller can't bid on their own item" })
+  }
+
+  // check if the user is already the highest bidder on the item
+  if(item.highestBidder.toString() === user._id.toString()) {
+    logger.warning(`User ${user.email} tried to bid on the same item ${item.id} again while being the highest bidder`)
+    return response.status(403).json({ error: "same user cannot bid again while being highest bidder" })
+  }*/
   
   // If the bid sent is lower than the highest bid or the initial price
   // return with status code 409 Conflict
-  if((bid < item.highestBid) || (bid < item.initialPrice)) {
+  if((bid <= item.highestBid) || (bid <= item.initialPrice)) {
+    logger.warning("user entered a bid lower than expected")
     return response.status(409).json({ error: "bid was lower than expected" })
   }
 
@@ -208,6 +221,5 @@ itemsRouter.delete('/:id', async (request, response) => {
 
   response.status(204).end()
 })
-
 
 module.exports = itemsRouter

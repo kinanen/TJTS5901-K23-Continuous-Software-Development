@@ -53,9 +53,15 @@ loginRouter.post('/', async (request, response) => {
     id: user.id,
   };
 
-  // Sign the token with sign and given user
-  const token = jwt.sign(userForToken, process.env.SECRET);
-
+  let token;
+  if(process.env.NODE_ENV === 'test') {
+    token = jwt.sign(userForToken, "supersalaistahommaa")
+  }
+  else {
+    // Sign the token with sign and given user
+    token = jwt.sign(userForToken, process.env.SECRET);
+  }
+  
   logger.notice(`Successful login ${email}`);
   user.passwordTries = 0;
   await user.save();
