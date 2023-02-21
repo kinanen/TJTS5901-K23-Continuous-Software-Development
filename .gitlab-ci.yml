@@ -1,6 +1,7 @@
 ## Stage names in the pipeline.
 stages:
   - build
+  - test
   - staging
   - deploy
 
@@ -9,6 +10,9 @@ variables:
   ## for special characters and spaces!
   DOCKER_IMAGE_NAME: ${DOCKER_REGISTRY}/fastandfurious
   DOCKER_TAG: ${CI_COMMIT_REF_SLUG}
+
+include:
+  - template: Jobs/SAST.gitlab-ci.yml
 
   ## (Optional) More verbose output from pipeline. Enabling it might reveal secrets.
   #CI_DEBUG_TRACE: "true"
@@ -44,6 +48,13 @@ build:
           --local dockerfile=. \
           --opt build-arg:CI_COMMIT_SHA=${CI_COMMIT_SHA} \
           --output type=image,name=${DOCKER_IMAGE_NAME}:${DOCKER_TAG},push=true
+
+sast:
+    ## Static Application Security Test
+    ## You can override the included template(s) by including variable overrides
+    ## SAST customization:
+    ##   https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+    stage: test
 
 deploy to staging:
   stage: staging
