@@ -24,7 +24,7 @@ usersRouter.get('/', async (request, response) => {
   response.json(users)
 })
 
-// Register user with the given data from the frontend with POST
+// POST endpoint to register user with the given data from the frontend with POST
 usersRouter.post('/', async (request, response) => {
   const { email, firstName, surname, userType, password } = request.body
 
@@ -72,7 +72,7 @@ usersRouter.post('/', async (request, response) => {
   response.status(201).json(savedUser)
 })
 
-// GET a single user's info
+// GET endpoint for a single user's info
 usersRouter.get('/:id', async (request, response) => {
   // if user can't be found with the given token or no token was given
   if (!request.user) {
@@ -120,7 +120,7 @@ usersRouter.delete('/:id', async (request, response) => {
   if(userToDelete.items.length > 0) {
     // delete all the items
     userToDelete.items.forEach(async element => {
-      // delete the items from database, element === item's id
+      // delete the items from database, element == item's id
       await Item.findByIdAndDelete(element)
     });
   }

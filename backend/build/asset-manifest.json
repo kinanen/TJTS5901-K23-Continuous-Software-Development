@@ -1,20 +1,22 @@
 {
   "files": {
     "main.css": "/static/css/main.073c9b0a.css",
-    "main.js": "/static/js/main.aa3fb8ac.js",
+    "main.js": "/static/js/main.c066cf63.js",
     "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
+    "static/media/emoticon.png": "/static/media/emoticon.4310c597f1fcf8433b31.png",
     "static/media/confetti.jpg": "/static/media/confetti.cf27c9b20a816ab7718e.jpg",
     "static/media/hammer.jpg": "/static/media/hammer.8dd945421cde17037361.jpg",
     "static/media/signin.jpg": "/static/media/signin.b252695aa3e98a44e0a4.jpg",
     "static/media/signup.jpg": "/static/media/signup.c4b2258a9e6d637e87b0.jpg",
     "static/media/FF-logo.PNG": "/static/media/FF-logo.dcfcf6b487ff3e11a771.PNG",
     "index.html": "/index.html",
+    "static/media/getFetch.cjs": "/static/media/getFetch.40f37ddea2378391108f.cjs",
     "main.073c9b0a.css.map": "/static/css/main.073c9b0a.css.map",
-    "main.aa3fb8ac.js.map": "/static/js/main.aa3fb8ac.js.map",
+    "main.c066cf63.js.map": "/static/js/main.c066cf63.js.map",
     "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.aa3fb8ac.js"
+    "static/js/main.c066cf63.js"
   ]
 }

@@ -1,5 +1,5 @@
 
-import {React, useState } from "react";
+import {React } from "react";
 import { Route, Routes } from "react-router-dom";
 import NavbarChakra from "./components/NavbarChakra";
 import FooterChakra from "./components/FooterChakra";
