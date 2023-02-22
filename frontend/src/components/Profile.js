@@ -140,13 +140,16 @@ import {
       //console.log(element);
       if(element.seller.id === user.id) {
         let publishedItem = {};
+        console.log(element);
         publishedItem.name = element.name;
         publishedItem.model = element.model;
         publishedItem.id = element.id;
         published.push(publishedItem);
+        console.log(publishedItem.id);
+        console.log(published);
       }     
     });
-    //console.log(published);
+    console.log(published);
 
     let highestbids = [];
     
@@ -231,6 +234,21 @@ import {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef();
 
+    const publItem = published.map((item, pos) => {
+        let publId = (item.id);
+      return(
+        <ListItem fontSize={{base:'md', sm:'lg', md: 'lg', lg:'lg'}} key={'sold'+item.id}><Link as={ReachLink} to={'/details'}  
+                  state={publId} id={publId}>{item.name} / {item.model}</Link></ListItem>
+      )
+    })
+
+    const boughtItem = highestbids.map((item, pos) => {
+      let bidId = (item.id);
+    return(
+      <ListItem fontSize={{base:'md', sm:'lg', md: 'lg', lg:'lg'}} key={'sold'+item.id}><Link as={ReachLink} to={'/details'}  
+                state={bidId} id={bidId}>{item.name} / {item.model}</Link></ListItem>
+    )
+  })
     
 
     return (
@@ -389,10 +407,11 @@ import {
                 {t('published-items')}:
                 </Text>
                 <UnorderedList>
-                {published.map((item) => (
+                  {publItem}
+                {/* {published.map((item) => (
                   <ListItem fontSize={{base:'md', sm:'lg', md: 'lg', lg:'lg'}} key={'sold'+item.id}><Link as={ReachLink} to={'/details'}  
                   state={item.id} id={item.id}>{item.name} / {item.model}</Link></ListItem>
-                  ))}
+                  ))} */}
                 </UnorderedList>
                 </Stack>
               </GridItem>
@@ -402,10 +421,11 @@ import {
                 {t('bought-items')}:
                 </Text>
                 <UnorderedList>
-                {highestbids.map((item) => (
+                  {boughtItem}
+                {/* {highestbids.map((item) => (
                   <ListItem fontSize={{base:'md', sm:'lg', md: 'lg', lg:'lg'}} key={'bought'+item.id}><Link as={ReachLink} to={'/details'}  
                   state={item.id} id={item.id}>{item.name} / {item.model}</Link></ListItem>
-                  ))};
+                  ))}; */}
                 </UnorderedList>
                 </Stack>
               </GridItem>

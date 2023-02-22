@@ -31,9 +31,9 @@ import {
     const location = useLocation();
     //console.log(location.state);
 
-    //let state = location.state;
+    let id = location.state;
     //console.log(state[0]);
-    let id = location.state[0].id;
+    //let id = location.state[0].id;
     //console.log("id on "+id);
     //let currency = location.state[0].currency;
     let currency = props.curr;
