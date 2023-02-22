@@ -6,3 +6,6 @@ REST interface implemented from the beginning, updated README.md to have instruc
 
 ### Otso: 
 Learning and applying the i18next library and translations to the applications. Set the useTranslate and added all texts to their files, and did the configuration for i18next.
+
+### Henna:
+Kept on working on the fontend and user features. Prepared the template for bughunt and played privacy game.
