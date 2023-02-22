@@ -166,7 +166,7 @@ function AuctionsList(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef();
 
-    /* const findStatus = (item) => {
+    const findStatus = (item) => {
         let status = '';
         let endTime = new Date(item.endDate);
         let timeLeftMS = endTime - Date.now();
@@ -182,7 +182,7 @@ function AuctionsList(props) {
             status = 'PREPAIRING'
         }
         return status
-    } */
+    }
 
     //console.log(itemList);
 
@@ -208,12 +208,12 @@ function AuctionsList(props) {
         onOpen();
         deleteItem(event.target.id)
         //console.log("item to delete is " +event.target.value);
-        //console.log(event.target.id)
+        console.log(event.target.id);
         listItems();
     }
 
     const handleDelete = (event) => {
-        console.log(event.target.id)
+        //console.log(event.target.id)
         //deleteItem(event.target.value)
         onClose();
     }
@@ -234,7 +234,7 @@ function AuctionsList(props) {
         return (
             <Tr key={pos}>
                 {/* <Td><Icon as={findIcon(item.endDate)}></Icon></Td> */}
-                <Td>{item.status}</Td>
+                <Td>{findStatus(item)}</Td>
                 <Td>{item.name}</Td>
                 <Td>{item.model}</Td>
                 {/* <Td>{item.description}</Td> */}
