@@ -84,14 +84,27 @@ function AuctionsList(props) {
         }
     }
 
-    const findStatus = (end) => {
+    // set the item's on database status to passed
+    const setStatus = async (item) => {
+        if (item.highestBidder === null) {
+            await axios.put(`${baseUrl}/status/${item.id}`, { status: "expired" })
+            return
+        }
+        await axios.put(`${baseUrl}/status/${item.id}`, { status: "fulfilled" })
+    }
+
+    const findStatus = (item) => {
         let status = '';
-        let endTime = new Date(end);
+        let endTime = new Date(item.endDate);
         let timeLeftMS = endTime - Date.now();
         if (timeLeftMS > 0) {
             status = 'ACTIVE'
         } else if (timeLeftMS < 0) {
-            status = 'PASSED'
+            setStatus(item)
+            if(item.highestBidder === null) {
+                return status = 'EXPIRED'
+            }
+            status = 'FULFILLED'
         } else {
             status = 'PREPAIRING'
         }
@@ -131,7 +144,7 @@ function AuctionsList(props) {
         return (
             <Tr key={pos}>
                 {/* <Td><Icon as={findIcon(item.endDate)}></Icon></Td> */}
-                <Td>{findStatus(item.endDate)}</Td>
+                <Td>{findStatus(item)}</Td>
                 <Td>{item.name}</Td>
                 <Td>{item.model}</Td>
                 {/* <Td>{item.description}</Td> */}

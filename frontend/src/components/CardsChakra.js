@@ -141,8 +141,12 @@ function CardsChakra(props) {
     }
 
     // set the item's on database status to passed
-    const setStatus = async (id) => {
-        await axios.put(`${baseUrl}/status/${id}`, { status: "passed" })
+    const setStatus = async (item) => {
+        if (item.highestBidder === null) {
+            await axios.put(`${baseUrl}/status/${item.id}`, { status: "expired" })
+            return
+        }
+        await axios.put(`${baseUrl}/status/${item.id}`, { status: "fulfilled" })
     }
 
     const findStatus = (item) => {
@@ -159,7 +163,7 @@ function CardsChakra(props) {
             status = t('active')
         } else if (timeLeftMS < 0) {
             status = t('passed')
-            setStatus(item.id)
+            setStatus(item)
         } else {
             status = t('prepairing')
         }
