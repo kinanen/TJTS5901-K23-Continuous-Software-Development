@@ -6,6 +6,10 @@
 
 Went through bughunt issues and fixed some backend related ones, went through user stories, added SAST to pipeline, updated backend to be more robust and updated it for more requirements.
 
+### Otso:
+
+Did the testing on the backedn using supertest. Tests mostly done via item_api and user_api which way tha backend will be tested widely. Added language selections function to frontend. 
+
 
 
 
