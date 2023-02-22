@@ -82,10 +82,10 @@ test:
       #- coverage xml -o coverage.xml
 
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
-  artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
+  #artifacts:
+    #reports:
+      #coverage_report:
+        #coverage_format: cobertura
 
 
 deploy to staging:
