@@ -6,7 +6,8 @@
 
 Went through bughunt issues and fixed some backend related ones, went through user stories, added SAST to pipeline, updated backend to be more robust and updated it for more requirements.
 
-
+### Henna:
+Up until the last minute added features to frontend. Fixed bugs based on reports or discussions. Together with the team prepared for the final event.
 
 
 
