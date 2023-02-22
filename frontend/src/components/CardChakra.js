@@ -20,7 +20,6 @@ import {
     const baseUrl = '/api/items';
 
     const getId = (e) => {
-      //console.log(e.target.id);
     }
 
     let detailState = [];
@@ -31,7 +30,6 @@ import {
     newState.bid = props.highestBid;
     newState.rate = props.rate;
     detailState.push(newState);
-    //console.log(newState);
 
     const setImage = async (id) => {
       if(!id) {
@@ -48,7 +46,6 @@ import {
     return (
         <Flex w={'full'} p={8} flex={1} align={'center'} justify={'center'} alignItems='center'>
           <Box
-          // alignItems='center'
             minW='90%'
             maxW='90%' 
             rounded={'lg'}
@@ -82,13 +79,11 @@ import {
                       "image price x"
                       "image button time"
                 `}}
-                //gridTemplateRows={'1fr 1fr 1fr 1fr 1fr'}
                 gridTemplateColumns={{sm: '1fr', md: '2fr 1fr' , lg: '200px 3fr 1fr'}}
                 h='full'
                 p={2}
                 gap='1'
                 color='blackAlpha.700'
-                // fontWeight='bold'
                 >
               <GridItem  area={'image'}>
                 <Image

@@ -7,7 +7,6 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { Link as ReachLink } from "react-router-dom";
-import Crowd from "../images/confetti.jpg";
 import { useTranslation } from 'react-i18next';
 
 export default function WithBackgroundImage() {

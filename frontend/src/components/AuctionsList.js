@@ -1,22 +1,12 @@
-import { VStack, 
-    List, 
-    ListIcon, 
-    ListItem, 
-    Box, 
-    GridItem, 
-    Grid,Table,
+import { VStack,  
+    Box,  
+    Table,
     Thead,
     Tbody,
-    Tfoot,
     Tr,
     Th,
     Td,
-    TableCaption,
     TableContainer,
-    Icon,
-    Checkbox,
-    Input,
-    Flex,
     Button,
     AlertDialog,
     AlertDialogBody,
@@ -27,23 +17,15 @@ import { VStack,
     useDisclosure,
  } from '@chakra-ui/react';
 import {React, useState, useEffect, useRef} from 'react';
-//import CardChakra from './CardChakra';
-//import img3 from '../images/hammer.jpg'
-//import emailjs from '@emailjs/browser';
-//import { CheckCircleIcon, InfoIcon, WarningIcon} from '@chakra-ui/icons'
 
 import axios from 'axios';
 const baseUrl = '/api/items';
 const baseUrlUsers = '/api/users';
 
 
-// these should be read from the database, as json?
-// then map all instances with below details, which will bse sent as props to collection page
-
 function AuctionsList(props) {
 
     const [itemList, setItemList] = useState([]);
-
 
     const listItems = async () => {
         await axios.get(baseUrl)
@@ -59,7 +41,6 @@ function AuctionsList(props) {
   
   const getUser = () => {
     const loggedUserJSON = window.localStorage.getItem(STORAGE_KEY)
-    //console.log(loggedUserJSON);
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       token = user.token
@@ -90,9 +71,6 @@ function AuctionsList(props) {
       showUserDetails();
     },[user.id]);
 
-  
-
-    // get user list to get other details than id
     const [userList, setUserList] = useState([]);
 
     useEffect(() => {
@@ -103,28 +81,19 @@ function AuctionsList(props) {
       listUsers();
     }, []);
 
-    //console.log(userList);
     userList.forEach(element => {
-      //console.log(element);
     })
 
     const findInfo = (id) =>{
         let info = '';
         userList.forEach(element => {
-          //console.log(id);
-          //console.log(element.id);
           if (id === element.id ) {
-            //console.log("bingo");
             info = element.firstName+" "+element.surname;
           } else {
-            //console.log("ei ollut" + id + " ja "+element.id);
           }
         })
         return info;
       }
-
-   
-    //console.log("From Auctions list " + props.curr +" and "+ props.rate);
 
     function msToTime(duration) {
         let milliseconds = Math.floor((duration % 1000) / 100);
@@ -166,27 +135,6 @@ function AuctionsList(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef();
 
-    /* const findStatus = (item) => {
-        let status = '';
-        let endTime = new Date(item.endDate);
-        let timeLeftMS = endTime - Date.now();
-        if (timeLeftMS > 0) {
-            status = 'ACTIVE'
-        } else if (timeLeftMS < 0) {
-            setStatus(item)
-            if(item.highestBidder === null) {
-                return status = 'EXPIRED'
-            }
-            status = 'FULFILLED'
-        } else {
-            status = 'PREPAIRING'
-        }
-        return status
-    } */
-
-    //console.log(itemList);
-
-
     const deleteItem = async (id) => {
         try {
         const response = await axios.delete(baseUrl+ '/' + id)
@@ -198,46 +146,30 @@ function AuctionsList(props) {
         listItems();
     }
 
-    /* const handleChange = (event) => {
-        console.log("item to delete is " +event.target.value);
-        deleteItem(event.target.value)
-        listItems();
-    } */
-
     const handleOpen = (event) => {
         onOpen();
         deleteItem(event.target.id)
-        //console.log("item to delete is " +event.target.value);
-        //console.log(event.target.id)
         listItems();
     }
 
     const handleDelete = (event) => {
         console.log(event.target.id)
-        //deleteItem(event.target.value)
         onClose();
     }
-
-    /* const { isOpen, onOpen, onClose } = useDisclosure();
-    const cancelRef = useRef(); */
 
     const tableRow = itemList.map((item, pos) => {
         let price = item.initialPrice;
         let bid = item.highestBid;
-        //let rate = findRate(currency);
         let rate = props.rate;
         let priceInCurr = (price * rate).toFixed(2);
         let bidInCurr = (bid * rate).toFixed(2);
         let sellerName = item.seller.firstName + " "+ item.seller.surname;
         let bidderName = findInfo(item.highestBidder);
-        //console.log(item);
         return (
             <Tr key={pos}>
-                {/* <Td><Icon as={findIcon(item.endDate)}></Icon></Td> */}
                 <Td>{item.status}</Td>
                 <Td>{item.name}</Td>
                 <Td>{item.model}</Td>
-                {/* <Td>{item.description}</Td> */}
                 <Td>{props.curr}</Td>
                 <Td isNumeric>{priceInCurr}</Td>
                 <Td isNumeric>{bidInCurr}</Td>
@@ -253,7 +185,6 @@ function AuctionsList(props) {
                   }}>
                     Delete
                 </Button></Td>
-                {/* <Td><Checkbox key={item.id}  value={item.id} onChange={handleChange}></Checkbox></Td> */}
             </Tr>
         )
     });
@@ -265,11 +196,9 @@ function AuctionsList(props) {
                     <Table variant='simple' size={'sm'}>
                         <Thead>
                             <Tr>
-                                {/* <Th>s</Th> */}
                                 <Th>Status</Th>
                                 <Th>Item name</Th>
                                 <Th>Item model</Th>
-                                {/* <Th>Description</Th> */}
                                 <Th>Currency</Th>
                                 <Th isNumeric>Initial Price</Th>
                                 <Th isNumeric>Highest Bid</Th>
@@ -284,16 +213,6 @@ function AuctionsList(props) {
                         </Tbody>
                     </Table>
                 </TableContainer>
-                {/* <Flex alignItems={'right'} justify={'flex-end'} mt={5} mb={5}>
-                <Button onClick={handleOpen} size="sm"
-                  bg={"#774BCD"}
-                  color={"white"}
-                  _hover={{
-                    bg: "#C7A1FE",
-                  }}>
-                    Delete Auction
-                </Button>
-                </Flex> */}
                 <AlertDialog
                     isOpen={isOpen}
                     leastDestructiveRef={cancelRef}
