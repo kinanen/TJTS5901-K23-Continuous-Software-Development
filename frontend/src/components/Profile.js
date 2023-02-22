@@ -25,7 +25,7 @@ import {
     Divider,
   } from '@chakra-ui/react';
   import { Link as ReachLink } from "react-router-dom";
-  import Avatar from "../images/emoticon.png"
+  import Avatar from "../images/blank-profile.png"
   import { useEffect, useState, useRef } from 'react';
   import { useTranslation } from 'react-i18next';
   
