@@ -6,20 +6,16 @@ import {
     Image,
     Input,
     Flex,
-    VStack,
     Button,
     Heading,
     SimpleGrid,
-    StackDivider,
     Divider,
-    List,
-    ListItem,
     Alert, 
     AlertDescription, 
     AlertIcon, 
     CloseButton,
   } from '@chakra-ui/react';
-  import Hammer from '../images/hammer.jpg';
+  import ImagePlaceholder from '../images/blanc-img.png'
   import axios from 'axios';
   import { useLocation } from "react-router-dom";
   import { useState, useEffect} from 'react';
@@ -79,7 +75,7 @@ import {
 
     const setImage = async () => {
       if(!item.photo) {
-        image = Hammer
+        image = ImagePlaceholder
         return
       }
       const imageData = await axios.get(`${baseUrl}/photo/${item.photo}`)
@@ -128,8 +124,6 @@ import {
     const recordBit = async (id, newBid) => {
       try{
       const response = await axios.put((baseUrl+ '/' + itemId), newBid, config())
-      //console.log(response);
-      //return response.data
       showItemDetails();
       } catch (error) {
         console.log(error.response.data.error);
@@ -149,12 +143,9 @@ import {
       event.preventDefault();
 
       let id = itemId;
-      //console.log("bid made for item "+id)
       setEdit(false);
 
       let user = getUser(); 
-      //console.log(user);
-      //console.log(token);
 
       const newBid = {
         highestBid : bid
@@ -169,32 +160,35 @@ import {
         if (user !== null) {
           setEdit(true);
         } else {
-          //console.log("sun täytyy kirjautua");
           setDisplay('flex');
-          //console.log(display);
           setAlertStatus('error');
-          //console.log(alertStatus);
           setAlertMessage("You need to sign in to make a bid");
-          //console.log(alertMessage);
         }
       }
       
 
     const closeAlert = () => {
       if (alertStatus === "success") {
-        //setDisplay('none');
-        //redirect();
       } else {
         setDisplay("none");
       }
     };
+
+    let sellerName = "";
+    let sellerEmail = "";
+
+    if (item.seller == null){
+      console.log(item);
+    } else {
+      sellerName = item.seller.firstName + " "+ item.seller.surname;
+      sellerEmail = item.seller.email;
+    }
 
     if(edit){
     return (
       <Container w={'80%'} maxW={'6xl'}>
         <Alert display={display} status={alertStatus}>
               <AlertIcon />
-              {/* <AlertTitle mr={2}>{alertTitle}</AlertTitle> */}
               <AlertDescription mr={2}>{alertMessage}</AlertDescription>
               <CloseButton onClick={closeAlert} />
         </Alert>
@@ -206,11 +200,11 @@ import {
             <Image
               rounded={'md'}
               alt={'product image'}
-              src={Hammer}
+              src={ImagePlaceholder}
               fit={'cover'}
               align={'center'}
-              w={'100%'}
-              h={{ base: '100%', sm: '100px', md: '200px', lg: '400px' }}
+              w={{ base: '100%', sm: '60%', md: '75%', lg: '100%' }}
+              h={{ base: '100%', sm: '60%', md: '75%', lg: '100%' }}
             />
           </Flex>
           <Stack spacing={{ base: 6, md: 10 }}>
@@ -233,7 +227,6 @@ import {
                 fontWeight={300}
                 fontSize={'1xl'}>
                 {t('initial-price')} {iPrice} {currency} 
-                {/* {item.initialPrice} {item.currency} */}
               </Text>
               <Text
                 color={'gray.900'}
@@ -241,7 +234,6 @@ import {
                 fontSize={'2xl'}
                 mb={4}>
                 {t('highest-bid')} {itemBid} {currency} 
-                {/* {item.highestBid} {item.currency} */}
               </Text>
               <Text
                 color={'gray.900'}
@@ -297,21 +289,35 @@ import {
                   fontWeight={'300'}>
                   Condition: {item.condition}
                 </Text>
+              </Box>
+                <Divider size={'lg'} borderColor={'#774BCD'}></Divider>
+              <Box>
+                <Text
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  color={'yellow.500'}
+                  fontWeight={'500'}
+                  textTransform={'uppercase'}
+                  mb={'4'}>
+                  {t('seller-details')}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Name: {sellerName}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Email: {sellerEmail}
+                </Text>
                 <Text
                   color={'gray.900'}
                   fontSize={{ base: '16px', lg: '18px' }}
                   fontWeight={'300'}>
                   Location zipcode: {item.zipcode}
                 </Text>
-
-                {/* <List spacing={2}>
-                  <ListItem>
-                    <Text as={'span'} fontWeight={'bold'}>
-                      {t('other-details')}
-                    </Text>{' '}
-                        Blaa blaa
-                  </ListItem>
-                </List> */}
               </Box>
             </Stack>
           </Stack>
@@ -323,7 +329,6 @@ import {
       <Container w={'80%'} maxW={'6xl'}>
         <Alert display={display} status={alertStatus}>
               <AlertIcon />
-              {/* <AlertTitle mr={2}>{alertTitle}</AlertTitle> */}
               <AlertDescription mr={2}>{alertMessage}</AlertDescription>
               <CloseButton onClick={closeAlert} />
         </Alert>
@@ -335,7 +340,7 @@ import {
             <Image
               rounded={'md'}
               alt={'product image'}
-              src={Hammer}
+              src={ImagePlaceholder}
               fit={'cover'}
               align={'center'}
               w={'100%'}
@@ -363,7 +368,6 @@ import {
                 fontWeight={300}
                 fontSize={'1xl'}>
                 {t('initial-price')} {iPrice} {currency}
-                {/* {item.initialPrice} {item.currency} */}
               </Text>
               <Text
                 color={'gray.900'}
@@ -371,7 +375,6 @@ import {
                 fontSize={'2xl'}
                 mb={4}>
                 {t('highest-bid')} {itemBid} {currency}
-                {/* {item.highestBid} {item.currency} */}
               </Text>
               <Button
                   loadingText="Submitting"
@@ -388,26 +391,7 @@ import {
             <Stack
               spacing={{ base: 4, sm: 6 }}
               direction={'column'}
-              // divider={
-              //   <StackDivider
-              //   color={'gray.900'}
-              //   />
-              // }
               >
-              {/* <VStack spacing={{ base: 4, sm: 6 }}>
-                <Text
-                  color={'gray.900'}
-                  fontSize={'2xl'}
-                  fontWeight={'300'}>
-                  {item.description}
-                </Text>
-{                <Text fontSize={'lg'}>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-                  aliquid amet at delectus doloribus dolorum expedita hic, ipsum
-                  maxime modi nam officiis porro, quae, quisquam quos
-                  reprehenderit velit? Natus, totam.
-                </Text> }
-              </VStack>*/}
               <Divider size={'lg'} borderColor={'#774BCD'}></Divider>
               <Box>
                 <Text
@@ -437,20 +421,35 @@ import {
                   fontWeight={'300'}>
                   Condition: {item.condition}
                 </Text>
+              </Box>
+                <Divider size={'lg'} borderColor={'#774BCD'}></Divider>
+              <Box>
+                <Text
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  color={'yellow.500'}
+                  fontWeight={'500'}
+                  textTransform={'uppercase'}
+                  mb={'4'}>
+                  {t('seller-details')}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Name: {sellerName}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Email: {sellerEmail}
+                </Text>
                 <Text
                   color={'gray.900'}
                   fontSize={{ base: '16px', lg: '18px' }}
                   fontWeight={'300'}>
                   Location zipcode: {item.zipcode}
                 </Text>
-                {/* <List spacing={2}>
-                  <ListItem>
-                    <Text as={'span'} fontWeight={'bold'}>
-                      {t('other-details')}
-                    </Text>{' '}
-                        Blaa blaa
-                  </ListItem>
-                </List> */}
               </Box>
             </Stack>
           </Stack>
