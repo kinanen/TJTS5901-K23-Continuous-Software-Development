@@ -54,21 +54,48 @@ const initialItems = [
     }
     ]
 
+    /*beforeEach(async () => {
+        await User.deleteMany({});
+    
+        const passwordHash = await bcrypt.hash("sekret", 10);
+        user = new User({ username: "root", passwordHash });
+    
+        await user.save();
+    
+        const response = await api
+          .post("/api/login")
+          .send({ username: "root", password: "sekret" });
+        token = response.body.token;
+      });
+      */
 
-
-initialUser = {
+initialUsers = [{
         email: "testi@mail.com",
         firstName: "Testi",
         surname: "Testinen",
-        userType: "Seller",
+        userType: "seller",
         passwordHash: "testi",
         items: []
-    }
+        },
+    {
+        email: "testi2@mail.com",
+        firstName: "Testi2",
+        surname: "Testinen2",
+        userType: "buyer",
+        passwordHash: "testi2",
+        items: []
+    }]
 
 const itemsInDb = async () => {
   const items = await Item.find({})
   return items.map(b => b.toJSON())
 }
 
+const usersInDb = async () => {
+    const users = await User.find({})
+    return users.map(b => b.toJSON())
+}
 
-module.exports = { initialItems, itemsInDb, initialUser}
+
+
+module.exports = { initialItems, itemsInDb, initialUsers, usersInDb}

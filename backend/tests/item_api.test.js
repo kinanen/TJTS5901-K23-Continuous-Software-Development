@@ -6,6 +6,7 @@ const api = supertest(app);
 const Item = require("../models/item");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+const { response } = require("../app");
 
 const initialItems = helper.initialItems;
 
@@ -45,9 +46,11 @@ test("a specific item is within the returned items", async () => {
   expect(names).toContain("Test item 1");
 });
 
-describe("addition of an item", () => {
+
+describe("addition and deleting an item", () => {
   let token;
   let buyerToken;
+
   beforeEach(async () => {
     await User.deleteMany({});
 
@@ -167,7 +170,39 @@ describe("addition of an item", () => {
     expect(response.body).toHaveLength(initialItems.length+1); // one item added in tests
     expect(names).not.toContain("Test item Z")
   });
+
+  test("item can be deleted", async () => {
+    const itemsresponse = await api
+      .get("/api/items");
+    
+    const itemId = itemsresponse.body[0].id;
+    console.log("item id", itemId);
+    
+    await api
+      .delete(`/api/items/${itemId}`)
+      .expect(204);
+
+    const response = await api.get("/api/items");
+
+    expect(response.body).toHaveLength(itemsresponse.body.length - 1);
+  
+  });
+
+  test("item cannot be deleted with non existing id", async () => {
+    const itemsresponse = await api
+      .get("/api/items");
+    
+    const itemId = "123456789012345678901234";
+
+    
+    await api
+      .delete(`/api/items/${itemId}`)
+      .expect(404);
+  
+  });
+
 });
+
 
 test("get item by id, item exists", async () => {
   const response = await api
@@ -186,7 +221,7 @@ test("get item by id, item not exsisting ", async () => {
   const item = response.body[0];
 
   const itemResponse = await api
-    .get(`/api/items/${101010101010}`)
+    .get(`/api/items/${"123456789012345678901234"}`)
     .expect(404);
 });
 
