@@ -123,7 +123,9 @@ itemsRouter.get('/photo/:id', async (request, response) => {
 
 // GET endpoint for a single item from Database
 itemsRouter.get('/:id', async (request, response) => {
-  const item = await Item.findById(request.params.id)
+  const item = await Item
+    .findById(request.params.id)
+    .populate('seller', { email: 1, firstName: 1, surname: 1 })
   // if there's no item found, respond with code 404 Not Found
   if(!item) {
     logger.error("Could not find an item with given id")

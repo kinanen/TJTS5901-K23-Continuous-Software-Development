@@ -263,5 +263,3 @@ describe("bidding on an item and changing item's status", () => {
 
   })
 });
-
-
