@@ -2,7 +2,7 @@ import { VStack, Select, FormControl, FormLabel, Stack, Button, HStack } from '@
 import {React, useState, useEffect, useRef} from 'react';
 import CardChakra from './CardChakra';
 import Currency from './Currency';
-import img3 from '../images/hammer.jpg'
+import ImagePlaceholder from '../images/blanc-img.png'
 //import emailjs from '@emailjs/browser';
 import { useTranslation } from 'react-i18next';
 
@@ -183,7 +183,7 @@ function CardsChakra(props) {
         return(
         <CardChakra 
             key={pos}
-            src={img3}
+            src={ImagePlaceholder}
             name={item.name}
             model={item.model}
             description={item.description}

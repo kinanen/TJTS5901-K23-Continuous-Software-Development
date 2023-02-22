@@ -34,6 +34,7 @@ import {React, useState, useEffect, useRef} from 'react';
 
 import axios from 'axios';
 const baseUrl = '/api/items';
+const baseUrlUsers = '/api/users';
 
 
 // these should be read from the database, as json?
@@ -52,6 +53,75 @@ function AuctionsList(props) {
     useEffect(() => {
         listItems();
     }, []);
+
+    let token = null
+  const STORAGE_KEY = 'loggedAuctionAppUser'
+  
+  const getUser = () => {
+    const loggedUserJSON = window.localStorage.getItem(STORAGE_KEY)
+    //console.log(loggedUserJSON);
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      token = user.token
+      return user;
+    }
+    return null;
+  }
+
+  const getToken = () => token
+
+  const config = () => {
+    return {
+      headers: {
+        Authorization: `bearer ${getToken()}`
+      },
+    }
+  }
+
+  const [userData, setUserData] = useState([]);
+
+  let user = getUser();
+
+    useEffect(() => {
+      const showUserDetails = async () => {
+      await axios.get(baseUrlUsers+ '/' + user.id, config())
+        .then(response => setUserData(response.data));
+      }
+      showUserDetails();
+    },[user.id]);
+
+  
+
+    // get user list to get other details than id
+    const [userList, setUserList] = useState([]);
+
+    useEffect(() => {
+    const listUsers = async () => {
+        await axios.get(baseUrlUsers, config())
+        .then(response => setUserList(response.data));
+      }
+      listUsers();
+    }, []);
+
+    //console.log(userList);
+    userList.forEach(element => {
+      //console.log(element);
+    })
+
+    const findInfo = (id) =>{
+        let info = '';
+        userList.forEach(element => {
+          //console.log(id);
+          //console.log(element.id);
+          if (id === element.id ) {
+            //console.log("bingo");
+            info = element.firstName+" "+element.surname;
+          } else {
+            //console.log("ei ollut" + id + " ja "+element.id);
+          }
+        })
+        return info;
+      }
 
    
     //console.log("From Auctions list " + props.curr +" and "+ props.rate);
@@ -93,7 +163,10 @@ function AuctionsList(props) {
         await axios.put(`${baseUrl}/status/${item.id}`, { status: "fulfilled" })
     }
 
-    const findStatus = (item) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelRef = useRef();
+
+    /* const findStatus = (item) => {
         let status = '';
         let endTime = new Date(item.endDate);
         let timeLeftMS = endTime - Date.now();
@@ -109,7 +182,7 @@ function AuctionsList(props) {
             status = 'PREPAIRING'
         }
         return status
-    }
+    } */
 
     //console.log(itemList);
 
@@ -125,10 +198,24 @@ function AuctionsList(props) {
         listItems();
     }
 
-    const handleChange = (event) => {
+    /* const handleChange = (event) => {
         console.log("item to delete is " +event.target.value);
         deleteItem(event.target.value)
         listItems();
+    } */
+
+    const handleOpen = (event) => {
+        onOpen();
+        deleteItem(event.target.id)
+        //console.log("item to delete is " +event.target.value);
+        //console.log(event.target.id)
+        listItems();
+    }
+
+    const handleDelete = (event) => {
+        console.log(event.target.id)
+        //deleteItem(event.target.value)
+        onClose();
     }
 
     /* const { isOpen, onOpen, onClose } = useDisclosure();
@@ -141,10 +228,13 @@ function AuctionsList(props) {
         let rate = props.rate;
         let priceInCurr = (price * rate).toFixed(2);
         let bidInCurr = (bid * rate).toFixed(2);
+        let sellerName = item.seller.firstName + " "+ item.seller.surname;
+        let bidderName = findInfo(item.highestBidder);
+        //console.log(item);
         return (
             <Tr key={pos}>
                 {/* <Td><Icon as={findIcon(item.endDate)}></Icon></Td> */}
-                <Td>{findStatus(item)}</Td>
+                <Td>{item.status}</Td>
                 <Td>{item.name}</Td>
                 <Td>{item.model}</Td>
                 {/* <Td>{item.description}</Td> */}
@@ -152,14 +242,25 @@ function AuctionsList(props) {
                 <Td isNumeric>{priceInCurr}</Td>
                 <Td isNumeric>{bidInCurr}</Td>
                 <Td isNumeric>{calculateHours(item.endDate)}</Td>
-                <Td><Checkbox key={item.id}  value={item.id} onChange={handleChange}></Checkbox></Td>
-                </Tr>
-            )
+                <Td>{sellerName}</Td>
+                <Td>{bidderName}</Td>
+                <Td><Button onClick={handleOpen} size="sm"
+                  id={item.id}
+                  bg={"#774BCD"}
+                  color={"white"}
+                  _hover={{
+                    bg: "#C7A1FE",
+                  }}>
+                    Delete
+                </Button></Td>
+                {/* <Td><Checkbox key={item.id}  value={item.id} onChange={handleChange}></Checkbox></Td> */}
+            </Tr>
+        )
     });
 
     return (
         <VStack mt={20}>
-            <Box w={'80%'} alignItems={'left'}> 
+            <Box w={'100%'} p={2} alignItems={'left'}> 
                 <TableContainer>
                     <Table variant='simple' size={'sm'}>
                         <Thead>
@@ -173,35 +274,26 @@ function AuctionsList(props) {
                                 <Th isNumeric>Initial Price</Th>
                                 <Th isNumeric>Highest Bid</Th>
                                 <Th isNumeric>Time remaining</Th>
+                                <Th>Seller</Th>
+                                <Th>Bidder</Th>
                                 <Th>Delete</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
                             {tableRow}
-                        {/* {itemList.map((item, pos) => (
-                            <Tr key={pos}>
-                                <Td>{findStatus(item.endDate)}</Td>
-                                <Td>{item.name}</Td>
-                                <Td>{item.model}</Td>
-                                <Td>{item.currency}</Td>
-                                <Td isNumeric>{item.initialPrice}</Td>
-                                <Td isNumeric>{item.highestBid}</Td>
-                                <Td isNumeric>{calculateHours(item.endDate)}</Td>
-                            </Tr>
-                            ))} */}
                         </Tbody>
                     </Table>
                 </TableContainer>
                 {/* <Flex alignItems={'right'} justify={'flex-end'} mt={5} mb={5}>
-                <Button onClick={onOpen} size="sm"
+                <Button onClick={handleOpen} size="sm"
                   bg={"#774BCD"}
                   color={"white"}
                   _hover={{
                     bg: "#C7A1FE",
                   }}>
-                    Delete Item
+                    Delete Auction
                 </Button>
-                </Flex>
+                </Flex> */}
                 <AlertDialog
                     isOpen={isOpen}
                     leastDestructiveRef={cancelRef}
@@ -210,7 +302,7 @@ function AuctionsList(props) {
                 <AlertDialogOverlay>
                 <AlertDialogContent>
                     <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                    Delete Customer
+                    Delete Auction
                     </AlertDialogHeader>
 
                     <AlertDialogBody>
@@ -221,13 +313,13 @@ function AuctionsList(props) {
                     <Button ref={cancelRef} onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button colorScheme='red' onClick={onClose} ml={3}>
+                    <Button colorScheme='red' onClick={handleDelete} ml={3}>
                         Delete
                     </Button>
                     </AlertDialogFooter>
                 </AlertDialogContent>
                 </AlertDialogOverlay>
-                </AlertDialog> */}
+                </AlertDialog>
                 </Box>
         </VStack>
     );

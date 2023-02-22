@@ -19,7 +19,7 @@ import {
     AlertIcon, 
     CloseButton,
   } from '@chakra-ui/react';
-  import Hammer from '../images/hammer.jpg';
+  import ImagePlaceholder from '../images/blanc-img.png'
   import axios from 'axios';
   import { useLocation } from "react-router-dom";
   import { useState, useEffect} from 'react';
@@ -79,7 +79,7 @@ import {
 
     const setImage = async () => {
       if(!item.photo) {
-        image = Hammer
+        image = ImagePlaceholder
         return
       }
       const imageData = await axios.get(`${baseUrl}/photo/${item.photo}`)
@@ -189,6 +189,8 @@ import {
       }
     };
 
+    //console.log(item);
+
     if(edit){
     return (
       <Container w={'80%'} maxW={'6xl'}>
@@ -206,7 +208,7 @@ import {
             <Image
               rounded={'md'}
               alt={'product image'}
-              src={Hammer}
+              src={ImagePlaceholder}
               fit={'cover'}
               align={'center'}
               w={'100%'}
@@ -297,21 +299,35 @@ import {
                   fontWeight={'300'}>
                   Condition: {item.condition}
                 </Text>
+              </Box>
+                <Divider size={'lg'} borderColor={'#774BCD'}></Divider>
+              <Box>
+                <Text
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  color={'yellow.500'}
+                  fontWeight={'500'}
+                  textTransform={'uppercase'}
+                  mb={'4'}>
+                  {t('seller-details')}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Name: {item.seller.firstName} {item.seller.surname}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Email: {item.seller.email}
+                </Text>
                 <Text
                   color={'gray.900'}
                   fontSize={{ base: '16px', lg: '18px' }}
                   fontWeight={'300'}>
                   Location zipcode: {item.zipcode}
                 </Text>
-
-                {/* <List spacing={2}>
-                  <ListItem>
-                    <Text as={'span'} fontWeight={'bold'}>
-                      {t('other-details')}
-                    </Text>{' '}
-                        Blaa blaa
-                  </ListItem>
-                </List> */}
               </Box>
             </Stack>
           </Stack>
@@ -335,7 +351,7 @@ import {
             <Image
               rounded={'md'}
               alt={'product image'}
-              src={Hammer}
+              src={ImagePlaceholder}
               fit={'cover'}
               align={'center'}
               w={'100%'}
@@ -437,12 +453,36 @@ import {
                   fontWeight={'300'}>
                   Condition: {item.condition}
                 </Text>
+              </Box>
+                <Divider size={'lg'} borderColor={'#774BCD'}></Divider>
+              <Box>
+                <Text
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  color={'yellow.500'}
+                  fontWeight={'500'}
+                  textTransform={'uppercase'}
+                  mb={'4'}>
+                  {t('seller-details')}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Name: {item.seller.firstName} {item.seller.surname}
+                </Text>
+                <Text
+                  color={'gray.900'}
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'300'}>
+                  Email: {item.seller.email}
+                </Text>
                 <Text
                   color={'gray.900'}
                   fontSize={{ base: '16px', lg: '18px' }}
                   fontWeight={'300'}>
                   Location zipcode: {item.zipcode}
                 </Text>
+              </Box>
                 {/* <List spacing={2}>
                   <ListItem>
                     <Text as={'span'} fontWeight={'bold'}>
@@ -451,7 +491,6 @@ import {
                         Blaa blaa
                   </ListItem>
                 </List> */}
-              </Box>
             </Stack>
           </Stack>
         </SimpleGrid>
