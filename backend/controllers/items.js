@@ -11,7 +11,7 @@ const upload = multer({ storage: storage });
 itemsRouter.get('/', async (request, response) => {
     const items = await Item
     .find({})
-    .find({}).populate('seller', { firstName: 1, surname: 1 })
+    .find({}).populate('seller', { email: 1, firstName: 1, surname: 1 })
     
     response.json(items)
 })
@@ -20,7 +20,7 @@ itemsRouter.get('/', async (request, response) => {
 itemsRouter.get('/active', async (request, response) => {
   const items = await Item
   .find({ status: 'active' })
-  .find({ status: 'active' }).populate('seller', { firstName: 1, surname: 1 })
+  .find({ status: 'active' }).populate('seller', { email: 1, firstName: 1, surname: 1 })
   
   response.json(items)
 })
@@ -71,7 +71,7 @@ itemsRouter.post('/', async (request, response) => {
 
   const itemToReturn = await Item
     .findById(savedItem._id)
-    .populate('seller', { email: 1 })
+    .populate('seller', { email: 1, firstName: 1, surname: 1 })
   // Respond with code 201 Created, and send the Item in JSON form to frontend
   response.status(201).json(itemToReturn)
 })
@@ -123,7 +123,9 @@ itemsRouter.get('/photo/:id', async (request, response) => {
 
 // GET endpoint for a single item from Database
 itemsRouter.get('/:id', async (request, response) => {
-  const item = await Item.findById(request.params.id)
+  const item = await Item
+    .findById(request.params.id)
+    .populate('seller', { email: 1, firstName: 1, surname: 1 })
   // if there's no item found, respond with code 404 Not Found
   if(!item) {
     logger.error("Could not find an item with given id")
@@ -184,7 +186,7 @@ itemsRouter.put('/:id', async (request, response) => {
       request.params.id,
       item,
       { new: true }
-    ).populate('highestBidder', { firstName: 1, surname: 1 })
+    ).populate('highestBidder', { email: 1, firstName: 1, surname: 1 })
 
   // respond with code 200 OK and send the updated item in the response
   logger.notice(`User ${user.email} bid on item ${item.id}`)
