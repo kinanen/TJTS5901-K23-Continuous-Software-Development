@@ -14,7 +14,8 @@ Did the testing on the backedn using supertest. Tests mostly done via item_api a
 ### Henna:
 Up until the last minute added features to frontend. Fixed bugs based on reports or discussions. Together with the team prepared for the final event.
 
-
+### Pierre:
+Did the french translations, implemented the content-security-policy along with other security features for backend. Implemented a maximum number of attempt to login on an account. Worked on the report.
 
 ## Bughunt:
 
