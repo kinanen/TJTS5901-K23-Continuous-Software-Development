@@ -7,3 +7,6 @@ Set up MongoDB in Azure. Worked on the backend: added application URL to README.
 ### Henna:
 
 Continued to work with frontend. Sign up & sign in & publish item. Struggled with container. Prepared non-functional user stories and added into git.
+
+### Otso:
+Weekly meetings with Team and Mentor. Started the testing project, mostly looking in and studying React testing in general. 

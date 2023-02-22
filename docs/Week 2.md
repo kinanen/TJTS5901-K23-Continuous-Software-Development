@@ -9,6 +9,9 @@ Set up the back- and frontend projects for the MERN app of our solution. Updated
 for automatic deployment. Started some premilinary work for the backend/server structure and development. Did the conatainer configuration
 for the MERN app.
 
+### Otso:
+Looking into and learning the selected stacks parts, done Express and react exersies, Weekly meetings on monday with team and on tuesday with mentor
+
 ### Pierre:
 Did the OWASP security considerations.
 
