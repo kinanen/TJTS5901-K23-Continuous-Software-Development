@@ -86,7 +86,6 @@ test:
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: cobertura-coverage.xml
 
 
 deploy to staging:
