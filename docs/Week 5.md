@@ -11,6 +11,8 @@ Went through bughunt issues and fixed some backend related ones, went through us
 Did the testing on the backedn using supertest. Tests mostly done via item_api and user_api which way tha backend will be tested widely. Added language selections function to frontend. 
 
 
+### Henna:
+Up until the last minute added features to frontend. Fixed bugs based on reports or discussions. Together with the team prepared for the final event.
 
 
 
